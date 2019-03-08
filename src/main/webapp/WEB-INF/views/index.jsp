@@ -15,15 +15,14 @@
 <div class = "container">
 
 <h1>Along The Way</h1>
-
-
-<form action="info">
-  What to See: <br> <input type="text" name=""><br>
-  What to Eat: <br> <input type="text" name="">
-   <br> <input href = "/info" type="submit" value="Submit">
-</form>
 				
-	
+<form action="/results">
+	<div class = "form-group">
+ 	 	<p>Starting Location: <input type="text" name="location"></p>
+  		<p>Ending Location: <input type="text" name="endlocation"></p>
+    	<button type="submit" class = "btn btn-primary">Search!</button>
+	</div>
+</form>	
 
 </body>
 </html>

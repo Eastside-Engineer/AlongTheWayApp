@@ -23,10 +23,10 @@ public class AlongTheWayController {
 
 	@RequestMapping("/info")
 	public ModelAndView info() {
-		
 		ModelAndView mav = new ModelAndView("info");
 		return mav;
 	}
+	
 	@RequestMapping("/results")
 	public ModelAndView results(
 			@RequestParam(name="location", required=true) String location) { 

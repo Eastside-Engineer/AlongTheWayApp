@@ -11,16 +11,13 @@
 </head>
 <body>
 
+<div class = "container">
 
-<div class = "dropdown">
 <h1>Pick Your Stuff</h4>
 
 
-<form action="/info">
-  Starting Location: <br> <input type="text" name=""><br>
-  Ending Location: <br> <input type="text" name="">
-   <br> <input href = "/results" type="submit" value="Submit">
-</form>
+
+</div>
 
 </body>
 </html>
