@@ -11,14 +11,26 @@
 <link rel="stylesheet" href="/style.css" />
 <body>
 
+	<div class = "container">
 
-<c:forEach items="${results}" var="results">
 			
-				${results.name}
+		<table class = "table table-striped">
+		
+		<th>Name</th>
+		
+		
+		<c:forEach items="${results}" var="results">
+			<tr>
+				
+				<td>${results.name}</td>
+				
+			</tr>
+		</c:forEach>
+
+	</table>
 			
 				
-			
-</c:forEach>
+	
 
 </body>
 </html>

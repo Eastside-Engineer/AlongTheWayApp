@@ -1,29 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
 
-<div class = "container">
 
-<h1>Along The Way</h1>
+<div class = "dropdown">
+<h1>Pick Your Stuff</h4>
 
 
-<form action="info">
-  What to See: <br> <input type="text" name=""><br>
-  What to Eat: <br> <input type="text" name="">
-   <br> <input href = "/info" type="submit" value="Submit">
+<form action="/info">
+  Starting Location: <br> <input type="text" name=""><br>
+  Ending Location: <br> <input type="text" name="">
+   <br> <input href = "/results" type="submit" value="Submit">
 </form>
-				
-	
 
 </body>
 </html>

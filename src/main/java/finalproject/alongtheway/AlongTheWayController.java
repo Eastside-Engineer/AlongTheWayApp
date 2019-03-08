@@ -22,6 +22,12 @@ public class AlongTheWayController {
 
 	}
 
+	@RequestMapping("/info")
+	public ModelAndView info() {
+		
+		ModelAndView mav = new ModelAndView("info");
+		return mav;
+	}
 	@RequestMapping("/results")
 	public ModelAndView results() { 
 		List<Businesses> results;
