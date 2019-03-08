@@ -39,9 +39,8 @@ public class BusinessSearchApiService {
 
 	@Value("${api.key}")
 	private String key;
-
-	public List<Businesses> getAllResultsByLocation() {
-		String location = "Detroit";
+		
+	public List<Businesses> getAllResultsByLocation(String location) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + apikey);
 		String url = "https://api.yelp.com/v3/businesses/search?location=" + location;
@@ -49,9 +48,13 @@ public class BusinessSearchApiService {
 				.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), BusinessSearchResponse.class).getBody();
 		return apiResponse.getBusinesses();
 	}
-
-	public List<Businesses> getResultsByCoord() {
-		return null;
+	
+	public List<Businesses> getAllResultsByCoord(Long longitude, Long latitude){
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", "Bearer " + apikey);
+		String url = "https://api.yelp.com/v3/businesses/search?longitude=" + longitude + "&latitude=" + latitude;
+		BusinessSearchResponse apiResponse = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), BusinessSearchResponse.class).getBody();
+		return apiResponse.getBusinesses();
 	}
 
 }
