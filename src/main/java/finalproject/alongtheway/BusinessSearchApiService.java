@@ -18,36 +18,40 @@ import finalproject.alongtheway.model.Businesses;
 public class BusinessSearchApiService {
 
 	private RestTemplate restTemplate = new RestTemplate();
-	
+
 	private RestTemplate restTemplateWithUserAgent;
 
 	// This is an instance initialization block. It runs when a new instance of the
 	// class is created--right before the constructor.
 	{
 		// This configures the restTemplateWithUserAgent to include a User-Agent header
-		// with every HTTP request. 
+		// with every HTTP request.
 		ClientHttpRequestInterceptor interceptor = (request, body, execution) -> {
 			request.getHeaders().add(HttpHeaders.USER_AGENT, "Spring");
 			return execution.execute(request, body);
 		};
 		restTemplateWithUserAgent = new RestTemplateBuilder().additionalInterceptors(interceptor).build();
 	}
-	
+
 	// api key values stored in application.properties
 	@Value("${myapi.key}")
 	private String apikey;
-		
+
+	@Value("${api.key}")
+	private String key;
+
 	public List<Businesses> getAllResultsByLocation() {
 		String location = "Detroit";
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + apikey);
 		String url = "https://api.yelp.com/v3/businesses/search?location=" + location;
-		BusinessSearchResponse apiResponse = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), BusinessSearchResponse.class).getBody();
+		BusinessSearchResponse apiResponse = restTemplate
+				.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), BusinessSearchResponse.class).getBody();
 		return apiResponse.getBusinesses();
 	}
-	
-	public List<Businesses> getResultsByCoord(){
+
+	public List<Businesses> getResultsByCoord() {
 		return null;
 	}
-	
+
 }
