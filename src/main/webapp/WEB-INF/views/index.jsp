@@ -15,6 +15,14 @@
 <div class = "container">
 
 <h1>Along The Way</h1>
+
+<form action="info">
+  What to See: <br> <input type="text" name=""><br>
+  What to Eat: <br> <input type="text" name="">
+   <br> <input href = "/info" type="submit" value="Submit">
+</form>
+
+<a href="/matrix">Distance + Time Example</a>
 				
 <form action="/results">
 	<div class = "form-group">
@@ -24,5 +32,6 @@
 	</div>
 </form>	
 
+</div>
 </body>
 </html>

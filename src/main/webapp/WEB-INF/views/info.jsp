@@ -13,10 +13,6 @@
 
 <div class = "container">
 
-<h1>Pick Your Stuff</h4>
-
-
-
 </div>
 
 </body>

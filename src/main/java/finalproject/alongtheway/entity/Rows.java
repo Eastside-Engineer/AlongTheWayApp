@@ -2,8 +2,6 @@ package finalproject.alongtheway.entity;
 
 import java.util.List;
 
-import javax.lang.model.element.Element;
-
 public class Rows {
 
 	List<Element> elements;
