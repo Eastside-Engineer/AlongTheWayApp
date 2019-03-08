@@ -13,7 +13,8 @@
 
 
 <div class = "dropdown">
-<h1>Pick Your Stuff</h4>
+
+<h1>Pick Your Stuff</h1>
 
 
 <form action="/info">
@@ -21,6 +22,8 @@
   Ending Location: <br> <input type="text" name="">
    <br> <input href = "/results" type="submit" value="Submit">
 </form>
+
+</div>
 
 </body>
 </html>
