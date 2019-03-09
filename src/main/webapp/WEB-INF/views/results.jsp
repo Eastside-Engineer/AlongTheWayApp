@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Results</title>
 </head>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -14,29 +14,22 @@
 <link rel="stylesheet" href="/style.css" />
 <body>
 
-	<div class="container">
-
-
-		<table class="table table-striped">
+<div class = "container">
+			
+	<table class = "table table-striped">
+		
+		<tr><th>Name</th><th>Price</th><th>City, State</th><th>URL Link</th></tr>
+		<c:forEach items="${results}" var="results">
 			<tr>
-				<th>Name</th>
+				<td>${results.name}</td>
+				<td>${results.price}</td>
+				<td>${results.location.city}, ${results.location.state}</td>
+				<td><a href = ${results.url} target = "_blank">Yelp page</a></td>
 			</tr>
+		</c:forEach>
+	</table>
 
-
-			<c:forEach items="${results}" var="results">
-				<tr>
-
-					<td>${results.name}</td>
-
-				</tr>
-			</c:forEach>
-
-		</table>
-
-	</div>
-
-
-
+</div>
 
 </body>
 </html>

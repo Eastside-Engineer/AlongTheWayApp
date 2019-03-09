@@ -59,9 +59,7 @@ public class BusinessSearchApiService {
 		String url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + location1
 				+ "&destinations=" + location2 + "&key=" + key;
 		Routes apiResponse = restTemplate.getForObject(url, Routes.class);
-
 		return (Element) apiResponse.getRows().get(0).getElements().get(0);
-
 	}
 
 	public List<Businesses> getAllResultsByCoord(Long longitude, Long latitude) {
