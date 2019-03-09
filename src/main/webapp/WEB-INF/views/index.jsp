@@ -25,7 +25,7 @@ x
 
 <a href="/matrix">Distance + Time Example</a>
 				
-	
+</div>
 
 </body>
 </html>
