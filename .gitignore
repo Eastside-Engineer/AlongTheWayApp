@@ -10,6 +10,7 @@ HELP.md
 .settings
 .springBeans
 .sts4-cache
+src/main/resources/config/application.properties
 
 ### IntelliJ IDEA ###
 .idea
@@ -24,4 +25,3 @@ HELP.md
 /nbdist/
 /.nb-gradle/
 /build/
-src/main/resources/config/application.properties
