@@ -55,14 +55,13 @@ public class AlongTheWayController {
 
 		List<Steps> steps = googleApiService.getWaypoints(location1, location2);
 		Steps step;
-		Long lat1;
-		Long long1;
+		Double lat1;
+		Double long1;
 		Coordinates coord = new Coordinates();
 		List<Coordinates> waypoints = new ArrayList<Coordinates>();
 
 		for (int i = 0; i < steps.size(); i++) {
 			step = steps.get(i);
-			System.out.println(step);
 			lat1 = step.getStartLocation().getStartLat();
 			long1 = step.getEndLocation().getEndLong();
 			coord.setLatitude(lat1);
@@ -75,8 +74,10 @@ public class AlongTheWayController {
 		List<Businesses> results = new ArrayList<Businesses>();
 		List<Businesses> fullResults = new ArrayList<Businesses>();
 		for (Coordinates coordinates : waypoints) {
+			System.out.println(coordinates);
 			results = businessSearchService.getAllResultsByCoord(coordinates.getLatitude(), coordinates.getLongitude());
 			for (Businesses busi : results) {
+				System.out.println(busi);
 				fullResults.add(busi);
 			}
 		}

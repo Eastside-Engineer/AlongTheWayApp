@@ -82,4 +82,11 @@ public class Businesses {
 		this.displayPhone = displayPhone;
 	}
 	
+	@Override
+	public String toString() {
+		return "Businesses [id=" + id + ", name=" + name + ", imageUrl=" + imageUrl + ", isClosed=" + isClosed
+				+ ", url=" + url + ", categories=" + categories + ", rating=" + rating + ", coordinates=" + coordinates
+				+ ", price=" + price + ", location=" + location + ", displayPhone=" + displayPhone + "]";
+	}
+	
 }

@@ -5,24 +5,29 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class End {
 
 	@JsonProperty("lat")
-	private Long endLat;
+	private Double endLat;
 	@JsonProperty("lng")
-	private Long endLong;
+	private Double endLong;
 
-	public Long getEndLat() {
+	public Double getEndLat() {
 		return endLat;
 	}
 
-	public void setEndLat(Long endLat) {
+	public void setEndLat(Double endLat) {
 		this.endLat = endLat;
 	}
 
-	public Long getEndLong() {
+	public Double getEndLong() {
 		return endLong;
 	}
 
-	public void setEndLong(Long endLong) {
+	public void setEndLong(Double endLong) {
 		this.endLong = endLong;
+	}
+
+	@Override
+	public String toString() {
+		return "End [endLat=" + endLat + ", endLong=" + endLong + "]";
 	}
 
 }

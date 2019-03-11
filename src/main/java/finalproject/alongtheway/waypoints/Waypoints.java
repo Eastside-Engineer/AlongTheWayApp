@@ -14,6 +14,4 @@ public class Waypoints {
 		this.legs = legs;
 	}
 	
-	
-
 }

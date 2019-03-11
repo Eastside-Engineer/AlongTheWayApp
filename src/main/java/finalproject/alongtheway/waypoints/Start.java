@@ -5,24 +5,30 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Start {
 
 	@JsonProperty("lat")
-	private Long startLat;
+	private Double startLat;
 	@JsonProperty("lng")
-	private Long startLong;
+	private Double startLong;
 
-	public Long getStartLat() {
+	public Double getStartLat() {
 		return startLat;
 	}
 
-	public void setStartLat(Long startLat) {
+	public void setStartLat(Double startLat) {
 		this.startLat = startLat;
 	}
 
-	public Long getStartLong() {
+	public Double getStartLong() {
 		return startLong;
 	}
 
-	public void setStartLong(Long startLong) {
+	public void setStartLong(Double startLong) {
 		this.startLong = startLong;
 	}
 
+	@Override
+	public String toString() {
+		return "Start [startLat=" + startLat + ", startLong=" + startLong + "]";
+	}
+
+	
 }
