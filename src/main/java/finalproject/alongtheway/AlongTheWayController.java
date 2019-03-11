@@ -58,8 +58,7 @@ public class AlongTheWayController {
 		Double lat1 = steps.getSteps().getStartLocation().getStartLat();
 		Double lat2 = steps.getSteps().getEndLocation().getEndLat();
 		Double long1 = steps.getSteps().getStartLocation().getStartLong();
-		Double long2 = steps.getSteps().getStartLocation().getEndLong();
-		
+		Double long2 = steps.getSteps().getStartLocation().getEndLong();	
 		
 		ModelAndView mav = new ModelAndView("directions");
 		mav.addObject("lat1", lat1);
