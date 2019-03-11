@@ -15,6 +15,8 @@ import finalproject.alongtheway.entity.Element;
 import finalproject.alongtheway.entity.Routes;
 import finalproject.alongtheway.model.BusinessSearchResponse;
 import finalproject.alongtheway.model.Businesses;
+import finalproject.alongtheway.waypoints.Steps;
+import finalproject.alongtheway.waypoints.WaypointResponse;
 
 @Component
 public class BusinessSearchApiService {
@@ -55,6 +57,9 @@ public class BusinessSearchApiService {
 
 		location1 = "Detroit,MI";
 		location2 = "Chicago,IL";
+		
+		//regex(no space between comma): [A-Z][a-zA-Z]+,[ ]?[A-Z]{2}
+		//regex(one space between comma): [A-Z][a-zA-Z]+,[ ]{1}?[A-Z]{2} 
 
 		String url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + location1
 				+ "&destinations=" + location2 + "&key=" + key;
@@ -70,5 +75,19 @@ public class BusinessSearchApiService {
 				.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), BusinessSearchResponse.class).getBody();
 		return apiResponse.getBusinesses();
 	}
+	
+	public List<Steps> getWaypoints(String location1, String location2) {
 
+		location1 = "Detroit,MI";
+		location2 = "Chicago,IL";
+		
+		//regex(no space between comma): [A-Z][a-zA-Z]+,[ ]?[A-Z]{2}
+		//regex(one space between comma): [A-Z][a-zA-Z]+,[ ]{1}?[A-Z]{2} 
+
+		String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
+				+ location1 + "&destination=" + location2 + "&departure_time=now" + "&key=" + key;
+		WaypointResponse apiResponse = restTemplate.getForObject(url, WaypointResponse.class);
+		return apiResponse.getRoutes().get(0).getLegs().get(0).getSteps();
+	
+	}
 }

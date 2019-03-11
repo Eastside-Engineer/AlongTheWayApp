@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import finalproject.alongtheway.entity.Element;
 import finalproject.alongtheway.model.Businesses;
+import finalproject.alongtheway.waypoints.Steps;
 
 @Controller
 public class AlongTheWayController {
@@ -47,6 +48,25 @@ public class AlongTheWayController {
 		mav.addObject("distance", distance);
 		mav.addObject("duration", duration);
 
+		return mav;
+	}
+	
+	@RequestMapping("/directions")
+	public ModelAndView direction() {
+		List<Steps> steps;
+		steps = businessSearchService.getWaypoints("","");
+		Double lat1 = steps.getSteps().getStartLocation().getStartLat();
+		Double lat2 = steps.getSteps().getEndLocation().getEndLat();
+		Double long1 = steps.getSteps().getStartLocation().getStartLong();
+		Double long2 = steps.getSteps().getStartLocation().getEndLong();
+		
+		
+		ModelAndView mav = new ModelAndView("directions");
+		mav.addObject("lat1", lat1);
+		mav.addObject("lat2", lat2);
+		mav.addObject("long1", long1);
+		mav.addObject("long2", long2);
+	
 		return mav;
 	}
 
