@@ -33,7 +33,6 @@ public class BusinessSearchApiService {
 		restTemplateWithUserAgent = new RestTemplateBuilder().additionalInterceptors(interceptor).build();
 	}
 
-	// api key values stored in application.properties
 	@Value("${yelpapi.key}")
 	private String yelpkey;
 

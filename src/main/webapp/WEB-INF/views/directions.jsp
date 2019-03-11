@@ -8,8 +8,11 @@
 </head>
 <body>
 
+
 <p>${lat1} , ${long1}</p>
 <p>${lat2} , ${long2}</p>
+
+
 
 </body>
 </html>

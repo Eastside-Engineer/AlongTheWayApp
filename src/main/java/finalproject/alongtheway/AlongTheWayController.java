@@ -16,6 +16,9 @@ import finalproject.alongtheway.waypoints.Steps;
 public class AlongTheWayController {
 
 	@Autowired
+	private GoogleApiService googleApiService;
+
+	@Autowired
 	private BusinessSearchApiService businessSearchService;
 
 	@RequestMapping("/")
@@ -28,7 +31,7 @@ public class AlongTheWayController {
 		ModelAndView mav = new ModelAndView("info");
 		return mav;
 	}
-	
+
 	@RequestMapping("/results")
 	public ModelAndView results(@RequestParam(name = "location", required = true) String location) {
 		List<Businesses> results;
@@ -40,7 +43,7 @@ public class AlongTheWayController {
 	@RequestMapping("/matrix")
 	public ModelAndView distance() {
 		Element element;
-		element = businessSearchService.findDistanceAndDuration("", "");
+		element = googleApiService.findDistanceAndDuration("", "");
 		String distance = element.getDistance().getText();
 		String duration = element.getDuration().getText();
 
@@ -50,22 +53,24 @@ public class AlongTheWayController {
 
 		return mav;
 	}
-	
+
 	@RequestMapping("/directions")
 	public ModelAndView direction() {
 		List<Steps> steps;
-		steps = businessSearchService.getWaypoints("","");
-		Double lat1 = steps.getSteps().getStartLocation().getStartLat();
-		Double lat2 = steps.getSteps().getEndLocation().getEndLat();
-		Double long1 = steps.getSteps().getStartLocation().getStartLong();
-		Double long2 = steps.getSteps().getStartLocation().getEndLong();	
-		
+		Steps step;
+		// yo, peep that 7, mang(that is the 8th step in the route, mang)
+		step = googleApiService.getWaypoints("", "").get(7);
+		Long lat1 = step.getStartLocation().getStartLat();
+		Long lat2 = step.getEndLocation().getEndLat();
+		Long long1 = step.getStartLocation().getStartLong();
+		Long long2 = step.getEndLocation().getEndLong();
+
 		ModelAndView mav = new ModelAndView("directions");
 		mav.addObject("lat1", lat1);
 		mav.addObject("lat2", lat2);
 		mav.addObject("long1", long1);
 		mav.addObject("long2", long2);
-	
+
 		return mav;
 	}
 

@@ -3,27 +3,26 @@ package finalproject.alongtheway.waypoints;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class End {
-	
+
 	@JsonProperty("lat")
-	private Double endLat; 
+	private Long endLat;
 	@JsonProperty("lng")
-	private Double endLong;
-	
-	
-	public Double getEndLat() {
+	private Long endLong;
+
+	public Long getEndLat() {
 		return endLat;
 	}
-	public void setEndLat(Double endLat) {
+
+	public void setEndLat(Long endLat) {
 		this.endLat = endLat;
 	}
-	public Double getEndLong() {
+
+	public Long getEndLong() {
 		return endLong;
 	}
-	public void setEndLong(Double endLong) {
+
+	public void setEndLong(Long endLong) {
 		this.endLong = endLong;
 	}
-	
-	
-	
 
 }
