@@ -22,7 +22,7 @@
 
 <a href="/matrix">Distance + Time Example</a>
 				
-<form action="/info">
+<form action="/results">
 	<div class = "form-group">
  	 	<p>Starting Location: <input pattern="[A-Z][a-zA-Z]+,[ ]?[A-Z]{2}" type="text" name="location"> </p>
   		<p>Ending Location: <input pattern="[A-Z][a-zA-Z]+,[ ]?[A-Z]{2}" type="text" name="endlocation"></p>
