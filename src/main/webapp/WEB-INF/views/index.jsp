@@ -25,8 +25,8 @@
 				
 <form action="/results">
 	<div class = "form-group">
- 	 	<p>Starting Location: <input pattern="[A-Z][a-zA-Z]+,[ ]?[A-Z]{2}" type="text" name="location"> </p>
-  		<p>Ending Location: <input pattern="[A-Z][a-zA-Z]+,[ ]?[A-Z]{2}" type="text" name="endlocation"></p>
+ 	 	<p>Starting Location: <input pattern="[A-Z][a-zA-Z]+,[ ]?[A-Z]{2}" type="text" name="location1"></p>
+  		<p>Ending Location: <input pattern="[A-Z][a-zA-Z]+,[ ]?[A-Z]{2}" type="text" name="location2"></p>
     	<button type="submit" class = "btn btn-primary">Search!</button>
 	</div>
 </form>	

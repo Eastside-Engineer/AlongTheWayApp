@@ -33,7 +33,7 @@ public class AlongTheWayController {
 	}
 
 	@RequestMapping("/results")
-	public ModelAndView results(@RequestParam(name = "location", required = true) String location) {
+	public ModelAndView results(@RequestParam(name = "location1", required = true) String location) {
 		List<Businesses> results;
 		results = businessSearchService.getAllResultsByLocation(location);
 		ModelAndView mav = new ModelAndView("results", "results", results);
