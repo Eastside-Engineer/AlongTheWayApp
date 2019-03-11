@@ -46,8 +46,8 @@ public class BusinessSearchApiService {
 		return apiResponse.getBusinesses();
 	}
 
-	// search with no filter by coords
-	public List<Businesses> getAllResultsByCoord(Long longitude, Long latitude) {
+	// search with no filter by coords 
+	public List<Businesses> getAllResultsByCoord(Long latitude, Long longitude) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + yelpkey);
 		String url = "https://api.yelp.com/v3/businesses/search?longitude=" + longitude + "&latitude=" + latitude;
@@ -56,7 +56,7 @@ public class BusinessSearchApiService {
 		return apiResponse.getBusinesses();
 	}
 	
-	// search by category given a coord set
+	// search by category given a coord set as longs
 	public List<Businesses> getAllResultsByCoordByCategory(Long longitude, Long latitude, String category){
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + yelpkey);

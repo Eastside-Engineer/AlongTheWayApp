@@ -1,5 +1,6 @@
 package finalproject.alongtheway;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import finalproject.alongtheway.entity.Element;
 import finalproject.alongtheway.model.Businesses;
+import finalproject.alongtheway.model.Coordinates;
 import finalproject.alongtheway.waypoints.Steps;
 
 @Controller
@@ -33,10 +35,16 @@ public class AlongTheWayController {
 	}
 
 	@RequestMapping("/results")
-	public ModelAndView results(@RequestParam(name = "location1", required = true) String location) {
-		List<Businesses> results;
-		results = businessSearchService.getAllResultsByLocation(location);
-		ModelAndView mav = new ModelAndView("results", "results", results);
+	public ModelAndView results(@RequestParam(name = "waypoints", required = true) List<Coordinates> coords) {
+		List<Businesses> results = new ArrayList<Businesses>();
+		List<Businesses> fullResults = new ArrayList<Businesses>();
+		for (Coordinates coord : coords) {
+			results = businessSearchService.getAllResultsByCoord(coord.getLatitude(), coord.getLongitude());
+			for (Businesses busi : results) {
+				fullResults.add(busi);
+			}
+		}
+		ModelAndView mav = new ModelAndView("results", "results", fullResults);
 		return mav;
 	}
 
@@ -55,21 +63,33 @@ public class AlongTheWayController {
 	}
 
 	@RequestMapping("/directions")
-	public ModelAndView direction() {
-		List<Steps> steps;
-		Steps step;
-		// yo, peep that 7, mang(that is the 8th step in the route, mang)
-		step = googleApiService.getWaypoints("", "").get(7);
-		Long lat1 = step.getStartLocation().getStartLat();
-		Long lat2 = step.getEndLocation().getEndLat();
-		Long long1 = step.getStartLocation().getStartLong();
-		Long long2 = step.getEndLocation().getEndLong();
+	public ModelAndView direction(
+			@RequestParam("location1") String location1,
+			@RequestParam("location2") String location2) {
 
-		ModelAndView mav = new ModelAndView("directions");
-		mav.addObject("lat1", lat1);
-		mav.addObject("lat2", lat2);
-		mav.addObject("long1", long1);
-		mav.addObject("long2", long2);
+		List<Steps> steps = googleApiService.getWaypoints(location1, location2);
+		Steps step;
+		Long lat1;
+		Long long1;
+		Coordinates coord = new Coordinates();
+		List<Coordinates> waypoints = new ArrayList<Coordinates>();
+
+		for (int i = 0; i < steps.size(); i++) {
+
+			step = steps.get(i);
+			lat1 = step.getStartLocation().getStartLat();
+			long1 = step.getEndLocation().getEndLong();
+			coord.setLatitude(lat1);
+			coord.setLongitude(long1);
+			waypoints.add(coord);
+
+		}
+
+		// yo, peep that 7, mang(that is the 8th step in the route, mang)
+
+		ModelAndView mav = new ModelAndView("results");
+
+		mav.addObject("waypoints", waypoints);
 
 		return mav;
 	}
