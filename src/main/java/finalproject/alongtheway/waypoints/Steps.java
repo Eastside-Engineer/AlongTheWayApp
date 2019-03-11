@@ -25,5 +25,11 @@ public class Steps {
 	public void setStartLocation(Start startLocation) {
 		this.startLocation = startLocation;
 	}
+
+	@Override
+	public String toString() {
+		return "Steps [endLocation=" + endLocation + ", startLocation=" + startLocation + "]";
+	}
+	
 	
 }

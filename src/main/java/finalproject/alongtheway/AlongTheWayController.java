@@ -34,20 +34,6 @@ public class AlongTheWayController {
 		return mav;
 	}
 
-	@RequestMapping("/results")
-	public ModelAndView results(@RequestParam(name = "waypoints", required = true) List<Coordinates> coords) {
-		List<Businesses> results = new ArrayList<Businesses>();
-		List<Businesses> fullResults = new ArrayList<Businesses>();
-		for (Coordinates coord : coords) {
-			results = businessSearchService.getAllResultsByCoord(coord.getLatitude(), coord.getLongitude());
-			for (Businesses busi : results) {
-				fullResults.add(busi);
-			}
-		}
-		ModelAndView mav = new ModelAndView("results", "results", fullResults);
-		return mav;
-	}
-
 	@RequestMapping("/matrix")
 	public ModelAndView distance() {
 		Element element;
@@ -62,8 +48,8 @@ public class AlongTheWayController {
 		return mav;
 	}
 
-	@RequestMapping("/directions")
-	public ModelAndView direction(
+	@RequestMapping("/results")
+	public ModelAndView results(
 			@RequestParam("location1") String location1,
 			@RequestParam("location2") String location2) {
 
@@ -75,22 +61,27 @@ public class AlongTheWayController {
 		List<Coordinates> waypoints = new ArrayList<Coordinates>();
 
 		for (int i = 0; i < steps.size(); i++) {
-
 			step = steps.get(i);
+			System.out.println(step);
 			lat1 = step.getStartLocation().getStartLat();
 			long1 = step.getEndLocation().getEndLong();
 			coord.setLatitude(lat1);
 			coord.setLongitude(long1);
+			System.out.println(coord);
 			waypoints.add(coord);
 
 		}
-
-		// yo, peep that 7, mang(that is the 8th step in the route, mang)
-
-		ModelAndView mav = new ModelAndView("results");
-
-		mav.addObject("waypoints", waypoints);
-
+		
+		List<Businesses> results = new ArrayList<Businesses>();
+		List<Businesses> fullResults = new ArrayList<Businesses>();
+		for (Coordinates coordinates : waypoints) {
+			results = businessSearchService.getAllResultsByCoord(coordinates.getLatitude(), coordinates.getLongitude());
+			for (Businesses busi : results) {
+				fullResults.add(busi);
+			}
+		}
+		
+		ModelAndView mav = new ModelAndView("results", "results", fullResults);
 		return mav;
 	}
 

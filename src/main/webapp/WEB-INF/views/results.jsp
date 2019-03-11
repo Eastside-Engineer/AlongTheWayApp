@@ -19,12 +19,12 @@
 	<table class = "table table-striped">
 		
 		<tr><th>Name</th><th>Price</th><th>City, State</th><th>URL Link</th></tr>
-		<c:forEach items="${results}" var="results">
+		<c:forEach items="${results}" var="result">
 			<tr>
-				<td>${results.name}</td>
-				<td>${results.price}</td>
-				<td>${results.location.city}, ${results.location.state}</td>
-				<td><a href = ${results.url} target = "_blank">Yelp page</a></td>
+				<td>${result.name}</td>
+				<td>${result.price}</td>
+				<td>${result.location.city}, ${result.location.state}</td>
+				<td><a href = ${result.url} target = "_blank">Yelp page</a></td>
 			</tr>
 		</c:forEach>
 	</table>
