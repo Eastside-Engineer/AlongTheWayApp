@@ -37,57 +37,25 @@ public class BusinessSearchApiService {
 		restTemplateWithUserAgent = new RestTemplateBuilder().additionalInterceptors(interceptor).build();
 	}
 
-	// api key values stored in application.properties
-	@Value("${googleapi.key}")
-	private String googlekey;
-
 	@Value("${yelpapi.key}")
 	private String yelpkey;
 
 	public List<Businesses> getAllResultsByLocation(String location) {
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "Bearer " + googlekey);
+		headers.add("Authorization", "Bearer " + yelpkey);
 		String url = "https://api.yelp.com/v3/businesses/search?location=" + location;
 		BusinessSearchResponse apiResponse = restTemplate
 				.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), BusinessSearchResponse.class).getBody();
 		return apiResponse.getBusinesses();
 	}
 
-	public Element findDistanceAndDuration(String location1, String location2) {
-
-		location1 = "Detroit,MI";
-		location2 = "Chicago,IL";
-		
-		//regex(no space between comma): [A-Z][a-zA-Z]+,[ ]?[A-Z]{2}
-		//regex(one space between comma): [A-Z][a-zA-Z]+,[ ]{1}?[A-Z]{2} 
-
-		String url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + location1
-				+ "&destinations=" + location2 + "&key=" + yelpkey;
-		Routes apiResponse = restTemplate.getForObject(url, Routes.class);
-		return (Element) apiResponse.getRows().get(0).getElements().get(0);
-	}
-
 	public List<Businesses> getAllResultsByCoord(Long longitude, Long latitude) {
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "Bearer " + googlekey);
+		headers.add("Authorization", "Bearer " + yelpkey);
 		String url = "https://api.yelp.com/v3/businesses/search?longitude=" + longitude + "&latitude=" + latitude;
 		BusinessSearchResponse apiResponse = restTemplate
 				.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), BusinessSearchResponse.class).getBody();
 		return apiResponse.getBusinesses();
 	}
-	
-	public List<Steps> getWaypoints(String location1, String location2) {
 
-		location1 = "Detroit,MI";
-		location2 = "Chicago,IL";
-		
-		//regex(no space between comma): [A-Z][a-zA-Z]+,[ ]?[A-Z]{2}
-		//regex(one space between comma): [A-Z][a-zA-Z]+,[ ]{1}?[A-Z]{2} 
-
-		String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
-				+ location1 + "&destination=" + location2 + "&departure_time=now" + "&key=" + googlekey;
-		WaypointResponse apiResponse = restTemplate.getForObject(url, WaypointResponse.class);
-		return apiResponse.getRoutes().get(0).getLegs().get(0).getSteps();
-	
-	}
 }

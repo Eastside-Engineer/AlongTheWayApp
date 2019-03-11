@@ -21,6 +21,7 @@
 <h4>Where are you traveling?</h4>
 
 <a href="/matrix">Distance + Time Example</a>
+<a href="/directions">directions</a>
 				
 <form action="/results">
 	<div class = "form-group">
