@@ -25,6 +25,9 @@
 <h4>Where are you traveling?</h4>
 
 <a href="/matrix">Distance + Time Example</a>
+<br>
+<a href="/embedded">Maps</a>
+<br>
 <a href="/directions">directions</a>
 				
 <form action="/results">
@@ -34,6 +37,10 @@
     	<button type="submit" class = "btn btn-primary">Search!</button>
 	</div>
 </form>	
+
+<footer>
+<a href="/contacts">Contact</a>
+</footer>
 </div>
 
 </body>

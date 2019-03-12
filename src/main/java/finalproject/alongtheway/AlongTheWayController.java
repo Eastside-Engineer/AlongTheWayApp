@@ -35,7 +35,14 @@ public class AlongTheWayController {
 		return new ModelAndView("index");
 	}
 	
-	
+	@RequestMapping("/embedded")
+	public ModelAndView maps() {
+		return new ModelAndView("embedded");
+	}
+	@RequestMapping("/contacts")
+	public ModelAndView contacts() {
+		return new ModelAndView("contacts");
+	}
 
 	@RequestMapping("/info")
 	public ModelAndView info() {

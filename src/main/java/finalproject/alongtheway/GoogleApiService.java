@@ -40,5 +40,6 @@ public class GoogleApiService {
 		WaypointResponse apiResponse = restTemplate.getForObject(url, WaypointResponse.class);
 		return apiResponse.getRoutes().get(0).getLegs().get(0).getSteps();
 	}
+		  
 
 }
