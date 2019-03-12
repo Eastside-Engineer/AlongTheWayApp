@@ -40,7 +40,7 @@ public class BusinessSearchApiService {
 	public List<Businesses> getAllResultsByLocation(String location) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + yelpkey);
-		String url = "https://api.yelp.com/v3/businesses/search?location=" + location;
+		String url = "https://api.yelp.com/v3/businesses/search?location=" + location + "&sort_by=rating";
 		BusinessSearchResponse apiResponse = restTemplate
 				.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), BusinessSearchResponse.class).getBody();
 		return apiResponse.getBusinesses();
@@ -50,7 +50,7 @@ public class BusinessSearchApiService {
 	public List<Businesses> getAllResultsByCoord(Double latitude, Double longitude) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + yelpkey);
-		String url = "https://api.yelp.com/v3/businesses/search?longitude=" + longitude + "&latitude=" + latitude;
+		String url = "https://api.yelp.com/v3/businesses/search?longitude=" + longitude + "&latitude=" + latitude + "&sort_by=rating";
 		BusinessSearchResponse apiResponse = restTemplate
 				.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), BusinessSearchResponse.class).getBody();
 		return apiResponse.getBusinesses();
@@ -60,10 +60,20 @@ public class BusinessSearchApiService {
 	public List<Businesses> getAllResultsByCoordByCategory(Double longitude, Double latitude, String category){
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + yelpkey);
-		String url = "https://api.yelp.com/v3/businesses/search?longitude=" + longitude + "&latitude=" + latitude + "&=categories" + category;
+		String url = "https://api.yelp.com/v3/businesses/search?longitude=" + longitude + "&latitude=" + latitude + "&=categories" + category + "&sort_by=rating";
 		BusinessSearchResponse apiResponse = restTemplate
 				.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), BusinessSearchResponse.class).getBody();
 		return apiResponse.getBusinesses();
+	}
+	
+	// search yelp by ID
+	public Businesses getResultById(String id) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", "Bearer " + yelpkey);
+		String url = "https://api.yelp.com/v3/businesses/" + id;
+		Businesses apiResponse = restTemplate
+				.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), Businesses.class).getBody();
+		return apiResponse;
 	}
 	
 }

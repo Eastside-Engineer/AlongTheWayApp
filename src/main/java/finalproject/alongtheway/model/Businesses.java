@@ -14,7 +14,7 @@ public class Businesses {
 	private Boolean isClosed;
 	private String url;
 	private List<Categories> categories;
-	private String rating;
+	private Double rating;
 	private Coordinates coordinates;
 	private String price;
 	private Location location;
@@ -51,10 +51,10 @@ public class Businesses {
 	public void setCategories(List<Categories> categories) {
 		this.categories = categories;
 	}
-	public String getRating() {
+	public Double getRating() {
 		return rating;
 	}
-	public void setRating(String rating) {
+	public void setRating(Double rating) {
 		this.rating = rating;
 	}
 	public Coordinates getCoordinates() {

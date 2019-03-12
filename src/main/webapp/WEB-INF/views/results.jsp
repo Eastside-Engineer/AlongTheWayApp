@@ -18,13 +18,15 @@
 			
 	<table class = "table table-striped">
 		
-		<tr><th>Name</th><th>Price</th><th>City, State</th><th>URL Link</th></tr>
+		<tr><th>Name</th><th>Price</th><th>City, State</th><th>Details</th><th>URL Link</th><th>Add to Route</th></tr>
 		<c:forEach items="${results}" var="result">
 			<tr>
 				<td>${result.name}</td>
 				<td>${result.price}</td>
 				<td>${result.location.city}, ${result.location.state}</td>
-				<td><a href = ${result.url} target = "_blank">Yelp page</a></td>
+				<td><a class = "btn btn-primary" type="submit" href = "/details/${result.id}">Details</a></td>	
+				<td><a class = "btn btn-primary" href = "${result.url}" target = "_blank">Yelp page</a></td>
+				<td><a class = "btn btn-primary">Add</a>
 			</tr>
 		</c:forEach>
 	</table>

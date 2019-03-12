@@ -2,6 +2,7 @@ package finalproject.alongtheway.model;
 
 import java.util.List;
 
+// when doing a business/search/ request, fills in with the json response
 public class BusinessSearchResponse {
 
 	private List<Businesses> businesses;
