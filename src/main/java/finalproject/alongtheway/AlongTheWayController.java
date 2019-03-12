@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import finalproject.alongtheway.dao.Route;
+import finalproject.alongtheway.dao.RoutesDao;
 import finalproject.alongtheway.entity.Element;
 import finalproject.alongtheway.model.Businesses;
 import finalproject.alongtheway.model.Coordinates;
@@ -17,6 +19,9 @@ import finalproject.alongtheway.waypoints.Steps;
 
 @Controller
 public class AlongTheWayController {
+	
+	@Autowired
+	RoutesDao dao;
 
 	@Autowired
 	private GoogleApiService googleApiService;
@@ -26,8 +31,11 @@ public class AlongTheWayController {
 
 	@RequestMapping("/")
 	public ModelAndView list() {
+		
 		return new ModelAndView("index");
 	}
+	
+	
 
 	@RequestMapping("/info")
 	public ModelAndView info() {
@@ -54,6 +62,12 @@ public class AlongTheWayController {
 	public ModelAndView results(
 			@RequestParam("location1") String location1,
 			@RequestParam("location2") String location2) {
+		
+		Route route = new Route();
+		route.setLocation1(location1);
+		route.setLocation2(location2);
+		dao.create(route);
+		System.out.println("hello, Dad!");
 
 		// define the steps along the way from the google directions api
 		List<Steps> steps = googleApiService.getWaypoints(location1, location2);
