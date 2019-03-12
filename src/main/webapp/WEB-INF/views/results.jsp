@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+ = <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -14,17 +14,19 @@
 <link rel="stylesheet" href="/style.css" />
 <body>
 
+<%@include file="partials/header.jsp"%>
+
 <div class = "container">
 			
 	<table class = "table table-striped">
 		
 		<tr><th>Name</th><th>Price</th><th>City, State</th><th>URL Link</th></tr>
-		<c:forEach items="${results}" var="result">
+		<c:forEach items="${results}" var="results">
 			<tr>
-				<td>${result.name}</td>
-				<td>${result.price}</td>
-				<td>${result.location.city}, ${result.location.state}</td>
-				<td><a href = ${result.url} target = "_blank">Yelp page</a></td>
+				<td>${results.name}</td>
+				<td>${results.price}</td>
+				<td>${results.location.city}, ${results.location.state}</td>
+				<td><a href = ${results.url} target = "_blank">Yelp page</a></td>
 			</tr>
 		</c:forEach>
 	</table>
