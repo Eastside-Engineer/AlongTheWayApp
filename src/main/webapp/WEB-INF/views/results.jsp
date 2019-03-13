@@ -1,4 +1,4 @@
- = <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -14,32 +14,44 @@
 <link rel="stylesheet" href="/style.css" />
 <body>
 
-<%@include file="partials/header.jsp"%>
+	<%@include file="partials/header.jsp"%>
 
+	<div class="container">
 
-
-<div class = "container">
-<!-- The map will not work because the google API key is hidden. -->
-<iframe width="600" height="450" frameborder="0" style="border: 0"
-		src="https://www.google.com/maps/embed/v1/directions?origin=${loc1}&destination=${loc2}&key=${googlekey}" 
+	<!-- The map will not work because the google API key is hidden. -->
+	<iframe width="600" height="450" frameborder="0" style="border: 0"
+		src="https://www.google.com/maps/embed/v1/directions?origin=${loc1}&destination=${loc2}&key=${googlekey}"
 		allowfullscreen> </iframe>
-			
-	<table class = "table table-striped">
-		
-		<tr><th>Name</th><th>Price</th><th>City, State</th><th>Details</th><th>URL Link</th><th>Add to Route</th></tr>
-		<c:forEach items="${results}" var="result">
-			<tr>
-				<td>${result.name}</td>
-				<td>${result.price}</td>
-				<td>${result.location.city}, ${result.location.state}</td>
-				<td><a class = "btn btn-primary" type="submit" href = "/details/${result.id}">Details</a></td>	
-				<td><a class = "btn btn-primary" href = "${result.url}" target = "_blank">Yelp page</a></td>
-				<td><a class = "btn btn-primary">Add</a>
-			</tr>
-		</c:forEach>
-	</table>
 
-</div>
+
+
+		<table class="table table-striped">
+
+			<tr>
+				<th>Name</th>
+				<th>Price</th>
+				<th>City, State</th>
+				<th>Details</th>
+				<th>URL Link</th>
+				<th>Add to Route</th>
+			</tr>
+			<c:forEach items="${results}" var="result">
+				<tr>
+					<td>${result.name}</td>
+					<td>${result.price}</td>
+					<td>${result.location.city},${result.location.state}</td>
+					<td><a class="btn btn-primary" type="submit"
+						href="/details/${result.id}">Details</a></td>
+					<td><a class="btn btn-primary" href="${result.url}"
+						target="_blank">Yelp page</a></td>
+
+					<td><a class="btn btn-primary" type="submit">Add</a></td>
+
+				</tr>
+			</c:forEach>
+		</table>
+
+	</div>
 
 </body>
 </html>

@@ -11,7 +11,13 @@
 </head>
 <body>
 
-<h1> Header </h1>
+<a href="/">New Search</a>
+
+<h1 class="display-4"> ${location1}  to ${location2}</h1>
+
+
+<br>
+
 
 </body>
 </html>
