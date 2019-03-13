@@ -111,6 +111,7 @@ public class AlongTheWayController {
 		// will be a list of all results from all waypoints
 		List<Businesses> results = new ArrayList<Businesses>();
 		List<Businesses> fullResults = new ArrayList<Businesses>();
+		List<String> names = new ArrayList<String>();
 
 		for (Coordinates coordinates : waypoints) {
 
@@ -118,14 +119,23 @@ public class AlongTheWayController {
 			results = businessSearchService.getAllResultsByCoordByCategory(coordinates.getLatitude(),
 					coordinates.getLongitude(), category);
 			for (Businesses busi : results) {
-				// only fill results if rating is 4.0 or better, filtering the results
-				if (busi.getRating() >= 4.0) {
-					fullResults.add(busi);
+
+				if (!names.contains(busi.getName())) {
+					names.add(busi.getName());
+
+					if (busi.getRating() >= 4.0) {
+						fullResults.add(busi);
+					}
+
 				}
 			}
+
 		}
+
 		// return fullResults from all waypoints for items rated 4.0 or higher
+
 		ModelAndView mav = new ModelAndView("results", "results", fullResults);
+
 		String[] parseLoc1 = location1.split(",");
 		String[] parseLoc2 = location2.split(",");
 		mav.addObject("loc1", parseLoc1[0] + "+" + parseLoc1[1]);
