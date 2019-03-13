@@ -42,6 +42,12 @@
 						oninvalid="('Please enter: City,State (ex:Detroit,MI)')"
 						type="text" name="location2" />
 				</p>
+				<br> 
+				<select name="category">
+					<option value="options">Pick One</option>
+					<option  value="restaurant">Restaurants</option>
+					<option value="landmarks">Landmarks</option>
+				</select>
 				<button type="submit" class="btn btn-primary">Search!</button>
 			</div>
 		</form>
@@ -52,6 +58,6 @@
 
 
 		</footer>
-		</div>
+	</div>
 </body>
 </html>

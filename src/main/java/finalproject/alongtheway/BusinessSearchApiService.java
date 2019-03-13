@@ -46,34 +46,36 @@ public class BusinessSearchApiService {
 		return apiResponse.getBusinesses();
 	}
 
-	// search with no filter by coords 
+	// search with no filter by coords
 	public List<Businesses> getAllResultsByCoord(Double latitude, Double longitude) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + yelpkey);
-		String url = "https://api.yelp.com/v3/businesses/search?longitude=" + longitude + "&latitude=" + latitude + "&sort_by=rating";
+		String url = "https://api.yelp.com/v3/businesses/search?longitude=" + longitude + "&latitude=" + latitude
+				+ "&sort_by=rating";
 		BusinessSearchResponse apiResponse = restTemplate
 				.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), BusinessSearchResponse.class).getBody();
 		return apiResponse.getBusinesses();
 	}
-	
+
 	// search by category given a coord set as longs
-	public List<Businesses> getAllResultsByCoordByCategory(Double longitude, Double latitude, String category){
+	public List<Businesses> getAllResultsByCoordByCategory(Double latitude, Double longitude, String category) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + yelpkey);
-		String url = "https://api.yelp.com/v3/businesses/search?longitude=" + longitude + "&latitude=" + latitude + "&=categories" + category + "&sort_by=rating";
+		String url = "https://api.yelp.com/v3/businesses/search?longitude=" + longitude + "&latitude=" + latitude
+				+ "&categories=" + category + "&sort_by=rating";
 		BusinessSearchResponse apiResponse = restTemplate
 				.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), BusinessSearchResponse.class).getBody();
 		return apiResponse.getBusinesses();
 	}
-	
+
 	// search yelp by ID
 	public Businesses getResultById(String id) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + yelpkey);
 		String url = "https://api.yelp.com/v3/businesses/" + id;
-		Businesses apiResponse = restTemplate
-				.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), Businesses.class).getBody();
+		Businesses apiResponse = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), Businesses.class)
+				.getBody();
 		return apiResponse;
 	}
-	
+
 }

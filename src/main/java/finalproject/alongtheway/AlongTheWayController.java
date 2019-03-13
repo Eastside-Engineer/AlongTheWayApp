@@ -48,7 +48,9 @@ public class AlongTheWayController {
 	}
 
 	@RequestMapping("/info")
-	public ModelAndView category() {
+	public ModelAndView category(@RequestParam("location1") String location1,
+			@RequestParam("location2") String location2) {
+
 		return new ModelAndView("info");
 	}
 
@@ -72,7 +74,8 @@ public class AlongTheWayController {
 	// generated from each waypoint along the way as a single list
 	@RequestMapping("/results")
 	public ModelAndView results(@RequestParam("location1") String location1,
-			@RequestParam("location2") String location2, HttpSession session) {
+			@RequestParam("location2") String location2, @RequestParam("category") String category,
+			HttpSession session) {
 
 		session.setAttribute("location1", location1);
 		session.setAttribute("location2", location2);
@@ -108,8 +111,12 @@ public class AlongTheWayController {
 		// will be a list of all results from all waypoints
 		List<Businesses> results = new ArrayList<Businesses>();
 		List<Businesses> fullResults = new ArrayList<Businesses>();
+
 		for (Coordinates coordinates : waypoints) {
-			results = businessSearchService.getAllResultsByCoord(coordinates.getLatitude(), coordinates.getLongitude());
+
+			System.out.println(category);
+			results = businessSearchService.getAllResultsByCoordByCategory(coordinates.getLatitude(),
+					coordinates.getLongitude(), category);
 			for (Businesses busi : results) {
 				// only fill results if rating is 4.0 or better, filtering the results
 				if (busi.getRating() >= 4.0) {
