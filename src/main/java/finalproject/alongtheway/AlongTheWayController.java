@@ -110,6 +110,10 @@ public class AlongTheWayController {
 		}
 		// return fullResults from all waypoints for items rated 4.0 or higher
 		ModelAndView mav = new ModelAndView("results", "results", fullResults);
+		String[] parseLoc1 = location1.split(",");
+		String[] parseLoc2 = location2.split(",");
+		mav.addObject("loc1",parseLoc1[0]+"+"+parseLoc1[1]);
+		mav.addObject("loc2",parseLoc2[0]+"+"+parseLoc2[1]);
 		return mav;
 	}
 	

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +8,11 @@
 </head>
 <body>
 
-<!-- <iframe
+	<iframe width="600" height="450" frameborder="0" style="border: 0"
+		src="https://www.google.com/maps/embed/v1/directions?origin=Detroit+MI&destination=Chicago+IL&key=AIzaSyAX-jJ8t5eO5MESoAhgIOZlQAwH7GqmGkA"
+		allowfullscreen> </iframe>
+
+	<!-- <iframe
   width="400"
   height="250"
   frameborder="0" style="border:0"
@@ -19,7 +23,7 @@
 
 </iframe> -->
 
-<iframe
+	<%-- <iframe
   width="600"
   height="450"
   frameborder="0" style="border:0"
@@ -28,7 +32,7 @@
   &origin=Oslo+Norway
   &destination=Telemark+Norway
   &avoid=tolls|highways" allowfullscreen>
-</iframe>
+</iframe> --%>
 
 </body>
 </html>

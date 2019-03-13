@@ -30,9 +30,9 @@
 <br>
 <a href="/directions">directions</a>
 				
-<form action="/info">
+<form action="/results">
 	<div class = "form-group">
-<<<<<<< Updated upstream
+
  	 	<p>Starting Location: <input pattern="[A-Z][a-zA-Z]+,[ ]?[A-Z]{2}" type="text" name="location1">(Ex. Detroit, MI)</p>
   		<p>Ending Location: <input pattern="[A-Z][a-zA-Z]+,[ ]?[A-Z]{2}" type="text" name="location2">(Ex. Seattle, WA)</p>
 
