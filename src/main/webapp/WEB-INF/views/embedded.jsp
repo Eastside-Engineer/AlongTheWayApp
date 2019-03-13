@@ -24,7 +24,7 @@
   height="450"
   frameborder="0" style="border:0"
   src="https://www.google.com/maps/embed/v1/directions
-  ?key=AIzaSyBeVuWx5URtY5NpNiPzcLyTuoakFaD6qB8
+  ?key=${googleapi.key }
   &origin=Oslo+Norway
   &destination=Telemark+Norway
   &avoid=tolls|highways" allowfullscreen>
