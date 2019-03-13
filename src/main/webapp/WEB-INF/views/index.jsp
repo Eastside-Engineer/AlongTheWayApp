@@ -23,12 +23,6 @@
 <h3>Welcome</h3>
 
 <h4>Where are you traveling?</h4>
-
-<a href="/matrix">Distance + Time Example</a>
-<br>
-<a href="/embedded">Maps</a>
-<br>
-<a href="/directions">directions</a>
 				
 <form action="/results">
 	<div class = "form-group">

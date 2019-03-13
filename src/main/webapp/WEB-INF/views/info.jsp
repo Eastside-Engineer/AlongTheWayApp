@@ -13,9 +13,15 @@
 
 <div class = "container">
 
-<form action="info">
-  What to See: <br> <input type="text" name=""><br>
-  What to Eat: <br> <input type="text" name="">
+<form action="results">
+What would you like to do on your trip?
+<br>
+
+<select>
+<option value="options">Pick One</option>
+  <option value="restaurant">Restaurants</option>
+  <option value="Landmarks">Landmarks</option>
+</select>
    <br> <input href = "/results" type="submit" value="Submit">
 </form>
 
