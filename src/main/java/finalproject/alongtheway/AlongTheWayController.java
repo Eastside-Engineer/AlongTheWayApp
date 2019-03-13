@@ -47,6 +47,11 @@ public class AlongTheWayController {
 		return new ModelAndView("contacts");
 	}
 
+	@RequestMapping("/info")
+	public ModelAndView category() {
+		return new ModelAndView("info");
+	}
+
 	@RequestMapping("/matrix")
 	public ModelAndView distance(@RequestParam("location1") String location1,
 			@RequestParam("location2") String location2) {

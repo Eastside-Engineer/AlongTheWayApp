@@ -25,25 +25,6 @@
 
 		<h3>Welcome</h3>
 
-<h4>Where are you traveling?</h4>
-				
-<form action="/results">
-	<div class = "form-group">
-
- 	 	<p>Starting Location: <input pattern="[A-Z][a-zA-Z]+,[ ]?[A-Z]{2}" type="text" name="location1">(Ex. Detroit, MI)</p>
-  		<p>Ending Location: <input pattern="[A-Z][a-zA-Z]+,[ ]?[A-Z]{2}" type="text" name="location2">(Ex. Seattle, WA)</p>
-
-    	<button type="submit" class = "btn btn-primary">Search!</button>
-	</div>
-</form>	
-
-<footer>
-
-<a href="/contacts">Meet AlongTheWay</a>
-
-
-</footer>
-</div>
 		<h4>Where are you traveling?</h4>
 
 		<form action="/results">
@@ -54,16 +35,23 @@
 						oninvalid="('Please enter: City,State (ex:Detroit,MI)')"
 						type="text" name="location1" />
 				</p>
-				
+
 				<p>
 					<input required placeholder="Ending Location"
 						pattern="[A-Za-z]+[ ]*[A-Za-z]+,[A-Z]{2}"
 						oninvalid="('Please enter: City,State (ex:Detroit,MI)')"
-						type="text" name="location2"/>
+						type="text" name="location2" />
 				</p>
 				<button type="submit" class="btn btn-primary">Search!</button>
 			</div>
 		</form>
 
+		<footer>
+
+			<a href="/contacts">Meet AlongTheWay</a>
+
+
+		</footer>
+		</div>
 </body>
 </html>
