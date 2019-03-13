@@ -18,10 +18,10 @@
 
 	<div class="container">
 
-	<!-- The map will not work because the google API key is hidden. -->
+<%-- 	<!-- !!!!!!!!    The map will not work because the google API key is hidden. -->
 	<iframe width="600" height="450" frameborder="0" style="border: 0"
 		src="https://www.google.com/maps/embed/v1/directions?origin=${loc1}&destination=${loc2}&key=${googlekey}"
-		allowfullscreen> </iframe>
+		allowfullscreen> </iframe> --%>
 
 
 
