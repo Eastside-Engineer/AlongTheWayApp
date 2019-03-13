@@ -30,16 +30,21 @@
 <br>
 <a href="/directions">directions</a>
 				
-<form action="/results">
+<form action="/info">
 	<div class = "form-group">
- 	 	<p>Starting Location: <input pattern="[A-Z][a-zA-Z]+,[ ]?[A-Z]{2}" type="text" name="location1"></p>
-  		<p>Ending Location: <input pattern="[A-Z][a-zA-Z]+,[ ]?[A-Z]{2}" type="text" name="location2"></p>
+<<<<<<< Updated upstream
+ 	 	<p>Starting Location: <input pattern="[A-Z][a-zA-Z]+,[ ]?[A-Z]{2}" type="text" name="location1">(Ex. Detroit, MI)</p>
+  		<p>Ending Location: <input pattern="[A-Z][a-zA-Z]+,[ ]?[A-Z]{2}" type="text" name="location2">(Ex. Seattle, WA)</p>
+
     	<button type="submit" class = "btn btn-primary">Search!</button>
 	</div>
 </form>	
 
 <footer>
-<a href="/contacts">Contact</a>
+
+<a href="/contacts">Meet AlongTheWay</a>
+
+
 </footer>
 </div>
 
