@@ -49,14 +49,7 @@
 			</div>
 		</form>
 		
-		<a href="/matrix" class="btn btn-secondary">View Saved Routes</a>
-
-		<footer>
-
-			<a href="/contacts">Meet AlongTheWay</a>
-
-
-		</footer>
+		
 	</div>
 </body>
 </html>

@@ -16,10 +16,14 @@
       <li class="nav-item"><a href="/" class="nav-link">New Route</a></li>
       <li class="nav-item"><a href="/matrix" class="nav-link">Saved Routes</a></li>
       <li class="nav-item"><a href="/contacts" class="nav-link">About The Team</a></li>
+      
+<c:if test = "${location1 != null}">
+      <li class="nav-item"><a href="/results" class="nav-link">Back</a></li>
+</c:if>
     </ul>
 </nav>
 
-<c:if test = "{location1 != null}">
+<c:if test = "${location1 != null}">
 	<h4 class="display-4"> ${location1} to ${location2}</h4>
 </c:if>
 
