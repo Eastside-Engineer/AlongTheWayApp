@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import finalproject.alongtheway.entity.Element;
-import finalproject.alongtheway.entity.Routes;
-import finalproject.alongtheway.waypoints.Steps;
-import finalproject.alongtheway.waypoints.WaypointResponse;
+import finalproject.alongtheway.matrixbeans.Element;
+import finalproject.alongtheway.matrixbeans.Routes;
+import finalproject.alongtheway.waypointsbeans.Steps;
+import finalproject.alongtheway.waypointsbeans.WaypointResponse;
 
 @Component
 public class GoogleApiService {

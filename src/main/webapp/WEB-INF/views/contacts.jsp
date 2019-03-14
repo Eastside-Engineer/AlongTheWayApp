@@ -17,7 +17,7 @@
 
 	<div class="container">
 
-		<table class="table">
+		<table class="table-striped table-dark">
 
 			<h1>Meet AlongTheWay</h1>
 
