@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,9 +14,7 @@
 </head>
 <body>
 
-
 	<%@include file="partials/header.jsp"%>
-
 
 	<div class="container">
 
@@ -30,27 +27,29 @@
 		<form action="/results">
 			<div class="form-group">
 				<p>
-					<input required placeholder="Starting Location"
-						pattern="[A-Za-z]+[ ]*[A-Za-z]+,[A-Z]{2}"
+					<input placeholder="Starting Location"
+						required pattern="[A-Za-z]+[ ]*[A-Za-z]+,+[ ]*[A-Za-z]{2}"
 						oninvalid="('Please enter: City,State (ex:Detroit,MI)')"
 						type="text" name="location1" />
 				</p>
 
 				<p>
-					<input required placeholder="Ending Location"
-						pattern="[A-Za-z]+[ ]*[A-Za-z]+,[A-Z]{2}"
+					<input placeholder="Ending Location"
+						required pattern="[A-Za-z]+[ ]*[A-Za-z]+,+[ ]*[A-Za-z]{2}"
 						oninvalid="('Please enter: City,State (ex:Detroit,MI)')"
 						type="text" name="location2" />
 				</p>
 				<br> 
 				<select name="category">
-					<option value="options">Pick One</option>
-					<option  value="restaurant">Restaurants</option>
+					<option>Pick One</option>
+					<option  value="restaurants">Restaurants</option>
 					<option value="landmarks">Landmarks</option>
 				</select>
 				<button type="submit" class="btn btn-primary">Search!</button>
 			</div>
 		</form>
+		
+		<a href="/matrix" class="btn btn-secondary">View Saved Routes</a>
 
 		<footer>
 

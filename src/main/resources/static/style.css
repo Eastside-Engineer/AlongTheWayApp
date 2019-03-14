@@ -1,13 +1,13 @@
 @charset "UTF-8";
 
 h1{
-
 	color: firebrick;
-	
 }
 
 body {
 	background-color: #fbca99;
+	
+}
 }
 
 #img {
@@ -16,3 +16,4 @@ body {
 	align: center;
 
 }
+

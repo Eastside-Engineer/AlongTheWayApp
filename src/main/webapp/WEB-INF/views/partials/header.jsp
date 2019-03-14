@@ -6,24 +6,22 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
 
-	<a href="/">New Search</a>
+<nav class="navbar">
+    <ul class ="nav">
+      <li class="nav-item"><a href="/" class="nav-link">New Route</a></li>
+      <li class="nav-item"><a href="/matrix" class="nav-link">Saved Routes</a></li>
+      <li class="nav-item"><a href="/contacts" class="nav-link">About The Team</a></li>
+    </ul>
+</nav>
 
-	<c:if test="${location1} != null">
-
-		<h1 class="display-4">${location1} to ${location2}</h1>
-
-	</c:if>
-
-	<br>
-
+<c:if test = "{location1 != null}">
+	<h4 class="display-4"> ${location1} to ${location2}</h4>
+</c:if>
 
 </body>
 </html>

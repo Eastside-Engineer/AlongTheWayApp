@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import finalproject.alongtheway.dao.Route;
@@ -32,17 +33,21 @@ public class AlongTheWayController {
 	private BusinessSearchApiService businessSearchService;
 
 	@RequestMapping("/")
-	public ModelAndView list() {
-
+	public ModelAndView index(HttpSession session) {
+		session.invalidate();
 		return new ModelAndView("index");
 	}
 
+	// remove Session????
 	@RequestMapping("/header")
-	public ModelAndView maps() {
+	public ModelAndView maps(@SessionAttribute(name = "location1", required = false) String location1,
+			@SessionAttribute(name = "location2", required = false) String location2) {
 
-		HttpSession session;
+		ModelAndView mav = new ModelAndView("header");
+		mav.addObject("location1", location1);
+		mav.addObject("location2", location2);
+		return mav;
 
-		return new ModelAndView("header");
 	}
 
 	@RequestMapping("/contacts")
@@ -50,32 +55,50 @@ public class AlongTheWayController {
 		return new ModelAndView("contacts");
 	}
 
-	@RequestMapping("/info")
-	public ModelAndView category(@RequestParam("location1") String location1,
-			@RequestParam("location2") String location2) {
+	@RequestMapping("/add")
+	public ModelAndView add(@SessionAttribute(name = "location1", required = false) String location1,
+			@SessionAttribute(name = "location2", required = false) String location2,
+			@RequestParam("latitude") Double latitude, @RequestParam("longitude") Double longitude,
+			HttpSession session) {
 
-		return new ModelAndView("info");
-	}
+		System.out.println(location1);
 
-	@RequestMapping("/matrix")
-	public ModelAndView distance(@RequestParam("location1") String location1,
-			@RequestParam("location2") String location2) {
+	
+		List<Element> elements;
+		elements = googleApiService.getTimeAndDistance(location1, location2, latitude, longitude);
 
-		Element element;
-		element = googleApiService.findDistanceAndDuration(location1, location2);
+		String distance = elements.get(elements.size() - 1).getDistance().getText();
+		String duration = elements.get(elements.size() - 1).getDuration().getText();
 
-		String distance = element.getDistance().getText();
-		String duration = element.getDuration().getText();
-
-		ModelAndView mav = new ModelAndView("matrix");
+		ModelAndView mav = new ModelAndView("add");
+		mav.addObject("location1", location1);
+		mav.addObject("location2", location2);
+		mav.addObject("latitude", latitude);
+		mav.addObject("longitude", longitude);
 		mav.addObject("distance", distance);
 		mav.addObject("duration", duration);
+		
+		return mav;
+	}
+
+
+	@RequestMapping("/matrix")
+	public ModelAndView showRoutes() {
+		List<Route> TheRoutes = dao.findAll();
+		return new ModelAndView("matrix", "amend", TheRoutes);
+		
+	}
+	@RequestMapping("/delete")
+	public ModelAndView deleteRouteForm(@RequestParam("id") Long id) {
+		dao.delete(id);
+		ModelAndView mav = new ModelAndView("redirect:/matrix");
 
 		return mav;
 	}
 
-	// when populating the results page, we want to return the set of results
-	// generated from each waypoint along the way as a single list
+
+//	 when populating the results page, we want to return the set of results
+//	 generated from each waypoint along the way as a single list
 	@RequestMapping("/results")
 	public ModelAndView results(@RequestParam("location1") String location1,
 			@RequestParam("location2") String location2, @RequestParam("category") String category,
@@ -88,53 +111,43 @@ public class AlongTheWayController {
 		route.setLocation1(location1);
 		route.setLocation2(location2);
 		dao.create(route);
-		System.out.println("hello, Dad!");
 
 		// define the steps along the way from the google directions api
 		List<Steps> steps = googleApiService.getWaypoints(location1, location2);
-		Steps step;
-		Double lat1;
-		Double long1;
+		System.out.println(steps); // console print out to see if steps populated properly
 		// store each lat and long in a set of Coordinates
-		Coordinates coord = new Coordinates();
+
 		// initialize the waypoints to be a list of coordinates
 		List<Coordinates> waypoints = new ArrayList<Coordinates>();
+		session.setAttribute("waypoints", waypoints);
 
-		// for each step in the google response, add the coordinates to the waypoints
-		// list
-		for (int i = 0; i < steps.size(); i++) {
-			step = steps.get(i);
-			lat1 = step.getStartLocation().getStartLat();
-			long1 = step.getEndLocation().getEndLong();
-
-			coord.setLatitude(lat1);
-			coord.setLongitude(long1);
+		int i = 0;
+		for (Steps stepwp : steps) {
+			Coordinates coord = new Coordinates();
+			coord.setLatitude(stepwp.getEndLocation().getEndLat());
+			coord.setLongitude(stepwp.getEndLocation().getEndLong());
+			System.out.println(coord.toString() + i);
 			waypoints.add(coord);
+			i++;
 		}
 
-		// results will take in the yelp response from each waypoint, while fullResults
-		// will be a list of all results from all waypoints
-		List<Businesses> results = new ArrayList<Businesses>();
+		// fullResults will be a list of all results from all waypoints
 		List<Businesses> fullResults = new ArrayList<Businesses>();
-		List<String> names = new ArrayList<String>();
 
 		for (Coordinates coordinates : waypoints) {
-
-			System.out.println(category);
-			results = businessSearchService.getAllResultsByCoordByCategory(coordinates.getLatitude(),
+			// results will take in the yelp response from each waypoint
+			List<Businesses> results = businessSearchService.getAllResultsByCoordByCategory(coordinates.getLatitude(),
 					coordinates.getLongitude(), category);
+
+			List<String> names = new ArrayList<String>();
 			for (Businesses busi : results) {
-
-				if (!names.contains(busi.getName())) {
-					names.add(busi.getName());
-
+				if (!names.contains(busi.getId())) {
+					names.add(busi.getId());
 					if (busi.getRating() >= 4.0) {
 						fullResults.add(busi);
 					}
-
 				}
 			}
-
 		}
 
 		// return fullResults from all waypoints for items rated 4.0 or higher

@@ -13,5 +13,11 @@ public class Waypoints {
 	public void setLegs(List<Legs> legs) {
 		this.legs = legs;
 	}
+
+	@Override
+	public String toString() {
+		return "Waypoints [legs=" + legs + "]";
+	}
+	
 	
 }
