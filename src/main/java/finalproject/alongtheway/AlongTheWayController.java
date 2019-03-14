@@ -37,9 +37,12 @@ public class AlongTheWayController {
 		return new ModelAndView("index");
 	}
 
-	@RequestMapping("/embedded")
+	@RequestMapping("/header")
 	public ModelAndView maps() {
-		return new ModelAndView("embedded");
+
+		HttpSession session;
+
+		return new ModelAndView("header");
 	}
 
 	@RequestMapping("/contacts")
@@ -60,6 +63,7 @@ public class AlongTheWayController {
 
 		Element element;
 		element = googleApiService.findDistanceAndDuration(location1, location2);
+
 		String distance = element.getDistance().getText();
 		String duration = element.getDuration().getText();
 
@@ -102,6 +106,7 @@ public class AlongTheWayController {
 			step = steps.get(i);
 			lat1 = step.getStartLocation().getStartLat();
 			long1 = step.getEndLocation().getEndLong();
+
 			coord.setLatitude(lat1);
 			coord.setLongitude(long1);
 			waypoints.add(coord);
