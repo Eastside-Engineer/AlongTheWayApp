@@ -32,8 +32,8 @@ public class AlongTheWayController {
 	private BusinessSearchApiService businessSearchService;
 
 	@RequestMapping("/")
-	public ModelAndView list() {
-
+	public ModelAndView index(HttpSession session) {
+		session.invalidate();
 		return new ModelAndView("index");
 	}
 
@@ -48,14 +48,16 @@ public class AlongTheWayController {
 	}
 
 	@RequestMapping("/info")
-	public ModelAndView category(@RequestParam("location1") String location1,
+	public ModelAndView category(
+			@RequestParam("location1") String location1,
 			@RequestParam("location2") String location2) {
 
 		return new ModelAndView("info");
 	}
 
 	@RequestMapping("/matrix")
-	public ModelAndView distance(@RequestParam("location1") String location1,
+	public ModelAndView distance(
+			@RequestParam("location1") String location1,
 			@RequestParam("location2") String location2) {
 
 		Element element;
@@ -73,8 +75,10 @@ public class AlongTheWayController {
 	// when populating the results page, we want to return the set of results
 	// generated from each waypoint along the way as a single list
 	@RequestMapping("/results")
-	public ModelAndView results(@RequestParam("location1") String location1,
-			@RequestParam("location2") String location2, @RequestParam("category") String category,
+	public ModelAndView results(
+			@RequestParam("location1") String location1,
+			@RequestParam("location2") String location2, 
+			@RequestParam("category") String category,
 			HttpSession session) {
 
 		session.setAttribute("location1", location1);
@@ -84,52 +88,46 @@ public class AlongTheWayController {
 		route.setLocation1(location1);
 		route.setLocation2(location2);
 		dao.create(route);
-		System.out.println("hello, Dad!");
 
 		// define the steps along the way from the google directions api
 		List<Steps> steps = googleApiService.getWaypoints(location1, location2);
-		Steps step;
-		Double lat1;
-		Double long1;
+		System.out.println(steps); // console print out to see if steps populated properly
 		// store each lat and long in a set of Coordinates
-		Coordinates coord = new Coordinates();
+		
 		// initialize the waypoints to be a list of coordinates
 		List<Coordinates> waypoints = new ArrayList<Coordinates>();
-
-		// for each step in the google response, add the coordinates to the waypoints
-		// list
-		for (int i = 0; i < steps.size(); i++) {
-			step = steps.get(i);
-			lat1 = step.getStartLocation().getStartLat();
-			long1 = step.getEndLocation().getEndLong();
-			coord.setLatitude(lat1);
-			coord.setLongitude(long1);
+		session.setAttribute("waypoints", waypoints);
+		
+		int i = 0;
+		for (Steps stepwp : steps) {
+			Coordinates coord = new Coordinates();
+			coord.setLatitude(stepwp.getEndLocation().getEndLat());
+			coord.setLongitude(stepwp.getEndLocation().getEndLong());
+			System.out.println(coord.toString() + i);
 			waypoints.add(coord);
+			i++;
 		}
-
-		// results will take in the yelp response from each waypoint, while fullResults
-		// will be a list of all results from all waypoints
-		List<Businesses> results = new ArrayList<Businesses>();
+		
+		// fullResults will be a list of all results from all waypoints
 		List<Businesses> fullResults = new ArrayList<Businesses>();
-		List<String> names = new ArrayList<String>();
-
+		
 		for (Coordinates coordinates : waypoints) {
-
-			System.out.println(category);
-			results = businessSearchService.getAllResultsByCoordByCategory(coordinates.getLatitude(),
-					coordinates.getLongitude(), category);
+			// results will take in the yelp response from each waypoint
+			List<Businesses> results = businessSearchService
+					.getAllResultsByCoordByCategory(
+					coordinates.getLatitude(),
+					coordinates.getLongitude(), 
+					category);
+			
+			List<String> names = new ArrayList<String>();
 			for (Businesses busi : results) {
-
-				if (!names.contains(busi.getName())) {
-					names.add(busi.getName());
-
+				if (!names.contains(busi.getId())) {
+					names.add(busi.getId());
 					if (busi.getRating() >= 4.0) {
 						fullResults.add(busi);
 					}
-
 				}
 			}
-
 		}
 
 		// return fullResults from all waypoints for items rated 4.0 or higher
