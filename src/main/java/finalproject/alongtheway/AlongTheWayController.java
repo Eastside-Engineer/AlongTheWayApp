@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import finalproject.alongtheway.dao.Route;
 import finalproject.alongtheway.dao.RoutesDao;
-import finalproject.alongtheway.matrixbeans.Element;
 import finalproject.alongtheway.waypointsbeans.Steps;
 import finalproject.alongtheway.yelpbeans.Businesses;
 import finalproject.alongtheway.yelpbeans.Coordinates;
@@ -38,45 +37,21 @@ public class AlongTheWayController {
 		return new ModelAndView("index");
 	}
 
-	@RequestMapping("/header")
-	public ModelAndView maps(@SessionAttribute(name = "location1", required = false) String location1,
-			@SessionAttribute(name = "location2", required = false) String location2) {
-
-		ModelAndView mav = new ModelAndView("header");
-		mav.addObject("location1", location1);
-		mav.addObject("location2", location2);
-		return mav;
-
-	}
-
 	@RequestMapping("/contacts")
 	public ModelAndView contacts() {
 		return new ModelAndView("contacts");
 	}
 
 	@RequestMapping("/add")
-	public ModelAndView add(@SessionAttribute(name = "location1", required = false) String location1,
+	public ModelAndView add(
+			@SessionAttribute(name = "location1", required = false) String location1,
 			@SessionAttribute(name = "location2", required = false) String location2,
-			@RequestParam("latitude") Double latitude, @RequestParam("longitude") Double longitude,
+			@RequestParam("latitude") Double latitude, 
+			@RequestParam("longitude") Double longitude,
+			@RequestParam("yelpid") String id,
 			HttpSession session) {
 
-		System.out.println(location1);
-
-	
-		List<Element> elements;
-		elements = googleApiService.getTimeAndDistance(location1, location2, latitude, longitude);
-
-		String distance = elements.get(elements.size() - 1).getDistance().getText();
-		String duration = elements.get(elements.size() - 1).getDuration().getText();
-
-		ModelAndView mav = new ModelAndView("add");
-		mav.addObject("location1", location1);
-		mav.addObject("location2", location2);
-		mav.addObject("latitude", latitude);
-		mav.addObject("longitude", longitude);
-		mav.addObject("distance", distance);
-		mav.addObject("duration", duration);
-		
+		ModelAndView mav = new ModelAndView("redirect:/results");
 		return mav;
 	}
 
@@ -85,8 +60,8 @@ public class AlongTheWayController {
 	public ModelAndView showRoutes() {
 		List<Route> TheRoutes = dao.findAll();
 		return new ModelAndView("matrix", "amend", TheRoutes);
-		
 	}
+	
 	@RequestMapping("/delete")
 	public ModelAndView deleteRouteForm(@RequestParam("id") Long id) {
 		dao.delete(id);
