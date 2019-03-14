@@ -1,4 +1,4 @@
-package finalproject.alongtheway.model;
+package finalproject.alongtheway.yelpbeans;
 
 public class Center {
 

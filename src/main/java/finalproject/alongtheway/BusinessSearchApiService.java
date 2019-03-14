@@ -11,8 +11,8 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import finalproject.alongtheway.model.BusinessSearchResponse;
-import finalproject.alongtheway.model.Businesses;
+import finalproject.alongtheway.yelpbeans.BusinessSearchResponse;
+import finalproject.alongtheway.yelpbeans.Businesses;
 
 @Component
 public class BusinessSearchApiService {

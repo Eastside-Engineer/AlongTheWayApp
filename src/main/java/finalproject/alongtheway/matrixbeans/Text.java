@@ -1,4 +1,4 @@
-package finalproject.alongtheway.entity;
+package finalproject.alongtheway.matrixbeans;
 
 public class Text {
 
