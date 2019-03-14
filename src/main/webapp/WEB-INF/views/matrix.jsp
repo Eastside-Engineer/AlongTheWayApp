@@ -19,7 +19,7 @@
 		<h1>The Routes</h1>
 
 
-		<table class="table table-striped">
+		<table class="table table-dark">
 
 			<th>Starting Location</th>
 			<th>Ending Location</th>

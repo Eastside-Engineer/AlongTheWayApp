@@ -13,6 +13,9 @@
 </head>
 <body>
 
+
+background="bgimage.jpg"
+
 <%@include file="partials/header.jsp"%>
 
 	<div class="container">

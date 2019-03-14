@@ -23,7 +23,7 @@
 
 
 
-		<table class="table table-striped">
+		<table class="table table-dark">
 
 			<tr>
 				<th>Name</th>

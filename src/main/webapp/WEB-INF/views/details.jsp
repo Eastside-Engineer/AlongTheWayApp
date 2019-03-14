@@ -16,7 +16,7 @@
 
 <div class = "container">
 <h1>${result.name}</h1>
-<table class = "table"> 
+<table class = "table table-dark"> 
 	<tr><th>Address</th><th>Categories</th><th>Price</th><th>Rating</th><th>URL</th><th>Add to Route</th></tr>
 	<tr>
 		<td>${result.location.address1}, ${result.location.address2} ${result.location.city}, ${result.location.state} ${result.location.zipCode}</td>

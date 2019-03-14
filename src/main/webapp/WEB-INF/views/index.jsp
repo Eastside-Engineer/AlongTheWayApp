@@ -12,15 +12,13 @@
 	crossorigin="anonymous">
 <link rel="stylesheet" href="/style.css" />
 </head>
-<body>
+<body background="https://images.pexels.com/photos/696680/pexels-photo-696680.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
 
 	<%@include file="partials/header.jsp"%>
 
 	<div class="container">
 
 		<h1>Along The Way</h1>
-
-		<h3>Welcome</h3>
 
 		<h4>Where are you traveling?</h4>
 
@@ -49,11 +47,11 @@
 			</div>
 		</form>
 		
-		<a href="/matrix" class="btn btn-secondary">View Saved Routes</a>
+
 
 		<footer>
 
-			<a href="/contacts">Meet AlongTheWay</a>
+			
 
 
 		</footer>

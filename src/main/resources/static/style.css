@@ -2,12 +2,33 @@
 
 h1{
 	color: firebrick;
+	font-style: italic;
+	font-style: bold;
+	font-size: 60px;
+}
+
+h3{
+	
+	color: white;
+	font-style: bold;
+}
+
+h4{
+	
+	color: white;
+	font-style: bold;
+	
 }
 
 body {
-	background-color: #fbca99;
+	background-color: black;
+	
+	background-size: 1400px;
+	
+	margin-top: 245px
 	
 }
+
 }
 
 #img {
