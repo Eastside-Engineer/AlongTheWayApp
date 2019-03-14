@@ -10,11 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import finalproject.alongtheway.dao.Route;
 import finalproject.alongtheway.dao.RoutesDao;
 import finalproject.alongtheway.dao.Stop;
+import finalproject.alongtheway.waypointsbeans.Legs;
 import finalproject.alongtheway.waypointsbeans.Steps;
 import finalproject.alongtheway.yelpbeans.Businesses;
 import finalproject.alongtheway.yelpbeans.Coordinates;
@@ -67,10 +69,28 @@ public class AlongTheWayController {
 		return mav;
 	}
 
+	@RequestMapping("/dt")
+	public ModelAndView dist(@SessionAttribute(value = "location1", required = false) String location1,
+			@SessionAttribute(value = "location2", required = false) String location2) {
+
+		ModelAndView mav = new ModelAndView("test");
+
+		Legs leg = googleApiService.getNewWaypoints(location1, location2);
+
+		String dist = leg.getDistance().getText();
+		String time = leg.getDuration().getText();
+
+		mav.addObject("distance", dist);
+		mav.addObject("duration", time);
+
+		return mav;
+	}
+
 	@RequestMapping("/matrix")
 	public ModelAndView showRoutes() {
 		List<Route> TheRoutes = dao.findAll();
 		return new ModelAndView("matrix", "amend", TheRoutes);
+
 	}
 	
 	@RequestMapping("/delete")
