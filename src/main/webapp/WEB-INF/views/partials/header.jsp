@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -18,8 +18,10 @@
       <li class="nav-item"><a href="/contacts" class="nav-link">About The Team</a></li>
     </ul>
 </nav>
+
 <c:if test = "{location1 != null}">
 	<h4 class="display-4"> ${location1} to ${location2}</h4>
 </c:if>
+
 </body>
 </html>
