@@ -21,7 +21,6 @@ public class Route {
 	@Column(name="end")
 	private String location2;
 	
-	@Column(name="")
 	
 	
 	public String getLocation1() {

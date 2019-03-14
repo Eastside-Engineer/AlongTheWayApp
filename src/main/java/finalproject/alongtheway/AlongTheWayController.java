@@ -63,6 +63,7 @@ public class AlongTheWayController {
 
 		System.out.println(location1);
 
+	
 		List<Element> elements;
 		elements = googleApiService.getTimeAndDistance(location1, location2, latitude, longitude);
 
@@ -76,12 +77,28 @@ public class AlongTheWayController {
 		mav.addObject("longitude", longitude);
 		mav.addObject("distance", distance);
 		mav.addObject("duration", duration);
+		
+		return mav;
+	}
+
+
+	@RequestMapping("/matrix")
+	public ModelAndView showRoutes() {
+		List<Route> TheRoutes = dao.findAll();
+		return new ModelAndView("matrix", "amend", TheRoutes);
+		
+	}
+	@RequestMapping("/delete")
+	public ModelAndView deleteRouteForm(@RequestParam("id") Long id) {
+		dao.delete(id);
+		ModelAndView mav = new ModelAndView("redirect:/matrix");
 
 		return mav;
 	}
 
-	// when populating the results page, we want to return the set of results
-	// generated from each waypoint along the way as a single list
+
+//	 when populating the results page, we want to return the set of results
+//	 generated from each waypoint along the way as a single list
 	@RequestMapping("/results")
 	public ModelAndView results(@RequestParam("location1") String location1,
 			@RequestParam("location2") String location2, @RequestParam("category") String category,
