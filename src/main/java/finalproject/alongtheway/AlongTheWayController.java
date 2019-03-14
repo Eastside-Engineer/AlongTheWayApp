@@ -38,7 +38,6 @@ public class AlongTheWayController {
 		return new ModelAndView("index");
 	}
 
-	// remove Session????
 	@RequestMapping("/header")
 	public ModelAndView maps(@SessionAttribute(name = "location1", required = false) String location1,
 			@SessionAttribute(name = "location2", required = false) String location2) {
@@ -123,13 +122,23 @@ public class AlongTheWayController {
 
 		int i = 0;
 		for (Steps stepwp : steps) {
+			if(i == 0) {
+				Coordinates coord = new Coordinates();
+				coord.setLatitude(stepwp.getStartLocation().getStartLat());
+				coord.setLongitude(stepwp.getStartLocation().getStartLong());
+				System.out.println("set start");
+				System.out.println(coord.toString() + i);
+				waypoints.add(coord);
+			} 
 			Coordinates coord = new Coordinates();
+			System.out.println("set end");
 			coord.setLatitude(stepwp.getEndLocation().getEndLat());
 			coord.setLongitude(stepwp.getEndLocation().getEndLong());
 			System.out.println(coord.toString() + i);
 			waypoints.add(coord);
 			i++;
 		}
+		System.out.println(waypoints);
 
 		// fullResults will be a list of all results from all waypoints
 		List<Businesses> fullResults = new ArrayList<Businesses>();
