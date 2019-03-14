@@ -1,4 +1,4 @@
-package finalproject.alongtheway.waypoints;
+package finalproject.alongtheway.waypointsbeans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

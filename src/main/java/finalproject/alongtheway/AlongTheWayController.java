@@ -15,10 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import finalproject.alongtheway.dao.Route;
 import finalproject.alongtheway.dao.RoutesDao;
-import finalproject.alongtheway.entity.Element;
-import finalproject.alongtheway.model.Businesses;
-import finalproject.alongtheway.model.Coordinates;
-import finalproject.alongtheway.waypoints.Steps;
+import finalproject.alongtheway.matrixbeans.Element;
+import finalproject.alongtheway.waypointsbeans.Steps;
+import finalproject.alongtheway.yelpbeans.Businesses;
+import finalproject.alongtheway.yelpbeans.Coordinates;
 
 @Controller
 public class AlongTheWayController {
