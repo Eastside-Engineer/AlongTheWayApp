@@ -25,7 +25,6 @@
 		<td>${result.rating}</td>
 		<td><a class = "btn btn-primary" href = "${result.url}" target = "_blank">Yelp page</a></td>
 		
-		
 		<td>
 		<form action="/add">
 			<input type="hidden" name="latitude" value="${result.coordinates.latitude}"/>

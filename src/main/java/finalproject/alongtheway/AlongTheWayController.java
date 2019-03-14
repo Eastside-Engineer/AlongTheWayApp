@@ -10,11 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import finalproject.alongtheway.dao.Route;
 import finalproject.alongtheway.dao.RoutesDao;
+import finalproject.alongtheway.dao.Stop;
 import finalproject.alongtheway.waypointsbeans.Steps;
 import finalproject.alongtheway.yelpbeans.Businesses;
 import finalproject.alongtheway.yelpbeans.Coordinates;
@@ -30,7 +30,7 @@ public class AlongTheWayController {
 
 	@Autowired
 	private BusinessSearchApiService businessSearchService;
-
+	
 	@RequestMapping("/")
 	public ModelAndView index(HttpSession session) {
 		session.invalidate();
@@ -41,20 +41,31 @@ public class AlongTheWayController {
 	public ModelAndView contacts() {
 		return new ModelAndView("contacts");
 	}
-
+	
 	@RequestMapping("/add")
 	public ModelAndView add(
-			@SessionAttribute(name = "location1", required = false) String location1,
-			@SessionAttribute(name = "location2", required = false) String location2,
-			@RequestParam("latitude") Double latitude, 
-			@RequestParam("longitude") Double longitude,
-			@RequestParam("yelpid") String id,
+			@RequestParam(name = "latitude") Double latitude, 
+			@RequestParam(name = "longitude") Double longitude,
+			@RequestParam(name = "yelpid") String yelpId,
+			@RequestParam(name = "location1") String location1,
+			@RequestParam(name = "location2") String location2,
+			@RequestParam(name = "category") String category,
 			HttpSession session) {
 
+		List<Stop> stops = new ArrayList<Stop>();
+		Stop stop = new Stop(yelpId, longitude, latitude);
+		stop.setBusiness(businessSearchService.getResultById(yelpId));
+		stops.add(stop);
+		session.setAttribute("stops", stops);
+		
 		ModelAndView mav = new ModelAndView("redirect:/results");
+		mav.addObject("location1", location1);
+		mav.addObject("location2", location2);
+		mav.addObject("category", category);
+		mav.addObject("stops", stops);
+		
 		return mav;
 	}
-
 
 	@RequestMapping("/matrix")
 	public ModelAndView showRoutes() {
@@ -66,20 +77,21 @@ public class AlongTheWayController {
 	public ModelAndView deleteRouteForm(@RequestParam("id") Long id) {
 		dao.delete(id);
 		ModelAndView mav = new ModelAndView("redirect:/matrix");
-
 		return mav;
 	}
-
 
 //	 when populating the results page, we want to return the set of results
 //	 generated from each waypoint along the way as a single list
 	@RequestMapping("/results")
-	public ModelAndView results(@RequestParam("location1") String location1,
-			@RequestParam("location2") String location2, @RequestParam("category") String category,
+	public ModelAndView results(
+			@RequestParam(name = "location1") String location1,
+			@RequestParam(name = "location2") String location2, 
+			@RequestParam(name = "category") String category,
 			HttpSession session) {
 
 		session.setAttribute("location1", location1);
 		session.setAttribute("location2", location2);
+		session.setAttribute("category", category);
 
 		Route route = new Route();
 		route.setLocation1(location1);
@@ -88,9 +100,7 @@ public class AlongTheWayController {
 
 		// define the steps along the way from the google directions api
 		List<Steps> steps = googleApiService.getWaypoints(location1, location2);
-		System.out.println(steps); // console print out to see if steps populated properly
 		// store each lat and long in a set of Coordinates
-
 		// initialize the waypoints to be a list of coordinates
 		List<Coordinates> waypoints = new ArrayList<Coordinates>();
 		session.setAttribute("waypoints", waypoints);
@@ -101,27 +111,24 @@ public class AlongTheWayController {
 				Coordinates coord = new Coordinates();
 				coord.setLatitude(stepwp.getStartLocation().getStartLat());
 				coord.setLongitude(stepwp.getStartLocation().getStartLong());
-				System.out.println("set start");
-				System.out.println(coord.toString() + i);
 				waypoints.add(coord);
 			} 
 			Coordinates coord = new Coordinates();
-			System.out.println("set end");
 			coord.setLatitude(stepwp.getEndLocation().getEndLat());
 			coord.setLongitude(stepwp.getEndLocation().getEndLong());
-			System.out.println(coord.toString() + i);
 			waypoints.add(coord);
 			i++;
 		}
-		System.out.println(waypoints);
 
 		// fullResults will be a list of all results from all waypoints
 		List<Businesses> fullResults = new ArrayList<Businesses>();
 
 		for (Coordinates coordinates : waypoints) {
 			// results will take in the yelp response from each waypoint
-			List<Businesses> results = businessSearchService.getAllResultsByCoordByCategory(coordinates.getLatitude(),
-					coordinates.getLongitude(), category);
+			List<Businesses> results = businessSearchService.getAllResultsByCoordByCategory(
+					coordinates.getLatitude(),
+					coordinates.getLongitude(), 
+					category);
 
 			List<String> names = new ArrayList<String>();
 			for (Businesses busi : results) {
