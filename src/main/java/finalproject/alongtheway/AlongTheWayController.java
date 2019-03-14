@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import finalproject.alongtheway.dao.Route;
 import finalproject.alongtheway.dao.RoutesDao;
-import finalproject.alongtheway.matrixbeans.Element;
+import finalproject.alongtheway.waypointsbeans.Legs;
 import finalproject.alongtheway.waypointsbeans.Steps;
 import finalproject.alongtheway.yelpbeans.Businesses;
 import finalproject.alongtheway.yelpbeans.Coordinates;
@@ -47,7 +47,6 @@ public class AlongTheWayController {
 		mav.addObject("location1", location1);
 		mav.addObject("location2", location2);
 		return mav;
-
 	}
 
 	@RequestMapping("/contacts")
@@ -55,39 +54,30 @@ public class AlongTheWayController {
 		return new ModelAndView("contacts");
 	}
 
-	@RequestMapping("/add")
-	public ModelAndView add(@SessionAttribute(name = "location1", required = false) String location1,
-			@SessionAttribute(name = "location2", required = false) String location2,
-			@RequestParam("latitude") Double latitude, @RequestParam("longitude") Double longitude,
-			HttpSession session) {
+	@RequestMapping("/dt")
+	public ModelAndView dist(@SessionAttribute(value = "location1", required = false) String location1,
+			@SessionAttribute(value = "location2", required = false) String location2) {
 
-		System.out.println(location1);
+		ModelAndView mav = new ModelAndView("test");
 
-	
-		List<Element> elements;
-		elements = googleApiService.getTimeAndDistance(location1, location2, latitude, longitude);
+		Legs leg = googleApiService.getNewWaypoints(location1, location2);
 
-		String distance = elements.get(elements.size() - 1).getDistance().getText();
-		String duration = elements.get(elements.size() - 1).getDuration().getText();
+		String dist = leg.getDistance().getText();
+		String time = leg.getDuration().getText();
 
-		ModelAndView mav = new ModelAndView("add");
-		mav.addObject("location1", location1);
-		mav.addObject("location2", location2);
-		mav.addObject("latitude", latitude);
-		mav.addObject("longitude", longitude);
-		mav.addObject("distance", distance);
-		mav.addObject("duration", duration);
-		
+		mav.addObject("distance", dist);
+		mav.addObject("duration", time);
+
 		return mav;
 	}
-
 
 	@RequestMapping("/matrix")
 	public ModelAndView showRoutes() {
 		List<Route> TheRoutes = dao.findAll();
 		return new ModelAndView("matrix", "amend", TheRoutes);
-		
+
 	}
+
 	@RequestMapping("/delete")
 	public ModelAndView deleteRouteForm(@RequestParam("id") Long id) {
 		dao.delete(id);
@@ -95,7 +85,6 @@ public class AlongTheWayController {
 
 		return mav;
 	}
-
 
 //	 when populating the results page, we want to return the set of results
 //	 generated from each waypoint along the way as a single list
