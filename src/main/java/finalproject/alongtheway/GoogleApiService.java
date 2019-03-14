@@ -37,19 +37,20 @@ public class GoogleApiService {
 	}
 
 	// get NEW Time and Distance
-	public Element getTimeAndDistance(String location1, String location2, Double latitude, Double longitude) {
+	public List<Element> getTimeAndDistance(String location1, String location2, Double latitude, Double longitude) {
 
+//		String[] splitStr = location1.split("\\s+");
+//		if (!splitStr[1].isEmpty()) {
+//			location1 = splitStr[0] + "+" + splitStr[1];
+//		}
+
+		String location3 = "Fenton,MI";
 		// Ex: destinations= lat,long|lat,long
 
-		String[] splitStr = location1.split("\\s+");
-		if (!splitStr[1].isEmpty()) {
-			location1 = splitStr[0] + "+" + splitStr[1];
-		}
-
 		String url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + location1
-				+ "&destinations=" + latitude + "," + longitude + "|" + location2 + "&key=" + googlekey;
+				+ "&destinations=" + location3 + "|" + location2 + "&key=" + googlekey;
 		Routes apiResponse = restTemplate.getForObject(url, Routes.class);
-		return (Element) apiResponse.getRows().get(0).getElements().get(0);
+		return apiResponse.getRows().get(0).getElements();
 	}
 
 	// get WAYPOINTS
@@ -63,7 +64,6 @@ public class GoogleApiService {
 		WaypointResponse apiResponse = restTemplate.getForObject(url, WaypointResponse.class);
 		return apiResponse.getRoutes().get(0).getLegs().get(0).getSteps();
 	}
-		  
 
 	public List<Steps> getNewWaypoints(String location1, String location2, Double latitude, Double longitude) {
 
