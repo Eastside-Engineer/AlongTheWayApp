@@ -13,11 +13,14 @@
 </head>
 <body>
 
+
 <%@include file="partials/header.jsp"%>
+
 
 	<div class="container">
 
 		<h1>Meet AlongTheWay</h1>
+
 
 		<table class="table-striped table-dark">
 
@@ -33,12 +36,9 @@
 						She is excited to enter the tech industry to be more creative and
 						innovative with my technical skills. She is open to learning more
 						and build more programs that will positively impact the community
-						and world.</p> 
-						
-						Connect with Cynthia:
-						<br>
-						<a href="https://github.com/FruitGeek313">GitHub</a> <br>
-					<a href="https://www.linkedin.com/in/cynturner/">LinkedIn</a>
+						and world.</p> Connect with Cynthia: <br> <a
+					href="https://github.com/FruitGeek313">GitHub</a> <br> <a
+					href="https://www.linkedin.com/in/cynturner/">LinkedIn</a>
 
 				</td>
 			</tr>
@@ -58,17 +58,14 @@
 						comprehensive solutions to complex problems. He is looking forward
 						to applying my skills to the technology sector, being a part of
 						the burgeoning opportunities, and bringing forward the future
-						economy.</p> 
-						
-						Connect with Krzysztof:
-						<br>
-						<a href="https://github.com/Maltheoshttps://github.com/Maltheos">GitHub</a>
+						economy.</p> Connect with Krzysztof: <br> <a
+					href="https://github.com/Maltheoshttps://github.com/Maltheos">GitHub</a>
 					<br> <a href="https://www.linkedin.com/in/krzysztof-grabka/">LinkedIn</a>
 				</td>
 			</tr>
 
 			<tr>
-				<td><img src="Kyle.jpg" class="img-thumbnail"" name="Kyle" ></td>
+				<td><img src="Kyle.jpg" class="img-thumbnail" " name="Kyle"></td>
 
 				<td>
 
@@ -76,12 +73,9 @@
 					<p>Kyle graduated from Western Michigan with an emphasis in
 						Mathematics/Physics. Recent Tech Endorsement in back-end
 						development. Enthusiastic about bringing creative solutions to
-						your team.</p> 
-						
-						Connect with Kyle:
-						<br>
-						<a href="https://github.com/kyledexperience">GitHub</a>
-					<br> <a href="https://www.linkedin.com/in/kylepdixon/">LinkedIn</a>
+						your team.</p> Connect with Kyle: <br> <a
+					href="https://github.com/kyledexperience">GitHub</a> <br> <a
+					href="https://www.linkedin.com/in/kylepdixon/">LinkedIn</a>
 
 				</td>
 			</tr>
@@ -96,12 +90,9 @@
 						skills learned thorough my previous academic accomplishments, the
 						experience acquired through working as a project manager and
 						salesman, with the technical knowledge and skills associated with
-						software development is exciting!</p> 
-						
-						Connect with Tom:
-						<br>
-						<a href="https://github.com/TomJHagey">GitHub</a> <br> 
-						<a href="https://www.linkedin.com/in/tomjhagey/">LinkedIn</a>
+						software development is exciting!</p> Connect with Tom: <br> <a
+					href="https://github.com/TomJHagey">GitHub</a> <br> <a
+					href="https://www.linkedin.com/in/tomjhagey/">LinkedIn</a>
 
 				</td>
 			</tr>

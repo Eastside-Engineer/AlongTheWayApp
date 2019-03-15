@@ -18,6 +18,7 @@
       	<li class="nav-item"><a href="/" class="nav-link">New Route</a></li>
       	<li class="nav-item"><a href="/matrix" class="nav-link">Saved Routes</a></li>
       	<li class="nav-item"><a href="/contacts" class="nav-link">About The Team</a></li>
+
 		<c:if test = "${location1 != null}">
       		<li class="nav-item"><a href="/results" class="nav-link">Search Results</a></li>
 		</c:if>
@@ -25,6 +26,7 @@
     </ul>
 </nav>
 </div>
+
 
 </body>
 </html>
