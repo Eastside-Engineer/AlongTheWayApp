@@ -53,7 +53,9 @@ public class AlongTheWayController {
 			@RequestParam(name = "location2") String location2,
 			@RequestParam(name = "category") String category, 
 			HttpSession session) {
-
+		
+		System.out.println("Hello");
+		
 		@SuppressWarnings("unchecked")
 		List<Stop> stops = (List<Stop>)session.getAttribute("stops");
 		if (stops == null) {
@@ -69,6 +71,14 @@ public class AlongTheWayController {
 		mav.addObject("location2", location2);
 		mav.addObject("category", category);
 		mav.addObject("stops", stops);
+		
+		String[] parseBusi1 = location1.split(" ");
+		String[] parseBusi2 = location2.split(" ");
+		System.out.println(parseBusi1[0] +"+"+ parseBusi1[1]);
+		System.out.println(parseBusi2[0] +"+"+ parseBusi2[1]);
+		mav.addObject("Busi1", parseBusi1[0] +"+"+ parseBusi1[1]);
+		mav.addObject("Busi2", parseBusi2[0] +"+"+ parseBusi2[1]);
+		
 
 		return mav;
 	}
@@ -167,7 +177,7 @@ public class AlongTheWayController {
 				}
 			}
 		}
-
+		
 		// return fullResults from all waypoints for items rated 4.0 or higher
 
 		session.setAttribute("location1", location1);
@@ -175,7 +185,7 @@ public class AlongTheWayController {
 		session.setAttribute("category", category);
 		
 		ModelAndView mav = new ModelAndView("results", "results", fullResults);
-
+		
 		String[] parseLoc1 = location1.split(",");
 		String[] parseLoc2 = location2.split(",");
 		mav.addObject("loc1", parseLoc1[0] + "+" + parseLoc1[1]);
