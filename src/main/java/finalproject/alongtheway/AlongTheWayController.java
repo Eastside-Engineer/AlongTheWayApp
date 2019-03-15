@@ -76,12 +76,12 @@ public class AlongTheWayController {
 
 		ModelAndView mav = new ModelAndView("test");
 
-		Legs legs = googleApiService.getAmendedDirections(location1, location2, stops);
-		String distNew = legs.getDistance().getText();
-		String timeNew = legs.getDuration().getText();
-
-		mav.addObject("distanceNew", distNew);
-		mav.addObject("durationNew", timeNew);
+//		Legs legs = googleApiService.getAmendedDirections(location1, location2, stops);
+//		String distNew = legs.getDistance().getText();
+//		String timeNew = legs.getDuration().getText();
+//
+//		mav.addObject("distanceNew", distNew);
+//		mav.addObject("durationNew", timeNew);
 
 		return mav;
 	}

@@ -15,8 +15,9 @@
 <%@include file="partials/header.jsp"%>
 
 <div class="container">
-
+<!--  
 <a href="/dt">Trial</a>
+-->
 
 	<h1>Current Route</h1>
 	<table class="table table-striped">
