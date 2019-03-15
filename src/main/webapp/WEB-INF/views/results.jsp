@@ -14,10 +14,11 @@
 
 <%@include file="partials/header.jsp"%>
 
+
 <div class="container">
-<!--  
+<!--
 <a href="/dt">Trial</a>
--->
+  -->
 
 	<h1>Current Route</h1>
 	<table class="table table-striped">
@@ -91,6 +92,7 @@
 				<td><a class="btn btn-primary" href="${result.url}"
 					target="_blank">Yelp page</a></td>
 
+
 				<td><form action="/add">
 						<input type="hidden" name="latitude" value="${result.coordinates.latitude}"/>
 						<input type="hidden" name="longitude" value="${result.coordinates.longitude}"/>
@@ -104,6 +106,8 @@
 			</tr>
 		</c:forEach>
 	</table>
+
+
 
 </div>
 

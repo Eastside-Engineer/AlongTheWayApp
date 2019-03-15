@@ -24,14 +24,14 @@
 			<div class="form-group">
 				<p>
 					<input placeholder="Starting Location"
-						required pattern="[A-Za-z]+[ ]*[A-Za-z]+,+[ ]*[A-Za-z]{2}"
+						required pattern="[A-Za-z]+[ ]*[A-Za-z]+,[ ]*[A-Za-z]{2}"
 						oninvalid="('Please enter: City,State (ex:Detroit,MI)')"
 						type="text" name="location1" />
 				</p>
 
 				<p>
 					<input placeholder="Ending Location"
-						required pattern="[A-Za-z]+[ ]*[A-Za-z]+,+[ ]*[A-Za-z]{2}"
+						required pattern="[A-Za-z]+[ ]*[A-Za-z]+,[ ]*[A-Za-z]{2}"
 						oninvalid="('Please enter: City,State (ex:Detroit,MI)')"
 						type="text" name="location2" />
 				</p>
