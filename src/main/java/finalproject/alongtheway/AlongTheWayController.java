@@ -76,18 +76,12 @@ public class AlongTheWayController {
 
 		ModelAndView mav = new ModelAndView("test");
 
-		Legs leg = googleApiService.getBasicDirections(location1, location2);
-		String dist = leg.getDistance().getText();
-		String time = leg.getDuration().getText();
+		Legs legs = googleApiService.getAmendedDirections(location1, location2, stops);
+		String distNew = legs.getDistance().getText();
+		String timeNew = legs.getDuration().getText();
 
-//		Legs legs = googleApiService.getAmendedDirections(location1, location2, stops);
-//		String distNew = legs.getDistance().getText();
-//		String timeNew = legs.getDuration().getText();
-
-		mav.addObject("distance", dist);
-		mav.addObject("duration", time);
-//		mav.addObject("distanceNew", distNew);
-//		mav.addObject("durationNew", timeNew);
+		mav.addObject("distanceNew", distNew);
+		mav.addObject("durationNew", timeNew);
 
 		return mav;
 	}
@@ -168,12 +162,20 @@ public class AlongTheWayController {
 		session.setAttribute("location2", location2);
 		session.setAttribute("category", category);
 
+		Legs leg = googleApiService.getBasicDirections(location1, location2);
+		String dist = leg.getDistance().getText();
+		String time = leg.getDuration().getText();
+
 		ModelAndView mav = new ModelAndView("results", "results", fullResults);
 
 		String[] parseLoc1 = location1.split(",");
 		String[] parseLoc2 = location2.split(",");
 		mav.addObject("loc1", parseLoc1[0] + "+" + parseLoc1[1]);
 		mav.addObject("loc2", parseLoc2[0] + "+" + parseLoc2[1]);
+
+		// basic dist/time
+		mav.addObject("distance", dist);
+		mav.addObject("duration", time);
 		return mav;
 	}
 

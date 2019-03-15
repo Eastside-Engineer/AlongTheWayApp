@@ -16,6 +16,8 @@
 
 <div class="container">
 
+<a href="/dt">Trial</a>
+
 	<h1>Current Route</h1>
 	<table class="table table-striped">
 		<tr>
@@ -48,11 +50,11 @@
 		</tr>
 		<tr>
 			<td>Time: ${duration}</td>
-			<td>Time: ${duration}</td>
+			<td>Time: ${durationNew}</td>
 		</tr>
 		<tr>
 			<td>Distance: ${distance}</td>
-			<td>Distance: ${distance}</td>
+			<td>Distance: ${distanceNew}</td>
 		</tr>
 	</table>
 	
