@@ -1,7 +1,7 @@
 package finalproject.alongtheway.dao;
 
 import java.io.Serializable;
-<<<<<<< Updated upstream
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,28 +10,24 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-=======
-
-import finalproject.alongtheway.yelpbeans.Businesses;
-
-
 public class Stop implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	@ManyToOne
 	private Route route;
-	@Column(name="yelp_id")
+	@Column(name = "yelp_id")
 	private String yelpId;
 
 	private String name;
 	private String city;
 	private String state;
-	
-	public Stop() {}
+
+	public Stop() {
+	}
 
 	public Long getId() {
 		return id;
@@ -65,6 +61,7 @@ public class Stop implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getCity() {
 		return city;
 	}
@@ -81,5 +78,5 @@ public class Stop implements Serializable {
 		this.state = state;
 
 	}
-	
+
 }
