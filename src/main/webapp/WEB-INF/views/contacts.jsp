@@ -13,17 +13,13 @@
 </head>
 <body>
 
-
 <%@include file="partials/header.jsp"%>
 
-
 	<div class="container">
-
 
 		<table class="table table-striped">
 
 		<h1>Meet AlongTheWay</h1>
-
 
 			<tr>
 				<td><img src="Cyn.jpeg" class="img-thumbnail" name="Cynthia"></td>

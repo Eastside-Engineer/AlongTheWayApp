@@ -14,10 +14,11 @@
 </head>
 <body>
 
+<%@include file="partials/header.jsp"%>
+
 	<div class="container">
 
 		<h1>The Routes</h1>
-
 
 		<table class="table table-striped">
 
@@ -32,7 +33,7 @@
 				<tr>
 					<td>${amended.location1}</td>
 					<td>${amended.location2}</td>
-					<td>${amended. }</td>
+					<td></td>
 					<td></td>
 					<td><a href="/delete?id=${amended.id}"
 						class="btn btn-secondary">Delete</a></td>

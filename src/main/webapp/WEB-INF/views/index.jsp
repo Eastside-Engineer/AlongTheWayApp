@@ -16,10 +16,8 @@
 
 <%@include file="partials/header.jsp"%>
 
-	<div class="container">
-
+	<div class="container" id = "indexpage">
 		<h1>Along The Way</h1>
-
 		<h4>Where are you traveling?</h4>
 
 		<form action="/results">
@@ -46,7 +44,6 @@
 				<button type="submit" class="btn btn-primary">Search!</button>
 			</div>
 		</form>
-		
 	</div>
 </body>
 </html>

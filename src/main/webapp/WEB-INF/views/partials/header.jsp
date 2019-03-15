@@ -11,7 +11,6 @@
 </head>
 <body>
 
-
 <div class = "container">
 
 <nav class="navbar">
@@ -29,8 +28,6 @@
 </nav>
 
 </div>
-
-
 
 </body>
 </html>
