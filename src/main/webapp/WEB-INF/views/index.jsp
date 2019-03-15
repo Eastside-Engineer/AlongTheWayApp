@@ -14,7 +14,7 @@
 </head>
 <body background="https://images.pexels.com/photos/696680/pexels-photo-696680.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
 
-	<%@include file="partials/header.jsp"%>
+<%@include file="partials/header.jsp"%>
 
 	<div class="container">
 
@@ -50,7 +50,13 @@
 
 
 
+		<footer>
+
+		<a href="/dt">testies</a>
 		
+
+		</footer>
+
 
 			
 

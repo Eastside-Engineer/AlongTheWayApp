@@ -32,7 +32,7 @@ public class AlongTheWayController {
 
 	@Autowired
 	private BusinessSearchApiService businessSearchService;
-	
+
 	@RequestMapping("/")
 	public ModelAndView index(HttpSession session) {
 		session.invalidate();
@@ -43,37 +43,37 @@ public class AlongTheWayController {
 	public ModelAndView contacts() {
 		return new ModelAndView("contacts");
 	}
-	
+
 	@RequestMapping("/add")
-	public ModelAndView add(
-			@RequestParam(name = "latitude") Double latitude, 
-			@RequestParam(name = "longitude") Double longitude,
-			@RequestParam(name = "yelpid") String yelpId,
-			@RequestParam(name = "location1") String location1,
-			@RequestParam(name = "location2") String location2,
-			@RequestParam(name = "category") String category,
-			HttpSession session) {
+	public ModelAndView add(@RequestParam(name = "latitude") Double latitude,
+			@RequestParam(name = "longitude") Double longitude, @RequestParam(name = "yelpid") String yelpId,
+			@RequestParam(name = "location1") String location1, @RequestParam(name = "location2") String location2,
+			@RequestParam(name = "category") String category, HttpSession session) {
 
 		List<Stop> stops = new ArrayList<Stop>();
 		Stop stop = new Stop(yelpId, longitude, latitude);
 		stop.setBusiness(businessSearchService.getResultById(yelpId));
 		stops.add(stop);
 		session.setAttribute("stops", stops);
-		
+
 		ModelAndView mav = new ModelAndView("redirect:/results");
 		mav.addObject("location1", location1);
 		mav.addObject("location2", location2);
 		mav.addObject("category", category);
 		mav.addObject("stops", stops);
-		
+
 		return mav;
 	}
 
 	@RequestMapping("/dt")
 	public ModelAndView dist(@SessionAttribute(value = "location1", required = false) String location1,
-			@SessionAttribute(value = "location2", required = false) String location2) {
+			@SessionAttribute(value = "location2", required = false) String location2,
+			@SessionAttribute("stops") List<Stop> stops, HttpSession session) {
 
 		ModelAndView mav = new ModelAndView("test");
+
+		session.getAttribute(location1);
+		session.getAttribute(location2);
 
 		Legs leg = googleApiService.getNewWaypoints(location1, location2);
 
@@ -92,7 +92,7 @@ public class AlongTheWayController {
 		return new ModelAndView("matrix", "amend", TheRoutes);
 
 	}
-	
+
 	@RequestMapping("/delete")
 	public ModelAndView deleteRouteForm(@RequestParam("id") Long id) {
 		dao.delete(id);
@@ -103,10 +103,8 @@ public class AlongTheWayController {
 //	 when populating the results page, we want to return the set of results
 //	 generated from each waypoint along the way as a single list
 	@RequestMapping("/results")
-	public ModelAndView results(
-			@RequestParam(name = "location1") String location1,
-			@RequestParam(name = "location2") String location2, 
-			@RequestParam(name = "category") String category,
+	public ModelAndView results(@RequestParam(name = "location1") String location1,
+			@RequestParam(name = "location2") String location2, @RequestParam(name = "category") String category,
 			HttpSession session) {
 
 		session.setAttribute("location1", location1);
@@ -127,12 +125,12 @@ public class AlongTheWayController {
 
 		int i = 0;
 		for (Steps stepwp : steps) {
-			if(i == 0) {
+			if (i == 0) {
 				Coordinates coord = new Coordinates();
 				coord.setLatitude(stepwp.getStartLocation().getStartLat());
 				coord.setLongitude(stepwp.getStartLocation().getStartLong());
 				waypoints.add(coord);
-			} 
+			}
 			Coordinates coord = new Coordinates();
 			coord.setLatitude(stepwp.getEndLocation().getEndLat());
 			coord.setLongitude(stepwp.getEndLocation().getEndLong());
@@ -145,10 +143,8 @@ public class AlongTheWayController {
 
 		for (Coordinates coordinates : waypoints) {
 			// results will take in the yelp response from each waypoint
-			List<Businesses> results = businessSearchService.getAllResultsByCoordByCategory(
-					coordinates.getLatitude(),
-					coordinates.getLongitude(), 
-					category);
+			List<Businesses> results = businessSearchService.getAllResultsByCoordByCategory(coordinates.getLatitude(),
+					coordinates.getLongitude(), category);
 
 			List<String> names = new ArrayList<String>();
 			for (Businesses busi : results) {
