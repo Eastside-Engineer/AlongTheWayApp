@@ -19,7 +19,7 @@
 		<h1>The Routes</h1>
 
 
-		<table class="table table-dark">
+		<table class="table table-striped">
 
 			<tr>
 				<th>Starting Location</th>
@@ -32,7 +32,7 @@
 				<tr>
 					<td>${amended.location1}</td>
 					<td>${amended.location2}</td>
-					<td></td>
+					<td>${amended. }</td>
 					<td></td>
 					<td><a href="/delete?id=${amended.id}"
 						class="btn btn-secondary">Delete</a></td>

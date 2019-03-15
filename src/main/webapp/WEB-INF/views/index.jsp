@@ -50,12 +50,7 @@
 
 
 
-		<footer>
-
-
 		
-
-		<footer>
 
 			
 

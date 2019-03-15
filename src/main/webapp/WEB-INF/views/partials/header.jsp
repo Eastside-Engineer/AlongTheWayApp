@@ -12,7 +12,7 @@
 <body>
 
 
-<div1>
+
 <nav class="navbar">
     <ul class ="nav">
 
@@ -29,7 +29,6 @@
 
     </ul>
 </nav>
-</div1>
 
 
 </body>

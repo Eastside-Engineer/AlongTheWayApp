@@ -14,13 +14,11 @@
 <body>
 
 
-background="bgimage.jpg"
-
 <%@include file="partials/header.jsp"%>
 
 	<div class="container">
 
-		<table class="table-striped table-dark">
+		<table class="table table-striped">
 
 			<h1>Meet AlongTheWay</h1>
 
