@@ -3,8 +3,7 @@ package finalproject.alongtheway.waypointsbeans;
 import java.util.List;
 
 public class WaypointResponse {
-	
-	
+
 	private List<Waypoints> routes;
 
 	public List<Waypoints> getRoutes() {
@@ -14,6 +13,10 @@ public class WaypointResponse {
 	public void setRoutes(List<Waypoints> routes) {
 		this.routes = routes;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "WaypointResponse [routes=" + routes + "]";
+	}
 
 }

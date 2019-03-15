@@ -21,10 +21,12 @@
 
 		<table class="table table-dark">
 
-			<th>Starting Location</th>
-			<th>Ending Location</th>
-			<th>Something</th>
-			<th>Something</th>
+			<tr>
+				<th>Starting Location</th>
+				<th>Ending Location</th>
+				<th>Something</th>
+				<th>Something</th>
+			</tr>
 
 			<c:forEach items="${amend}" var="amended">
 				<tr>
@@ -32,13 +34,15 @@
 					<td>${amended.location2}</td>
 					<td></td>
 					<td></td>
-					<td><a href="/delete?id=${amended.id}" class="btn btn-secondary">Delete</a></td>
+					<td><a href="/delete?id=${amended.id}"
+						class="btn btn-secondary">Delete</a></td>
 
 				</tr>
 			</c:forEach>
 
 		</table>
+	</div>
 
-		<a href="/" class="btn btn-secondary">Return to Homepage</a>
+	<a href="/" class="btn btn-secondary">Return to Homepage</a>
 </body>
 </html>

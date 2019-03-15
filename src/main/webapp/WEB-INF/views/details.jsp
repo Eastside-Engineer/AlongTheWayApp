@@ -24,7 +24,15 @@
 		<td>${result.price}</td>
 		<td>${result.rating}</td>
 		<td><a class = "btn btn-primary" href = "${result.url}" target = "_blank">Yelp page</a></td>
-		<td><a class = "btn btn-primary">Add</a></td>
+		
+		<td>
+		<form action="/add">
+			<input type="hidden" name="latitude" value="${result.coordinates.latitude}"/>
+			<input type="hidden" name="longitude" value="${result.coordinates.longitude}"/>
+			<input type="hidden" name="yelpid" value="${result.id}"/>
+			<button type="submit">Add</button>
+		</form>
+		</td>
 	</tr>
 </table>
 

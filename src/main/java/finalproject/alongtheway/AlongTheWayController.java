@@ -15,7 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import finalproject.alongtheway.dao.Route;
 import finalproject.alongtheway.dao.RoutesDao;
-import finalproject.alongtheway.matrixbeans.Element;
+import finalproject.alongtheway.dao.Stop;
+import finalproject.alongtheway.waypointsbeans.Legs;
 import finalproject.alongtheway.waypointsbeans.Steps;
 import finalproject.alongtheway.yelpbeans.Businesses;
 import finalproject.alongtheway.yelpbeans.Coordinates;
@@ -31,81 +32,86 @@ public class AlongTheWayController {
 
 	@Autowired
 	private BusinessSearchApiService businessSearchService;
-
+	
 	@RequestMapping("/")
 	public ModelAndView index(HttpSession session) {
 		session.invalidate();
 		return new ModelAndView("index");
 	}
 
-	// remove Session????
-	@RequestMapping("/header")
-	public ModelAndView maps(@SessionAttribute(name = "location1", required = false) String location1,
-			@SessionAttribute(name = "location2", required = false) String location2) {
-
-		ModelAndView mav = new ModelAndView("header");
-		mav.addObject("location1", location1);
-		mav.addObject("location2", location2);
-		return mav;
-
-	}
-
 	@RequestMapping("/contacts")
 	public ModelAndView contacts() {
 		return new ModelAndView("contacts");
 	}
-
+	
 	@RequestMapping("/add")
-	public ModelAndView add(@SessionAttribute(name = "location1", required = false) String location1,
-			@SessionAttribute(name = "location2", required = false) String location2,
-			@RequestParam("latitude") Double latitude, @RequestParam("longitude") Double longitude,
+	public ModelAndView add(
+			@RequestParam(name = "latitude") Double latitude, 
+			@RequestParam(name = "longitude") Double longitude,
+			@RequestParam(name = "yelpid") String yelpId,
+			@RequestParam(name = "location1") String location1,
+			@RequestParam(name = "location2") String location2,
+			@RequestParam(name = "category") String category,
 			HttpSession session) {
 
-		System.out.println(location1);
-
-	
-		List<Element> elements;
-		elements = googleApiService.getTimeAndDistance(location1, location2, latitude, longitude);
-
-		String distance = elements.get(elements.size() - 1).getDistance().getText();
-		String duration = elements.get(elements.size() - 1).getDuration().getText();
-
-		ModelAndView mav = new ModelAndView("add");
+		List<Stop> stops = new ArrayList<Stop>();
+		Stop stop = new Stop(yelpId, longitude, latitude);
+		stop.setBusiness(businessSearchService.getResultById(yelpId));
+		stops.add(stop);
+		session.setAttribute("stops", stops);
+		
+		ModelAndView mav = new ModelAndView("redirect:/results");
 		mav.addObject("location1", location1);
 		mav.addObject("location2", location2);
-		mav.addObject("latitude", latitude);
-		mav.addObject("longitude", longitude);
-		mav.addObject("distance", distance);
-		mav.addObject("duration", duration);
+		mav.addObject("category", category);
+		mav.addObject("stops", stops);
 		
 		return mav;
 	}
 
+	@RequestMapping("/dt")
+	public ModelAndView dist(@SessionAttribute(value = "location1", required = false) String location1,
+			@SessionAttribute(value = "location2", required = false) String location2) {
+
+		ModelAndView mav = new ModelAndView("test");
+
+		Legs leg = googleApiService.getNewWaypoints(location1, location2);
+
+		String dist = leg.getDistance().getText();
+		String time = leg.getDuration().getText();
+
+		mav.addObject("distance", dist);
+		mav.addObject("duration", time);
+
+		return mav;
+	}
 
 	@RequestMapping("/matrix")
 	public ModelAndView showRoutes() {
 		List<Route> TheRoutes = dao.findAll();
 		return new ModelAndView("matrix", "amend", TheRoutes);
-		
+
 	}
+	
 	@RequestMapping("/delete")
 	public ModelAndView deleteRouteForm(@RequestParam("id") Long id) {
 		dao.delete(id);
 		ModelAndView mav = new ModelAndView("redirect:/matrix");
-
 		return mav;
 	}
-
 
 //	 when populating the results page, we want to return the set of results
 //	 generated from each waypoint along the way as a single list
 	@RequestMapping("/results")
-	public ModelAndView results(@RequestParam("location1") String location1,
-			@RequestParam("location2") String location2, @RequestParam("category") String category,
+	public ModelAndView results(
+			@RequestParam(name = "location1") String location1,
+			@RequestParam(name = "location2") String location2, 
+			@RequestParam(name = "category") String category,
 			HttpSession session) {
 
 		session.setAttribute("location1", location1);
 		session.setAttribute("location2", location2);
+		session.setAttribute("category", category);
 
 		Route route = new Route();
 		route.setLocation1(location1);
@@ -114,19 +120,22 @@ public class AlongTheWayController {
 
 		// define the steps along the way from the google directions api
 		List<Steps> steps = googleApiService.getWaypoints(location1, location2);
-		System.out.println(steps); // console print out to see if steps populated properly
 		// store each lat and long in a set of Coordinates
-
 		// initialize the waypoints to be a list of coordinates
 		List<Coordinates> waypoints = new ArrayList<Coordinates>();
 		session.setAttribute("waypoints", waypoints);
 
 		int i = 0;
 		for (Steps stepwp : steps) {
+			if(i == 0) {
+				Coordinates coord = new Coordinates();
+				coord.setLatitude(stepwp.getStartLocation().getStartLat());
+				coord.setLongitude(stepwp.getStartLocation().getStartLong());
+				waypoints.add(coord);
+			} 
 			Coordinates coord = new Coordinates();
 			coord.setLatitude(stepwp.getEndLocation().getEndLat());
 			coord.setLongitude(stepwp.getEndLocation().getEndLong());
-			System.out.println(coord.toString() + i);
 			waypoints.add(coord);
 			i++;
 		}
@@ -136,8 +145,10 @@ public class AlongTheWayController {
 
 		for (Coordinates coordinates : waypoints) {
 			// results will take in the yelp response from each waypoint
-			List<Businesses> results = businessSearchService.getAllResultsByCoordByCategory(coordinates.getLatitude(),
-					coordinates.getLongitude(), category);
+			List<Businesses> results = businessSearchService.getAllResultsByCoordByCategory(
+					coordinates.getLatitude(),
+					coordinates.getLongitude(), 
+					category);
 
 			List<String> names = new ArrayList<String>();
 			for (Businesses busi : results) {
