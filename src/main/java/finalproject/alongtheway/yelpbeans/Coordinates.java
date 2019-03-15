@@ -1,6 +1,9 @@
 package finalproject.alongtheway.yelpbeans;
 
-public class Coordinates {
+import java.io.Serializable;
+
+public class Coordinates implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private Double latitude;
 	private Double longitude;
@@ -34,6 +37,4 @@ public class Coordinates {
 		return "Coordinates [latitude=" + latitude + ", longitude=" + longitude + "]";
 	}
 
-	
-	
 }

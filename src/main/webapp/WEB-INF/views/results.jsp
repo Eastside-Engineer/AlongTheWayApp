@@ -60,6 +60,7 @@
 		src="https://www.google.com/maps/embed/v1/directions?origin=${loc1}&destination=${loc2}&key=AIzaSyBF6NVoNSyPvZ9PWq3J1WVh3Yup75hSM84"
 		allowfullscreen> </iframe>
 
+
 	<table class="table table-striped">
 		<tr>
 			<th>Name</th>
