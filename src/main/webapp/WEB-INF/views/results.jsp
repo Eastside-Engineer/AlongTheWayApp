@@ -29,18 +29,26 @@
 		<c:if test = "${stops != null}">
 			<c:forEach items="${stops}" var="stop">
 				<tr>
-					<td>${stop.business.name}</td>
-					<td>${stop.business.location.city}, ${stop.business.location.state}</td>
+					<td>${stop.name}</td>
+					<td>${stop.city}, ${stop.state}</td>
 				</tr>
 			</c:forEach>
 		</c:if>	
-	<tr>
-		<td>End location</td>
-		<td>${location2}</td>
-	</tr>
+		<tr>
+			<td>End location</td>
+			<td>${location2}</td>
+		</tr>
 	</table>
 
-	<h1>Time and Distance of Routes</h1>
+	<form action="/matrix">
+				<input type="hidden" name="stops" value="${stops}"/>
+				<input type="hidden" name="location1" value="${location1}"/>
+				<input type="hidden" name="location2" value="${location2}"/>
+				<button type="submit" class="btn btn-primary">Save this route</button>
+	</form>
+	
+	<h3>Time and Distance of Routes</h3> 
+	
 	<table class="table table-hover">
 		<tr>
 			<th>${location1} to ${location2}</th>

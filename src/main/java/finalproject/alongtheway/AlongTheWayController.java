@@ -39,6 +39,19 @@ public class AlongTheWayController {
 		return new ModelAndView("index");
 	}
 
+	@RequestMapping("/submitform")
+	public ModelAndView formsubmit(
+			@RequestParam(name = "location1") String location1,
+			@RequestParam(name = "location2") String location2,
+			@RequestParam(name = "category") String category,
+			HttpSession session) {
+		session.setAttribute("location1", location1);
+		session.setAttribute("location2", location2);
+		session.setAttribute("category", category);
+		ModelAndView mav = new ModelAndView("redirect:/results");
+		return mav;
+	}
+	
 	@RequestMapping("/contacts")
 	public ModelAndView contacts() {
 		return new ModelAndView("contacts");
@@ -49,9 +62,9 @@ public class AlongTheWayController {
 			@RequestParam(name = "latitude") Double latitude,
 			@RequestParam(name = "longitude") Double longitude, 
 			@RequestParam(name = "yelpid") String yelpId,
-			@RequestParam(name = "location1") String location1, 
-			@RequestParam(name = "location2") String location2,
-			@RequestParam(name = "category") String category, 
+			@SessionAttribute(name = "location1") String location1, 
+			@SessionAttribute(name = "location2") String location2,
+			@SessionAttribute(name = "category") String category, 
 			HttpSession session) {
 
 		@SuppressWarnings("unchecked")
@@ -60,8 +73,16 @@ public class AlongTheWayController {
 			stops = new ArrayList<Stop>();
 			session.setAttribute("stops", stops);
 		}
-		Stop stop = new Stop(yelpId, longitude, latitude);
-		stop.setBusiness(businessSearchService.getResultById(yelpId));
+		
+		// get the business at the stop
+		Businesses busi = businessSearchService.getResultById(yelpId);
+		
+		Stop stop = new Stop();
+		stop.setYelpId(yelpId);
+		stop.setName(businessSearchService.getNameById(yelpId));
+		stop.setCity(busi.getLocation().getCity());
+		stop.setState(busi.getLocation().getState());
+		
 		stops.add(stop);
 
 		ModelAndView mav = new ModelAndView("redirect:/results");
@@ -69,6 +90,7 @@ public class AlongTheWayController {
 		mav.addObject("location2", location2);
 		mav.addObject("category", category);
 		mav.addObject("stops", stops);
+		mav.addObject("busi", busi);
 
 		return mav;
 	}
@@ -97,7 +119,22 @@ public class AlongTheWayController {
 	}
 
 	@RequestMapping("/matrix")
-	public ModelAndView showRoutes() {
+	public ModelAndView showRoutes(
+			@SessionAttribute(value = "location1") String location1,
+			@SessionAttribute(value = "location2") String location2,
+			@SessionAttribute("stops") List<Stop> stops, 
+			HttpSession session) {
+		
+		Route route = new Route();
+		route.setLocation1(location1);
+		route.setLocation2(location2);
+		route.setStops(stops);
+		
+		session.setAttribute("route", route);
+		
+		dao.create(route);		
+		
+		// return list of all items in DB and pass to jsp
 		List<Route> TheRoutes = dao.findAll();
 		return new ModelAndView("matrix", "amend", TheRoutes);
 	}
@@ -113,19 +150,10 @@ public class AlongTheWayController {
 //	 generated from each waypoint along the way as a single list
 	@RequestMapping("/results")
 	public ModelAndView results(
-			@RequestParam(name = "location1") String location1,
-			@RequestParam(name = "location2") String location2, 
-			@RequestParam(name = "category") String category,
+			@SessionAttribute(name = "location1") String location1,
+			@SessionAttribute(name = "location2") String location2, 
+			@SessionAttribute(name = "category") String category,
 			HttpSession session) {
-
-		session.getAttribute(location1);
-		session.getAttribute(location2);
-		session.getAttribute(category);
-		
-		Route route = new Route();
-		route.setLocation1(location1);
-		route.setLocation2(location2);
-		dao.create(route);
 
 		// define the steps along the way from the google directions api
 		List<Steps> steps = googleApiService.getWaypoints(location1, location2);
@@ -170,9 +198,6 @@ public class AlongTheWayController {
 
 		// return fullResults from all waypoints for items rated 4.0 or higher
 
-		session.setAttribute("location1", location1);
-		session.setAttribute("location2", location2);
-		session.setAttribute("category", category);
 		
 		ModelAndView mav = new ModelAndView("results", "results", fullResults);
 

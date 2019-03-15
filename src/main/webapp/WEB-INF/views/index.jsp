@@ -20,7 +20,7 @@
 		<h1>Along The Way</h1>
 		<h4>Where are you traveling?</h4>
 
-		<form action="/results">
+		<form action="/submitform">
 			<div class="form-group">
 				<p>
 					<input placeholder="Starting Location"
