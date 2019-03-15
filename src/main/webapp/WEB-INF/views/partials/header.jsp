@@ -11,12 +11,9 @@
 </head>
 <body>
 
-<<<<<<< HEAD
 
-
-=======
 <div class = "container">
->>>>>>> adc6272d8f43e32cd03759d07b8ee0daf0e6169c
+
 <nav class="navbar">
     <ul class ="nav">
 
@@ -30,10 +27,9 @@
 
     </ul>
 </nav>
-<<<<<<< HEAD
-=======
+
 </div>
->>>>>>> adc6272d8f43e32cd03759d07b8ee0daf0e6169c
+
 
 
 </body>

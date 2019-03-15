@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="/style.css" />
 <body>
 
+<a href="/dt">testies</a>
+
 	<%@include file="partials/header.jsp"%>
 
 	<div class="container">

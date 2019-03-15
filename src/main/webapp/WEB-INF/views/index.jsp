@@ -47,23 +47,6 @@
 			</div>
 		</form>
 		
-
-
-
-		<footer>
-
-		<a href="/dt">testies</a>
-		
-
-		</footer>
-
-
-			
-
-
-
-		</footer>
-
 	</div>
 </body>
 </html>
