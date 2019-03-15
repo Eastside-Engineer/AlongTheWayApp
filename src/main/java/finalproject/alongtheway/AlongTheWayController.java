@@ -68,7 +68,7 @@ public class AlongTheWayController {
 			HttpSession session) {
 
 		@SuppressWarnings("unchecked")
-		List<Stop> stops = (List<Stop>)session.getAttribute("stops");
+		List<Stop> stops = (List<Stop>) session.getAttribute("stops");
 		if (stops == null) {
 			stops = new ArrayList<Stop>();
 			session.setAttribute("stops", stops);
@@ -96,24 +96,18 @@ public class AlongTheWayController {
 	}
 
 	@RequestMapping("/dt")
-	public ModelAndView dist(
-			@SessionAttribute(value = "location1", required = false) String location1,
-			@SessionAttribute(value = "location2", required = false) String location2,
-			@SessionAttribute("stops") List<Stop> stops, 
-			HttpSession session) {
+	public ModelAndView dist(@SessionAttribute(value = "location1", required = true) String location1,
+			@SessionAttribute(value = "location2", required = true) String location2,
+			@SessionAttribute(value = "stops", required = false) List<Stop> stops) {
 
 		ModelAndView mav = new ModelAndView("test");
 
-		session.getAttribute(location1);
-		session.getAttribute(location2);
-
-		Legs leg = googleApiService.getNewWaypoints(location1, location2);
-
-		String dist = leg.getDistance().getText();
-		String time = leg.getDuration().getText();
-
-		mav.addObject("distance", dist);
-		mav.addObject("duration", time);
+//		Legs legs = googleApiService.getAmendedDirections(location1, location2, stops);
+//		String distNew = legs.getDistance().getText();
+//		String timeNew = legs.getDuration().getText();
+//
+//		mav.addObject("distanceNew", distNew);
+//		mav.addObject("durationNew", timeNew);
 
 		return mav;
 	}
@@ -178,6 +172,7 @@ public class AlongTheWayController {
 		}
 
 		// fullResults will be a list of all results from all waypoints
+		
 		List<Businesses> fullResults = new ArrayList<Businesses>();
 
 		for (Coordinates coordinates : waypoints) {
@@ -186,6 +181,7 @@ public class AlongTheWayController {
 					coordinates.getLongitude(), category);
 
 			List<String> names = new ArrayList<String>();
+			// return fullResults from all waypoints for items rated 4.0 or higher
 			for (Businesses busi : results) {
 				if (!names.contains(busi.getId())) {
 					names.add(busi.getId());
@@ -196,15 +192,24 @@ public class AlongTheWayController {
 			}
 		}
 
-		// return fullResults from all waypoints for items rated 4.0 or higher
+		session.setAttribute("location1", location1);
+		session.setAttribute("location2", location2);
+		session.setAttribute("category", category);
 
-		
+		Legs leg = googleApiService.getBasicDirections(location1, location2);
+		String dist = leg.getDistance().getText();
+		String time = leg.getDuration().getText();
+
 		ModelAndView mav = new ModelAndView("results", "results", fullResults);
 
 		String[] parseLoc1 = location1.split(",");
 		String[] parseLoc2 = location2.split(",");
 		mav.addObject("loc1", parseLoc1[0] + "+" + parseLoc1[1]);
 		mav.addObject("loc2", parseLoc2[0] + "+" + parseLoc2[1]);
+
+		// basic dist/time
+		mav.addObject("distance", dist);
+		mav.addObject("duration", time);
 		return mav;
 	}
 

@@ -37,7 +37,6 @@
 				</p>
 				<br> 
 				<select name="category">
-					<option>Pick One</option>
 					<option  value="restaurants">Restaurants</option>
 					<option value="landmarks">Landmarks</option>
 				</select>
