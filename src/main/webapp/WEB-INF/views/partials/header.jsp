@@ -16,7 +16,7 @@
 <nav class="navbar">
     <ul class ="nav">
 
-      	<li class="nav-item"><a href="/" class="nav-link">New Route</a></li>
+      	<li class="nav-item"><a href="/endsession" class="nav-link">New Route</a></li>
       	<li class="nav-item"><a href="/matrix" class="nav-link">Saved Routes</a></li>
       	<li class="nav-item"><a href="/contacts" class="nav-link">About The Team</a></li>
 

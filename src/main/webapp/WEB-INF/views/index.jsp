@@ -31,11 +31,24 @@
 						required pattern="[A-Za-z]+[ ]*[A-Za-z]+,[ ]*[A-Za-z]{2}"
 						type="text" name="location2" />
 				</p>
-				<br> 
+				<br>
+				<p class = "text-light"> Select a category for your search
 				<select name="category">
 					<option  value="restaurants">Restaurants</option>
 					<option value="landmarks">Landmarks</option>
 				</select>
+				</p>
+				<p class = "text-light"> Minimum Yelp Rating
+				<select name ="minrating">
+					<option value = 5.0>5.0</option>
+					<option value = 4.5>4.5</option>
+					<option value = 4.0>4.0</option>
+					<option value = 3.5>3.5</option>
+					<option value = 3.0>3.0</option>
+					<option value = 2.5>2.5</option>
+					<option value = 2.0>2.0</option>
+				</select>
+				</p>
 				<button type="submit" class="btn btn-primary">Search!</button>
 			</div>
 		</form>
