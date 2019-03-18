@@ -81,9 +81,10 @@ public class AlongTheWayController {
 
 		stops.add(stop);
 
-		Legs leg1 = googleApiService.getAmendedDirections(location1, location2, stops);
-		String dist1 = leg1.getDistance().getText();
-		String time1 = leg1.getDuration().getText();
+		List<Legs> legs = googleApiService.getAmendedDirections(location1, location2, stops);
+
+		String totalDist = total1(legs);
+		String totalTime = total2(legs);
 
 		ModelAndView mav = new ModelAndView("redirect:/results");
 		mav.addObject("location1", location1);
@@ -91,8 +92,8 @@ public class AlongTheWayController {
 		mav.addObject("category", category);
 		mav.addObject("stops", stops);
 		mav.addObject("busi", busi);
-		mav.addObject("distanceNew", dist1);
-		mav.addObject("durationNew", time1);
+		mav.addObject("distanceNew", totalDist);
+		mav.addObject("durationNew", totalTime);
 
 		return mav;
 	}
@@ -201,6 +202,36 @@ public class AlongTheWayController {
 		Businesses result = businessSearchService.getResultById(id);
 		ModelAndView mav = new ModelAndView("details", "result", result);
 		return mav;
+	}
+
+	private String total1(List<Legs> legs) {
+
+		String tot = "";
+		Double totes = 0.0;
+		for (int i = 0; i < legs.size(); i++) {
+			tot = tot + legs.get(i).getDistance().getText();
+
+			String[] str = tot.split("\\s+");
+
+			totes = totes + Double.parseDouble(str[0]);
+		}
+
+		return totes.toString() + " mi";
+
+	}
+
+	private String total2(List<Legs> legs) {
+
+		String tot = "";
+		Double totes = 0.0;
+
+		for (int i = 0; i < legs.size(); i++) {
+			tot = tot + legs.get(i).getDuration().getText();
+			String[] str = tot.split("\\s+");
+			totes = totes + Double.parseDouble(str[0]);
+
+		}
+		return totes + " mins";
 	}
 
 }

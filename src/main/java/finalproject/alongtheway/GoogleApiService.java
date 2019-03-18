@@ -69,26 +69,25 @@ public class GoogleApiService {
 	}
 
 	// get AMENDED directions
-	public Legs getAmendedDirections(String location1, String location2, List<Stop> stops) {
+	public List<Legs> getAmendedDirections(String location1, String location2, List<Stop> stops) {
 
 		// regex(no space between comma): [A-Z][a-zA-Z]+,[ ]?[A-Z]{2}
 		// regex(one space between comma): [A-Z][a-zA-Z]+,[ ]{1}?[A-Z]{2}
 
 		location1 = splitter(location1);
 		location2 = splitter(location2);
+		String waypoints = "";
 
-		String stop1 = stops.get(0).getCity() + "," + stops.get(0).getState();
-		// String stop2 = stops.get(1).getCity() + "," + stops.get(1).getState();
-
-		String waypoints = stop1;
-		// String waypoints = stop1 + "|" + stop2;
-
-//		String latLong2 = "via:" + latitude + "%2C" + longitude;
-//
-//		System.out.println(latitude + " " + longitude);
+		for (int i = 0; i < stops.size(); i++) {
+			if (i > 0) {
+				waypoints = waypoints + "|" + stops.get(i).getCity() + "," + stops.get(i).getState();
+			} else {
+				waypoints = waypoints + stops.get(i).getCity() + "," + stops.get(i).getState();
+			}
+		}
 
 		String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + location1 + "&destination="
-				+ location2 + "&waypoints=via:" + waypoints + "&key=" + googlekey;
+				+ location2 + "&waypoints=" + waypoints + "&key=" + googlekey;
 
 		System.out.println(url);
 
@@ -96,7 +95,7 @@ public class GoogleApiService {
 
 		System.out.println(apiResponse.toString());
 
-		return apiResponse.getRoutes().get(0).getLegs().get(0);
+		return apiResponse.getRoutes().get(0).getLegs();
 
 	}
 
