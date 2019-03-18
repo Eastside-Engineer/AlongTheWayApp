@@ -24,7 +24,7 @@ public class Route {
 	private String location1;
 
 	@Column(name = "end")
-	private String location2;
+	private String location2;  
 	
 	@OneToMany(cascade = CascadeType.ALL,
 	        mappedBy = "route", orphanRemoval = true)

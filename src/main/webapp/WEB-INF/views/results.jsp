@@ -67,7 +67,7 @@
 		</tr>
 	</table>
 	
-	<iframe width="600" height="450" frameborder="0" style="border: 0"
+	<iframe width="1110" height="450" frameborder="0" style="border: 0"
 		src="https://www.google.com/maps/embed/v1/directions?origin=${loc1}&destination=${loc2}&key=AIzaSyBF6NVoNSyPvZ9PWq3J1WVh3Yup75hSM84"
 		allowfullscreen> </iframe>
 

@@ -35,7 +35,7 @@ public class AlongTheWayController {
 
 	@RequestMapping("/")
 	public ModelAndView index(HttpSession session) {
-		session.invalidate();
+		session.invalidate(); 
 		return new ModelAndView("index");
 	}
 
@@ -145,7 +145,7 @@ public class AlongTheWayController {
 	@RequestMapping("/results")
 	public ModelAndView results(
 			@SessionAttribute(name = "location1") String location1,
-			@SessionAttribute(name = "location2") String location2, 
+			@SessionAttribute(name = "location2") String location2,
 			@SessionAttribute(name = "category") String category,
 			HttpSession session) {
 
@@ -204,8 +204,13 @@ public class AlongTheWayController {
 
 		String[] parseLoc1 = location1.split(",");
 		String[] parseLoc2 = location2.split(",");
+		
+		
 		mav.addObject("loc1", parseLoc1[0] + "+" + parseLoc1[1]);
 		mav.addObject("loc2", parseLoc2[0] + "+" + parseLoc2[1]);
+		
+
+	
 
 		// basic dist/time
 		mav.addObject("distance", dist);
