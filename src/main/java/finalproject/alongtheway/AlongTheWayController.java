@@ -41,10 +41,8 @@ public class AlongTheWayController {
 	}
 
 	@RequestMapping("/submitform")
-	public ModelAndView formsubmit(
-			@RequestParam(name = "location1") String location1,
-			@RequestParam(name = "location2") String location2, 
-			@RequestParam(name = "category") String category,
+	public ModelAndView formsubmit(@RequestParam(name = "location1") String location1,
+			@RequestParam(name = "location2") String location2, @RequestParam(name = "category") String category,
 			HttpSession session) {
 		session.setAttribute("location1", location1);
 		session.setAttribute("location2", location2);
@@ -58,22 +56,22 @@ public class AlongTheWayController {
 		return new ModelAndView("contacts");
 	}
 
-
-	@RequestMapping("/add")	
-	public ModelAndView add(
-			@RequestParam(name = "latitude") Double latitude,
-			@RequestParam(name = "longitude") Double longitude, 
-			@RequestParam(name = "yelpid") String yelpId,
+	@RequestMapping("/add")
+	public ModelAndView add(@RequestParam(name = "latitude") Double latitude,
+			@RequestParam(name = "longitude") Double longitude, @RequestParam(name = "yelpid") String yelpId,
 			@SessionAttribute(name = "location1") String location1,
 			@SessionAttribute(name = "location2") String location2,
-			@SessionAttribute(name = "category") String category, 
-			HttpSession session) {
+			@SessionAttribute(name = "category") String category, HttpSession session) {
 
 		@SuppressWarnings("unchecked")
 		List<Stop> stops = (List<Stop>) session.getAttribute("stops");
+	
 		if (stops == null) {
 			stops = new ArrayList<Stop>();
 			session.setAttribute("stops", stops);
+			for (Stop stop : stops) {
+				System.out.println("IF NULL: " + stop.getName());
+			}
 		}
 
 		// get the business at the stop
@@ -84,7 +82,7 @@ public class AlongTheWayController {
 		stop.setName(businessSearchService.getNameById(yelpId));
 		stop.setCity(busi.getLocation().getCity());
 		stop.setState(busi.getLocation().getState());
-
+		System.out.println("NEW" + stop);
 		stops.add(stop);
 
 		ModelAndView mav = new ModelAndView("redirect:/results");
@@ -92,18 +90,23 @@ public class AlongTheWayController {
 		mav.addObject("location2", location2);
 		mav.addObject("category", category);
 		mav.addObject("stops", stops);
+		
+		if (stop == null || stop.getName().isEmpty()) {
+			mav.addObject("waypointsUrl", "");
+		} else {
+			//mav.addObject("waypoint", "&waypoints=");
+			String[] test = stop.getName().split(" ");
 
-		
-		String[] parseBusi1 = location1.split(" ");
-		String[] parseBusi2 = location2.split(" ");
-		System.out.println(parseBusi1[0] +"+"+ parseBusi1[1]);
-		System.out.println(parseBusi2[0] +"+"+ parseBusi2[1]);
-		mav.addObject("Busi1", parseBusi1[0] +"+"+ parseBusi1[1]);
-		mav.addObject("Busi2", parseBusi2[0] +"+"+ parseBusi2[1]);
-		
+			mav.addObject("waypoints","&waypoints=" + test[0] + "+" + test[1]);
+			//mav.addObject("waypoints","&waypoints=Hamtramck,MI");
+		}
+
+		//String[] parsestop1 = stop.getName().split(" ");
+		//String[] parsestop2 = stop.getName().split(" ");
+		//mav.addObject("stop1", parsestop1[0] + "+" + parsestop1[1]);
+		//mav.addObject("stop2", parsestop2[0] + "+" + parsestop2[1]);
 
 		mav.addObject("busi", busi);
-
 
 		return mav;
 	}
@@ -123,10 +126,8 @@ public class AlongTheWayController {
 	}
 
 	@RequestMapping("/matrix")
-	public ModelAndView showRoutes(
-			@SessionAttribute(value = "location1") String location1,
-			@SessionAttribute(value = "location2") String location2, 
-			@SessionAttribute("stops") List<Stop> stops,
+	public ModelAndView showRoutes(@SessionAttribute(value = "location1") String location1,
+			@SessionAttribute(value = "location2") String location2, @SessionAttribute("stops") List<Stop> stops,
 			HttpSession session) {
 
 		Route route = new Route();
@@ -151,11 +152,10 @@ public class AlongTheWayController {
 //	 when populating the results page, we want to return the set of results
 //	 generated from each waypoint along the way as a single list
 	@RequestMapping("/results")
-	public ModelAndView results(
-			@SessionAttribute(name = "location1") String location1,
+	public ModelAndView results(@SessionAttribute(name = "location1") String location1,
 			@SessionAttribute(name = "location2") String location2,
-			@SessionAttribute(name = "category") String category, 
-			HttpSession session) {
+			@SessionAttribute(name = "category") String category,
+			@SessionAttribute(name = "stops", required = false) List<Stop> stops, HttpSession session) {
 
 		// define the steps along the way from the google directions api
 		List<Steps> steps = googleApiService.getWaypoints(location1, location2);
@@ -202,7 +202,6 @@ public class AlongTheWayController {
 
 		// return fullResults from all waypoints for items rated 4.0 or higher
 
-
 		session.setAttribute("location1", location1);
 		session.setAttribute("location2", location2);
 		session.setAttribute("category", category);
@@ -212,7 +211,7 @@ public class AlongTheWayController {
 		String time = leg.getDuration().getText();
 
 		ModelAndView mav = new ModelAndView("results", "results", fullResults);
-		
+
 		String[] parseLoc1 = location1.split(",");
 		String[] parseLoc2 = location2.split(",");
 		mav.addObject("loc1", parseLoc1[0] + "+" + parseLoc1[1]);

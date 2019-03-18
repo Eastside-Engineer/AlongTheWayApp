@@ -68,8 +68,13 @@
 		</tr>
 	</table>
 	
-	<iframe width="600" height="450" frameborder="0" style="border: 0"
-		src="https://www.google.com/maps/embed/v1/directions?origin=${loc1}&destination=${loc2}&waypoints=${Busi1}&key=AIzaSyBF6NVoNSyPvZ9PWq3J1WVh3Yup75hSM84"
+<%-- 	<iframe width="600" height="450" frameborder="0" style="border: 0"
+		src="https://www.google.com/maps/embed/v1/directions?origin=${loc1}&destination=${loc2}${waypoint}
+		<c:forEach var="stop" items="${waypointsURL}">${stop.name }</c:forEach>&key=AIzaSyBF6NVoNSyPvZ9PWq3J1WVh3Yup75hSM84"
+		allowfullscreen> </iframe> --%>
+		
+			<iframe width="600" height="450" frameborder="0" style="border: 0"
+		src="https://www.google.com/maps/embed/v1/directions?origin=${loc1}&destination=${loc2}${waypoints}&key=AIzaSyBF6NVoNSyPvZ9PWq3J1WVh3Yup75hSM84"
 		allowfullscreen> </iframe>
 
 
