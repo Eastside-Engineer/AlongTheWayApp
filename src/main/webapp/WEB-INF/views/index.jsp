@@ -30,26 +30,33 @@
 				<input placeholder="Ex: Detroit, MI" required
 					pattern="[A-Za-z]+[ ]*[A-Za-z]+,+[ ]*[A-Za-z]{2}" type="text"
 					name="location1" />
-				</p>
-
+				
 				<p>
 				<h5>End</h5>
 				<input placeholder="Ex: Seattle, WA" required
 					pattern="[A-Za-z]+[ ]*[A-Za-z]+,+[ ]*[A-Za-z]{2}" type="text"
 					name="location2" />
-				</p>
-
-				<h5>Category</h5>
+				
 				<select name="category">
 					<option value="" disabled selected>Select a
 						category&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
 					<option value="restaurants">Restaurants</option>
 					<option value="landmarks">Landmarks</option>
+				</select>
+				
+				<p class = "text-light"> Minimum Yelp Rating
+				<select name ="minrating">
+					<option value = 5.0>5.0</option>
+					<option value = 4.5>4.5</option>
+					<option value = 4.0>4.0</option>
+					<option value = 3.5>3.5</option>
+					<option value = 3.0>3.0</option>
+					<option value = 2.5>2.5</option>
+					<option value = 2.0>2.0</option>
 				</select> <br>
 				<br>
 				<button type="submit" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Search!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-				</br>
-				</br>
+				
 			</div>
 		</form>
 	</div>

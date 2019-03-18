@@ -35,18 +35,27 @@ public class AlongTheWayController {
 
 	@RequestMapping("/")
 	public ModelAndView index(HttpSession session) {
-
 		return new ModelAndView("index");
 	}
 
+	@RequestMapping("/endsession")
+	public ModelAndView endsession(HttpSession session) {
+		session.invalidate();
+		return new ModelAndView("redirect:/");
+	}
+	
 	@RequestMapping("/submitform")
-	public ModelAndView formsubmit(@RequestParam(name = "location1") String location1,
-			@RequestParam(name = "location2") String location2, @RequestParam(name = "category") String category,
+	public ModelAndView formsubmit(
+			@RequestParam(name = "location1") String location1,
+			@RequestParam(name = "location2") String location2, 
+			@RequestParam(name = "category") String category,
+			@RequestParam(name = "minrating") Double minrating,
 			HttpSession session) {
-
+		// when first clicking submit button from index page, add the variables to the session
 		session.setAttribute("location1", location1);
 		session.setAttribute("location2", location2);
 		session.setAttribute("category", category);
+		session.setAttribute("minrating", minrating);
 		ModelAndView mav = new ModelAndView("redirect:/results");
 		return mav;
 	}
@@ -60,7 +69,8 @@ public class AlongTheWayController {
 	public ModelAndView add(@RequestParam(name = "yelpid") String yelpId,
 			@SessionAttribute(name = "location1") String location1,
 			@SessionAttribute(name = "location2") String location2,
-			@SessionAttribute(name = "category") String category, HttpSession session) {
+			@SessionAttribute(name = "category") String category,
+			HttpSession session) {
 
 		@SuppressWarnings("unchecked")
 		List<Stop> stops = (List<Stop>) session.getAttribute("stops");
@@ -69,47 +79,53 @@ public class AlongTheWayController {
 			session.setAttribute("stops", stops);
 		}
 
-		// get the business at the stop
+		// get the business as a Businesses class object at the stop by yelp id
 		Businesses busi = businessSearchService.getResultById(yelpId);
 
+		// create a new stop to be added to the list of stops
+		// using the business returned by the yelpid, set the parameters
 		Stop stop = new Stop();
+		
 		stop.setYelpId(yelpId);
-		stop.setName(businessSearchService.getNameById(yelpId));
+		stop.setName(busi.getName());
 		stop.setCity(busi.getLocation().getCity());
 		stop.setState(busi.getLocation().getState());
 
+		// add this created stop to the session List<Stop> stops
 		stops.add(stop);
-
+		
+		// call google api to get directions for amended time and distance calc
 		List<Legs> legs = googleApiService.getAmendedDirections(location1, location2, stops);
 
 		String totalDist = total1(legs);
 		String totalTime = total2(legs);
+		session.setAttribute("distanceNew", totalDist);
+		session.setAttribute("durationNew", totalTime);
 
+		// redirect to the results page, no need to add objects to model since the same info is already in the session
 		ModelAndView mav = new ModelAndView("redirect:/results");
-		mav.addObject("location1", location1);
-		mav.addObject("location2", location2);
-		mav.addObject("category", category);
-		mav.addObject("stops", stops);
-		mav.addObject("busi", busi);
-		mav.addObject("distanceNew", totalDist);
-		mav.addObject("durationNew", totalTime);
 
 		return mav;
 	}
 
-	@RequestMapping("/matrix")
-	public ModelAndView showRoutes(@SessionAttribute(value = "location1") String location1,
-			@SessionAttribute(value = "location2") String location2,
-			@SessionAttribute(value = "stops") List<Stop> stops, HttpSession session) {
-
+	@RequestMapping("/saveroute")
+	public ModelAndView saveroute(
+			@SessionAttribute(value = "location1", required = true) String location1,
+			@SessionAttribute(value = "location2", required = true) String location2,
+			@SessionAttribute(value = "stops", required = false) List<Stop> stops,
+			HttpSession session) {
+		
 		Route route = new Route();
 		route.setLocation1(location1);
 		route.setLocation2(location2);
 		route.setStops(stops);
+		dao.create(route);
+		return new ModelAndView("redirect:/results");
+	}
 
-		session.setAttribute("route", route);
-
-		// return list of all items in DB and pass to jsp
+	@RequestMapping("/matrix")
+	public ModelAndView showRoutes(HttpSession session) {
+		// return list of all items in DB and pass to model
 		List<Route> theRoutes = dao.findAll();
 		return new ModelAndView("matrix", "amend", theRoutes);
 	}
@@ -129,24 +145,31 @@ public class AlongTheWayController {
 
 			@SessionAttribute(name = "location2") String location2,
 			@SessionAttribute(name = "category") String category,
-			@RequestParam(name = "distanceNew", required = false) String distanceNew,
-			@RequestParam(name = "durationNew", required = false) String durationNew, HttpSession session) {
-
+			@SessionAttribute(name = "minrating") Double minrating,
+			@SessionAttribute(name = "stops") List<Stop> stops,
+			@SessionAttribute(name = "distanceNew") String distanceNew,
+			@SessionAttribute(name = "durationNew") String durationNew,
+			HttpSession session) {
+		
 		// define the steps along the way from the google directions api
 		List<Steps> steps = googleApiService.getWaypoints(location1, location2);
-		// store each lat and long in a set of Coordinates
-		// initialize the waypoints to be a list of coordinates
+		
+		// initialize the waypoints to be a list of Coordinates (paired lat and long)
 		List<Coordinates> waypoints = new ArrayList<Coordinates>();
+		
+		// set save the waypoints list to the session
 		session.setAttribute("waypoints", waypoints);
 
 		int i = 0;
 		for (Steps stepwp : steps) {
+			// set the first coordinates in the list to be the starting location, as steps doesn't include location 0
 			if (i == 0) {
 				Coordinates coord = new Coordinates();
 				coord.setLatitude(stepwp.getStartLocation().getStartLat());
 				coord.setLongitude(stepwp.getStartLocation().getStartLong());
 				waypoints.add(coord);
 			}
+			// store each lat and long from the list of steps in a list of Coordinates called waypoints
 			Coordinates coord = new Coordinates();
 			coord.setLatitude(stepwp.getEndLocation().getEndLat());
 			coord.setLongitude(stepwp.getEndLocation().getEndLong());
@@ -155,7 +178,6 @@ public class AlongTheWayController {
 		}
 
 		// fullResults will be a list of all results from all waypoints
-
 		List<Businesses> fullResults = new ArrayList<Businesses>();
 
 		for (Coordinates coordinates : waypoints) {
@@ -164,20 +186,17 @@ public class AlongTheWayController {
 					coordinates.getLongitude(), category);
 
 			List<String> names = new ArrayList<String>();
-			// return fullResults from all waypoints for items rated 4.0 or higher
+			
 			for (Businesses busi : results) {
 				if (!names.contains(busi.getId())) {
 					names.add(busi.getId());
-					if (busi.getRating() >= 4.0) {
+					// return fullResults from all waypoints for items rated 4.0 or higher
+					if (busi.getRating() >= minrating) {
 						fullResults.add(busi);
 					}
 				}
 			}
 		}
-
-		session.setAttribute("location1", location1);
-		session.setAttribute("location2", location2);
-		session.setAttribute("category", category);
 
 		Legs leg = googleApiService.getBasicDirections(location1, location2);
 		String dist = leg.getDistance().getText();
@@ -187,13 +206,8 @@ public class AlongTheWayController {
 
 		String[] parseLoc1 = location1.split(",");
 		String[] parseLoc2 = location2.split(",");
-		
-		
 		mav.addObject("loc1", parseLoc1[0] + "+" + parseLoc1[1]);
 		mav.addObject("loc2", parseLoc2[0] + "+" + parseLoc2[1]);
-		
-
-	
 
 		mav.addObject("distance", dist);
 		mav.addObject("duration", time);
@@ -221,9 +235,8 @@ public class AlongTheWayController {
 
 			totes = totes + Double.parseDouble(str[0]);
 		}
-
+		
 		return totes.toString() + " mi";
-
 	}
 
 	private String total2(List<Legs> legs) {
@@ -238,6 +251,7 @@ public class AlongTheWayController {
 
 		}
 		return totes + " mins";
+
 	}
 
 }
