@@ -14,7 +14,6 @@
 
 <%@include file="partials/header.jsp"%>
 
-
 <div class="container">
 <!--
 <a href="/dt">Trial</a>
@@ -44,13 +43,15 @@
 		</tr>
 	</table>
 
-	<form action="/matrix">
+	<form action="/saveroute">
+		<c:if test = "${stops != null}">
 				<input type="hidden" name="stops" value="${stops}"/>
+		</c:if>	
 				<input type="hidden" name="location1" value="${location1}"/>
 				<input type="hidden" name="location2" value="${location2}"/>
-				<button type="submit" class="btn btn-primary">Save this route</button>
+				<button type="submit" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save this route&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
 	</form>
-	
+	<br>
 	<h3>Time and Distance of Routes</h3> 
 	
 	<table class="table table-hover">
@@ -68,6 +69,7 @@
 		</tr>
 	</table>
 	
+
 <%-- 	<iframe width="600" height="450" frameborder="0" style="border: 0"
 		src="https://www.google.com/maps/embed/v1/directions?origin=${loc1}&destination=${loc2}${waypoint}
 		<c:forEach var="stop" items="${waypointsURL}">${stop.name }</c:forEach>&key=AIzaSyBF6NVoNSyPvZ9PWq3J1WVh3Yup75hSM84"
@@ -76,7 +78,6 @@
 			<iframe width="600" height="450" frameborder="0" style="border: 0"
 		src="https://www.google.com/maps/embed/v1/directions?origin=${loc1}&destination=${loc2}${waypoints}&key=AIzaSyBF6NVoNSyPvZ9PWq3J1WVh3Yup75hSM84"
 		allowfullscreen> </iframe>
-
 
 	<table class="table table-striped">
 		<tr>
@@ -97,7 +98,6 @@
 				<td><a class="btn btn-primary" href="${result.url}"
 					target="_blank">Yelp page</a></td>
 
-
 				<td><form action="/add">
 						<input type="hidden" name="latitude" value="${result.coordinates.latitude}"/>
 						<input type="hidden" name="longitude" value="${result.coordinates.longitude}"/>
@@ -111,8 +111,6 @@
 			</tr>
 		</c:forEach>
 	</table>
-
-
 
 </div>
 

@@ -9,38 +9,51 @@ h1{
 
 h3{
 	
-	color: firebrick;
+	color: gray;
 	font-style: italic;
 	font-style: bold;
 }
 
 h4{
 	
-	color: white;
+	color: #C0C0C0;
 	font-style: bold;
 	
+	
+}
+
+h5{
+	
+	color: #C0C0C0;
+	font-style: bold;
+
 }
 
 body {
 	background-color: ghostwhite;
 	
-	background-size: 1400px;
+	background-size: 1600px;
 	
-	margin-top: 10px
 	
 }
 
 #indexpage{
 	
-	margin-top: 240px
+	margin-top: 275px
+	
+	
 }
 
-}
 
 #img {
 	
 	height: 300px;
 	align: center;
 
+}
+::placeholder {
+  color: black;
+ 
+}
 }
 

@@ -26,8 +26,13 @@ public class Stop implements Serializable {
 	private String city;
 	private String state;
 
-	public Stop() {
-	}
+	private Double latitude;
+	private Double longitude;
+
+	public Stop() {}
+
+
+
 
 	public Long getId() {
 		return id;
@@ -79,4 +84,23 @@ public class Stop implements Serializable {
 
 	}
 
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+	
 }
+
+
+	

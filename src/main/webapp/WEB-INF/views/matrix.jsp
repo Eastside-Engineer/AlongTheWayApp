@@ -34,7 +34,7 @@
 					<td></td>
 					<td>${amended.location2}</td>
 					<td><a href="/delete?id=${amended.id}"
-						class="btn btn-secondary">Delete</a></td>
+						class="btn btn-secondary">Delete Route</a></td>
 
 				</tr>
 			</c:forEach>
@@ -42,6 +42,5 @@
 		</table>
 	</div>
 
-	<a href="/" class="btn btn-secondary">Return to Homepage</a>
 </body>
 </html>

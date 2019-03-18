@@ -8,13 +8,6 @@ public class Coordinates implements Serializable {
 	private Double latitude;
 	private Double longitude;
 
-	public Coordinates() {
-	}
-
-	public Coordinates(Double latitude, Double longitude) {
-		setLatitude(latitude);
-		setLongitude(longitude);
-	}
 
 	public Double getLatitude() {
 		return latitude;
