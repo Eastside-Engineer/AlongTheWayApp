@@ -48,7 +48,7 @@
 				<input type="hidden" name="stops" value="${stops}"/>
 				<input type="hidden" name="location1" value="${location1}"/>
 				<input type="hidden" name="location2" value="${location2}"/>
-				<button type="submit" class="btn btn-primary">Save this route</button>
+				<button type="submit" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save this route&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
 	</form>
 	
 	<h3>Time and Distance of Routes</h3> 
