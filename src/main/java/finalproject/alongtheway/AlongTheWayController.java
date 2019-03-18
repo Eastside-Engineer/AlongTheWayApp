@@ -59,12 +59,12 @@ public class AlongTheWayController {
 	}
 
 	@RequestMapping("/add")
-	public ModelAndView add(@RequestParam(name = "latitude") Double latitude,
-			@RequestParam(name = "longitude") Double longitude, 
+	public ModelAndView add(
 			@RequestParam(name = "yelpid") String yelpId,
 			@SessionAttribute(name = "location1") String location1,
 			@SessionAttribute(name = "location2") String location2,
-			@SessionAttribute(name = "category") String category, HttpSession session) {
+			@SessionAttribute(name = "category") String category, 
+			HttpSession session) {
 
 		@SuppressWarnings("unchecked")
 		List<Stop> stops = (List<Stop>) session.getAttribute("stops");
@@ -124,8 +124,6 @@ public class AlongTheWayController {
 		route.setStops(stops);
 
 		session.setAttribute("route", route);
-
-		dao.create(route);
 
 		// return list of all items in DB and pass to jsp
 		List<Route> TheRoutes = dao.findAll();
