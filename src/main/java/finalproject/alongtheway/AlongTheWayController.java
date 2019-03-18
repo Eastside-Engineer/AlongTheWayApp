@@ -141,14 +141,11 @@ public class AlongTheWayController {
 //	 generated from each waypoint along the way as a single list
 	@RequestMapping("/results")
 
-	public ModelAndView results(@SessionAttribute(name = "location1") String location1,
-
+	public ModelAndView results(
+			@SessionAttribute(name = "location1") String location1,
 			@SessionAttribute(name = "location2") String location2,
 			@SessionAttribute(name = "category") String category,
 			@SessionAttribute(name = "minrating") Double minrating,
-			@SessionAttribute(name = "stops") List<Stop> stops,
-			@SessionAttribute(name = "distanceNew") String distanceNew,
-			@SessionAttribute(name = "durationNew") String durationNew,
 			HttpSession session) {
 		
 		// define the steps along the way from the google directions api
@@ -206,13 +203,11 @@ public class AlongTheWayController {
 
 		String[] parseLoc1 = location1.split(",");
 		String[] parseLoc2 = location2.split(",");
+		
 		mav.addObject("loc1", parseLoc1[0] + "+" + parseLoc1[1]);
 		mav.addObject("loc2", parseLoc2[0] + "+" + parseLoc2[1]);
-
 		mav.addObject("distance", dist);
 		mav.addObject("duration", time);
-		mav.addObject("distanceNew", distanceNew);
-		mav.addObject("durationNew", durationNew);
 		return mav;
 	}
 
