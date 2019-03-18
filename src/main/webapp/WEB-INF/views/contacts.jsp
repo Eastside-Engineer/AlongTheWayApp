@@ -58,14 +58,15 @@
 			</tr>
 
 			<tr>
-				<td><img src="Kyle.jpg" class="img-thumbnail" " name="Kyle"></td>
+				<td><img src="Kyle.jpg" class="img-thumbnail" name="Kyle"></td>
 
 				<td>
 					<h3>Kyle Dixon</h3> <br>
-					<p>Kyle graduated from Western Michigan with an emphasis in
-						Mathematics/Physics. **** KYLE UPDATE YOUR CONTACT PAGE INFO!!!! **** Recent Tech Endorsement in back-end
-						development. Enthusiastic about bringing creative solutions to
-						your team.</p> Connect with Kyle: <br> 
+					<p>Kyle has a background in Mathematics and is a Musician. 
+					As a java developer he is excited to blend logic and creativity 
+					to create beautiful content and solve complex problems. 
+					He has worked in Data Management and looks forward to further
+					database utilization and manipulation. </p> Connect with Kyle: <br> 
 						<a href="https://github.com/kyledexperience">GitHub</a> <br> 
 						<a href="https://www.linkedin.com/in/kylepdixon/">LinkedIn</a>
 				</td>
