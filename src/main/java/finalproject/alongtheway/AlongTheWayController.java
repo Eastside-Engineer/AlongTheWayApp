@@ -74,6 +74,7 @@ public class AlongTheWayController {
 
 		@SuppressWarnings("unchecked")
 		List<Stop> stops = (List<Stop>) session.getAttribute("stops");
+	
 		if (stops == null) {
 			stops = new ArrayList<Stop>();
 			session.setAttribute("stops", stops);
@@ -90,7 +91,7 @@ public class AlongTheWayController {
 		stop.setName(busi.getName());
 		stop.setCity(busi.getLocation().getCity());
 		stop.setState(busi.getLocation().getState());
-
+		
 		// add this created stop to the session List<Stop> stops
 		stops.add(stop);
 		
@@ -104,6 +105,21 @@ public class AlongTheWayController {
 
 		// redirect to the results page, no need to add objects to model since the same info is already in the session
 		ModelAndView mav = new ModelAndView("redirect:/results");
+		
+		if (stop == null || stop.getName().isEmpty()) {
+			mav.addObject("waypoints", "");
+		} else {
+			//mav.addObject("waypoint", "&waypoints=");
+			String[] test = stop.getName().split(" ");
+
+			mav.addObject("waypoints","&waypoints=" + test[0] + "+" + test[1]);
+			//mav.addObject("waypoints","&waypoints=Hamtramck,MI");
+		}
+
+		//String[] parsestop1 = stop.getName().split(" ");
+		//String[] parsestop2 = stop.getName().split(" ");
+		//mav.addObject("stop1", parsestop1[0] + "+" + parsestop1[1]);
+		//mav.addObject("stop2", parsestop2[0] + "+" + parsestop2[1]);
 
 		return mav;
 	}
