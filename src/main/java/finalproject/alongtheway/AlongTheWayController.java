@@ -44,6 +44,7 @@ public class AlongTheWayController {
 	public ModelAndView formsubmit(@RequestParam(name = "location1") String location1,
 			@RequestParam(name = "location2") String location2, @RequestParam(name = "category") String category,
 			HttpSession session) {
+
 		session.setAttribute("location1", location1);
 		session.setAttribute("location2", location2);
 		session.setAttribute("category", category);
@@ -80,34 +81,26 @@ public class AlongTheWayController {
 
 		stops.add(stop);
 
+		Legs leg1 = googleApiService.getAmendedDirections(location1, location2, stops);
+		String dist1 = leg1.getDistance().getText();
+		String time1 = leg1.getDuration().getText();
+
 		ModelAndView mav = new ModelAndView("redirect:/results");
 		mav.addObject("location1", location1);
 		mav.addObject("location2", location2);
 		mav.addObject("category", category);
 		mav.addObject("stops", stops);
 		mav.addObject("busi", busi);
-
-		return mav;
-	}
-
-	@RequestMapping("/dt")
-	public ModelAndView dist(@SessionAttribute(value = "location1", required = true) String location1,
-			@SessionAttribute(value = "location2", required = true) String location2,
-			@SessionAttribute(value = "stops", required = false) List<Stop> stops) {
-
-		ModelAndView mav = new ModelAndView("test");
-
-		Legs legs = googleApiService.getAmendedDirections(location1, location2, stops);
-		String distNew;
-		String timeNew;
+		mav.addObject("distanceNew", dist1);
+		mav.addObject("durationNew", time1);
 
 		return mav;
 	}
 
 	@RequestMapping("/matrix")
 	public ModelAndView showRoutes(@SessionAttribute(value = "location1") String location1,
-			@SessionAttribute(value = "location2") String location2, @SessionAttribute("stops") List<Stop> stops,
-			HttpSession session) {
+			@SessionAttribute(value = "location2") String location2,
+			@SessionAttribute(value = "stops") List<Stop> stops, HttpSession session) {
 
 		Route route = new Route();
 		route.setLocation1(location1);
@@ -133,7 +126,9 @@ public class AlongTheWayController {
 	@RequestMapping("/results")
 	public ModelAndView results(@SessionAttribute(name = "location1") String location1,
 			@SessionAttribute(name = "location2") String location2,
-			@SessionAttribute(name = "category") String category, HttpSession session) {
+			@SessionAttribute(name = "category") String category,
+			@RequestParam(name = "distanceNew", required = false) String distanceNew,
+			@RequestParam(name = "durationNew", required = false) String durationNew, HttpSession session) {
 
 		// define the steps along the way from the google directions api
 		List<Steps> steps = googleApiService.getWaypoints(location1, location2);
@@ -193,9 +188,10 @@ public class AlongTheWayController {
 		mav.addObject("loc1", parseLoc1[0] + "+" + parseLoc1[1]);
 		mav.addObject("loc2", parseLoc2[0] + "+" + parseLoc2[1]);
 
-		// basic dist/time
 		mav.addObject("distance", dist);
 		mav.addObject("duration", time);
+		mav.addObject("distanceNew", distanceNew);
+		mav.addObject("durationNew", durationNew);
 		return mav;
 	}
 
@@ -207,22 +203,4 @@ public class AlongTheWayController {
 		return mav;
 	}
 
-	private String splitter(String str1) {
-
-		String[] str2 = str1.split(",");
-		String str = str2[1].trim();
-
-		String str3 = str2[0];
-		String[] str4 = str3.split("\\s*");
-		String str5 = "";
-
-		if (!str4[1].isEmpty()) {
-			str5 = str4[0] + "+" + str4[1];
-			System.out.println("not empty" + str5);
-		}
-		System.out.println("full address" + str5 + "," + str);
-
-		return str5 + "," + str;
-
-	}
 }
