@@ -41,8 +41,10 @@ public class AlongTheWayController {
 	}
 
 	@RequestMapping("/submitform")
-	public ModelAndView formsubmit(@RequestParam(name = "location1") String location1,
-			@RequestParam(name = "location2") String location2, @RequestParam(name = "category") String category,
+	public ModelAndView formsubmit(
+			@RequestParam(name = "location1") String location1,
+			@RequestParam(name = "location2") String location2, 
+			@RequestParam(name = "category") String category,
 			HttpSession session) {
 		session.setAttribute("location1", location1);
 		session.setAttribute("location2", location2);
@@ -58,7 +60,8 @@ public class AlongTheWayController {
 
 	@RequestMapping("/add")
 	public ModelAndView add(@RequestParam(name = "latitude") Double latitude,
-			@RequestParam(name = "longitude") Double longitude, @RequestParam(name = "yelpid") String yelpId,
+			@RequestParam(name = "longitude") Double longitude, 
+			@RequestParam(name = "yelpid") String yelpId,
 			@SessionAttribute(name = "location1") String location1,
 			@SessionAttribute(name = "location2") String location2,
 			@SessionAttribute(name = "category") String category, HttpSession session) {
@@ -109,8 +112,10 @@ public class AlongTheWayController {
 //		return mav;
 
 	@RequestMapping("/matrix")
-	public ModelAndView showRoutes(@SessionAttribute(value = "location1") String location1,
-			@SessionAttribute(value = "location2") String location2, @SessionAttribute("stops") List<Stop> stops,
+	public ModelAndView showRoutes(
+			@SessionAttribute(value = "location1") String location1,
+			@SessionAttribute(value = "location2") String location2, 
+			@SessionAttribute("stops") List<Stop> stops,
 			HttpSession session) {
 
 		Route route = new Route();
@@ -137,9 +142,11 @@ public class AlongTheWayController {
 //	 when populating the results page, we want to return the set of results
 //	 generated from each waypoint along the way as a single list
 	@RequestMapping("/results")
-	public ModelAndView results(@SessionAttribute(name = "location1") String location1,
+	public ModelAndView results(
+			@SessionAttribute(name = "location1") String location1,
 			@SessionAttribute(name = "location2") String location2,
-			@SessionAttribute(name = "category") String category, HttpSession session) {
+			@SessionAttribute(name = "category") String category, 
+			HttpSession session) {
 
 		// define the steps along the way from the google directions api
 		List<Steps> steps = googleApiService.getWaypoints(location1, location2);

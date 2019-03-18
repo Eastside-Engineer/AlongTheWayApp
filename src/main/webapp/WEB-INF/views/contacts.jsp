@@ -63,15 +63,13 @@
 				<td><img src="Kyle.jpg" class="img-thumbnail" " name="Kyle"></td>
 
 				<td>
-
 					<h3>Kyle Dixon</h3> <br>
 					<p>Kyle graduated from Western Michigan with an emphasis in
 						Mathematics/Physics. **** KYLE UPDATE YOUR CONTACT PAGE INFO!!!! **** Recent Tech Endorsement in back-end
 						development. Enthusiastic about bringing creative solutions to
-						your team.</p> Connect with Kyle: <br> <a
-					href="https://github.com/kyledexperience">GitHub</a> <br> <a
-					href="https://www.linkedin.com/in/kylepdixon/">LinkedIn</a>
-
+						your team.</p> Connect with Kyle: <br> 
+						<a href="https://github.com/kyledexperience">GitHub</a> <br> 
+						<a href="https://www.linkedin.com/in/kylepdixon/">LinkedIn</a>
 				</td>
 			</tr>
 
@@ -89,7 +87,6 @@
 						Connect with Tom: <br> 
 						<a href="https://github.com/TomJHagey">GitHub</a> <br> 
 						<a href="https://www.linkedin.com/in/tomjhagey/">LinkedIn</a>
-
 				</td>
 			</tr>
 
