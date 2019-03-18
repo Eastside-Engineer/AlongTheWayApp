@@ -1,48 +1,82 @@
 package finalproject.alongtheway.dao;
 
-import finalproject.alongtheway.yelpbeans.Businesses;
+import java.io.Serializable;
 
-public class Stop {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
+@Entity
+public class Stop implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
+	@ManyToOne
+	private Route route;
+	@Column(name = "yelp_id")
 	private String yelpId;
-	private Businesses business;
-	private Double longitude;
-	private Double latitude;
-	
-	public Stop() {}
-	
-	public Stop(String yelpId, Double longitude, Double latitude) {
-		setYelpId(yelpId);
-		setLongitude(longitude);
-		setLatitude(latitude);
+
+	private String name;
+	private String city;
+	private String state;
+
+	public Stop() {
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Route getRoute() {
+		return route;
+	}
+
+	public void setRoute(Route route) {
+		this.route = route;
+
+	}
+
 	public String getYelpId() {
 		return yelpId;
 	}
+
 	public void setYelpId(String yelpId) {
 		this.yelpId = yelpId;
 	}
-	public Double getLongitude() {
-		return longitude;
+
+	public String getName() {
+		return name;
 	}
-	public void setLongitude(Double longitude) {
-		this.longitude = longitude;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	public Double getLatitude() {
-		return latitude;
+
+	public String getCity() {
+		return city;
 	}
-	public void setLatitude(Double latitude) {
-		this.latitude = latitude;
+
+	public void setCity(String city) {
+		this.city = city;
 	}
-	public Businesses getBusiness() {
-		return business;
+
+	public String getState() {
+		return state;
 	}
-	public void setBusiness(Businesses business) {
-		this.business = business;
+
+	public void setState(String state) {
+		this.state = state;
+
 	}
-	@Override
-	public String toString() {
-		return "Stop [yelpId=" + yelpId + ", business=" + business + ", longitude=" + longitude + ", latitude="
-				+ latitude + "]";
-	}
+
 }

@@ -8,9 +8,9 @@
 </head>
 <body>
 <p>
-${distance}
+${distanceNew}
 <br>
-${duration}
+${durationNew}
 </p>
 
 </body>

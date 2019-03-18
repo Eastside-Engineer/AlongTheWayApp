@@ -68,13 +68,23 @@ public class BusinessSearchApiService {
 		return apiResponse.getBusinesses();
 	}
 
-	// search yelp by ID
+	// search yelp by ID return business
 	public Businesses getResultById(String id) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + yelpkey);
 		String url = "https://api.yelp.com/v3/businesses/" + id;
 		Businesses apiResponse = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), Businesses.class)
 				.getBody();
+		return apiResponse;
+	}
+	
+	// search yelp by id return string
+	public String getNameById(String id) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", "Bearer " + yelpkey);
+		String url = "https://api.yelp.com/v3/businesses/" + id;
+		String apiResponse = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), Businesses.class)
+				.getBody().getName();
 		return apiResponse;
 	}
 

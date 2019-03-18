@@ -14,7 +14,11 @@
 
 <%@include file="partials/header.jsp"%>
 
+
 <div class="container">
+<!--
+<a href="/dt">Trial</a>
+  -->
 
 	<h1>Current Route</h1>
 	<table class="table table-striped">
@@ -29,18 +33,26 @@
 		<c:if test = "${stops != null}">
 			<c:forEach items="${stops}" var="stop">
 				<tr>
-					<td>${stop.business.name}</td>
-					<td>${stop.business.location.city}, ${stop.business.location.state}</td>
+					<td>${stop.name}</td>
+					<td>${stop.city}, ${stop.state}</td>
 				</tr>
 			</c:forEach>
 		</c:if>	
-	<tr>
-		<td>End location</td>
-		<td>${location2}</td>
-	</tr>
+		<tr>
+			<td>End location</td>
+			<td>${location2}</td>
+		</tr>
 	</table>
 
-	<h1>Time and Distance of Routes</h1>
+	<form action="/matrix">
+				<input type="hidden" name="stops" value="${stops}"/>
+				<input type="hidden" name="location1" value="${location1}"/>
+				<input type="hidden" name="location2" value="${location2}"/>
+				<button type="submit" class="btn btn-primary">Save this route</button>
+	</form>
+	
+	<h3>Time and Distance of Routes</h3> 
+	
 	<table class="table table-hover">
 		<tr>
 			<th>${location1} to ${location2}</th>
@@ -48,17 +60,18 @@
 		</tr>
 		<tr>
 			<td>Time: ${duration}</td>
-			<td>Time: ${duration}</td>
+			<td>Time: ${durationNew}</td>
 		</tr>
 		<tr>
 			<td>Distance: ${distance}</td>
-			<td>Distance: ${distance}</td>
+			<td>Distance: ${distanceNew}</td>
 		</tr>
 	</table>
 	
 	<iframe width="600" height="450" frameborder="0" style="border: 0"
 		src="https://www.google.com/maps/embed/v1/directions?origin=${loc1}&destination=${loc2}&waypoints=${Busi1}&key=AIzaSyBF6NVoNSyPvZ9PWq3J1WVh3Yup75hSM84"
 		allowfullscreen> </iframe>
+
 
 	<table class="table table-striped">
 		<tr>
@@ -79,6 +92,7 @@
 				<td><a class="btn btn-primary" href="${result.url}"
 					target="_blank">Yelp page</a></td>
 
+
 				<td><form action="/add">
 						<input type="hidden" name="latitude" value="${result.coordinates.latitude}"/>
 						<input type="hidden" name="longitude" value="${result.coordinates.longitude}"/>
@@ -92,6 +106,8 @@
 			</tr>
 		</c:forEach>
 	</table>
+
+
 
 </div>
 
