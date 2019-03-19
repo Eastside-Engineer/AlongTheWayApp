@@ -81,16 +81,8 @@
 		&key=AIzaSyBF6NVoNSyPvZ9PWq3J1WVh3Yup75hSM84">
 		</iframe> --%>
 		
-		<h1>Original Route</h1>
-
-		<iframe id="iframe" width="600" height="450"
-			src="https://www.google.com/maps/embed/v1/directions?origin=${loc1}&destination=${loc2}&key=AIzaSyBF6NVoNSyPvZ9PWq3J1WVh3Yup75hSM84" allowfullscreen>
-		</iframe>
-		
-		<h1>Amended Map</h1>
 			<iframe id="iframe" width="600" height="450" 
-		src="https://www.google.com/maps/embed/v1/directions?origin=${loc1}&destination=${loc2}${waypointsUrlPart}&key=AIzaSyBF6NVoNSyPvZ9PWq3J1WVh3Yup75hSM84"
-		allowfullscreen> </iframe>
+		src="https://www.google.com/maps/embed/v1/directions?origin=${loc1}&destination=${loc2}${waypointsUrlPart}&key=AIzaSyBF6NVoNSyPvZ9PWq3J1WVh3Yup75hSM84"> </iframe>
 
 		<table class="table table-striped">
 			<tr>
