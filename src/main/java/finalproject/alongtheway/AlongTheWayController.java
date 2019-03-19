@@ -1,5 +1,6 @@
 package finalproject.alongtheway;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,13 +107,13 @@ public class AlongTheWayController {
 		// redirect to the results page, no need to add objects to model since the same info is already in the session
 		ModelAndView mav = new ModelAndView("redirect:/results");
 		
-		if (stop == null || stop.getName().isEmpty()) {
+		if (stop.getName() == null || stop.getName().isEmpty()) {
 			mav.addObject("waypoints", "");
 		} else {
 			//mav.addObject("waypoint", "&waypoints=");
-			String[] test = stop.getName().split(" ");
+			String[] parsestop1 = stop.getName().split(" ");
 
-			mav.addObject("waypoints","&waypoints=" + test[0] + "+" + test[1]);
+			mav.addObject("waypoints","&waypoints=" + parsestop1[0] + "+" + parsestop1[1]);
 			//mav.addObject("waypoints","&waypoints=Hamtramck,MI");
 		}
 
@@ -161,6 +162,7 @@ public class AlongTheWayController {
 			@SessionAttribute(name = "location2") String location2,
 			@SessionAttribute(name = "category") String category,
 			@SessionAttribute(name = "minrating") Double minrating,
+			@SessionAttribute(value = "stops", required = false) List<Stop> stops,
 			HttpSession session) {
 		
 		// define the steps along the way from the google directions api
@@ -218,6 +220,18 @@ public class AlongTheWayController {
 
 		String[] parseLoc1 = location1.split(",");
 		String[] parseLoc2 = location2.split(",");
+		
+		if (stops != null && !stops.isEmpty()) {
+			String waypointsUrlPart = "&waypoints=";
+			
+			
+			String safeLoc = URLEncoder.encode(stops.get(0).getName());
+			waypointsUrlPart += safeLoc;
+			
+			// TODO loop and add "|" between locations
+			
+			mav.addObject("waypointsUrlPart", waypointsUrlPart);
+		}
 		
 		mav.addObject("loc1", parseLoc1[0] + "+" + parseLoc1[1]);
 		mav.addObject("loc2", parseLoc2[0] + "+" + parseLoc2[1]);
