@@ -17,32 +17,33 @@
 
 	<div class="container" id="indexpage">
 		<h1>Along The Way</h1>
-		<br>
+		
 		<h4>
 			Where are <i>you</i> traveling?
 		</h4>
 
 		<form action="/submitform">
 			<div class="form-group">
+				<p>
 				<h5>Start City</h5>
 				<input placeholder="Ex: Detroit, MI" required
 					pattern="[A-Za-z]+[ ]*[A-Za-z]+,+[ ]*[A-Za-z]{2}" type="text"
-					name="location1" />
-				
+					name="location1" /> 
+				<p>
 				<h5>End City</h5>
 				<input placeholder="Ex: Seattle, WA" required
 					pattern="[A-Za-z]+[ ]*[A-Za-z]+,+[ ]*[A-Za-z]{2}" type="text"
 					name="location2" />
-				<p>
+				<br><br>
 				<select name="category">
-					<option>Select a
-						category&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+					<option value="disabled selected">Select a category&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
 					<option value="restaurants">Restaurants</option>
 					<option value="landmarks">Landmarks</option>
 				</select>
-					
-				<p class = "text-light"> Minimum Yelp Rating
+				
+				<br><br>
 				<select name ="minrating">
+				<option value="disabled selected">Minimum Yelp Rating&nbsp;&nbsp;</option>
 					<option value = 5.0>5.0</option>
 					<option value = 4.5>4.5</option>
 					<option value = 4.0 selected>4.0</option>

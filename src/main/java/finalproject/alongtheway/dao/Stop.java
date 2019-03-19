@@ -31,6 +31,7 @@ public class Stop implements Serializable {
 
 	public Stop() {}
 
+
 	public Stop(Stop from) {
 		this.id = from.id;
 		this.route = from.route;
@@ -42,6 +43,7 @@ public class Stop implements Serializable {
 		this.longitude = from.longitude;
 		
 	}
+
 	public Long getId() {
 		return id;
 	}

@@ -252,7 +252,8 @@ public class AlongTheWayController {
 
 			}
 
-			// TODO loop and add "|" between locations
+			// String moreStops = stops.stream().map(stop ->
+			// stop.getName()).collect(Collectors.joining("|"));
 
 			mav.addObject("waypointsUrlPart", waypointsUrlPart);
 		}
