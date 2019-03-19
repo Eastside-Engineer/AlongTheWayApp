@@ -215,6 +215,8 @@ public class AlongTheWayController {
 		String[] parseLoc1 = location1.split(",");
 		String[] parseLoc2 = location2.split(",");
 
+		System.out.println("map builder" + parseLoc1 + " " + parseLoc2);
+
 		mav.addObject("loc1", parseLoc1[0] + "+" + parseLoc1[1]);
 		mav.addObject("loc2", parseLoc2[0] + "+" + parseLoc2[1]);
 		mav.addObject("distance", dist);
@@ -252,30 +254,38 @@ public class AlongTheWayController {
 	private String total2(List<Legs> legs) {
 
 		String tot = "";
-		Double totes = 0.0;
-		Double tote = 0.0;
+		Double mins = 0.0;
+		Double hours = 0.0;
 
 		for (int i = 0; i < legs.size(); i++) {
-			tot = tot + legs.get(i).getDuration().getText();
 
-			if (tot.contains("hr")) {
+			tot = legs.get(i).getDuration().getText();
+
+			if (tot.contains("hour")) {
 				String[] str = tot.split("\\s+");
-				tote = tote + Double.parseDouble(str[0]);
 
-				totes = totes + Double.parseDouble(str[2]);
+				hours = hours + Double.parseDouble(str[0]);
+
+				mins = mins + Double.parseDouble(str[2]);
+
+				System.out.println(mins);
+
 			} else {
+
 				String[] str1 = tot.split("\\s+");
-				totes = totes + Double.parseDouble(str1[0]);
+				mins = mins + Double.parseDouble(str1[0]);
+
+				System.out.println("no hours" + mins);
 			}
 
 		}
 
-		Double hr = totes / 60;
-		Double min = totes % 60;
+		Double hr = mins / 60;
+		Double min = mins % 60;
 		System.out.println("hr" + hr + " min " + min);
 
 		Integer tot2 = min.intValue();
-		Integer tot1 = tote.intValue() + hr.intValue();
+		Integer tot1 = hours.intValue() + hr.intValue();
 
 		return tot1 + " hours " + tot2 + " mins";
 

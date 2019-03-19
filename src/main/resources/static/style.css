@@ -51,9 +51,13 @@ body {
 	align: center;
 
 }
-::placeholder {
-  color: black;
- 
+
+#iframe{
+	
+	border: 1px solid black;
+	align: center;
+	width: 100%;
+	
 }
-}
+
 

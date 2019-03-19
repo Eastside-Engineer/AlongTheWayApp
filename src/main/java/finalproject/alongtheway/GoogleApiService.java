@@ -80,14 +80,14 @@ public class GoogleApiService {
 
 		for (int i = 0; i < stops.size(); i++) {
 			if (i > 0) {
-				waypoints = waypoints + "|" + stops.get(i).getCity() + "," + stops.get(i).getState();
+				waypoints = waypoints + "|" + citySplit(stops.get(i).getCity()) + "," + stops.get(i).getState();
 			} else {
-				waypoints = waypoints + stops.get(i).getCity() + "," + stops.get(i).getState();
+				waypoints = citySplit(stops.get(i).getCity()) + "," + stops.get(i).getState();
 			}
 		}
 
 		String url = "https://maps.googleapis.com/maps/api/directions/json?units=imperial&origin=" + location1
-				+ "&destination=" + location2 + "&waypoints=optimize:true" + waypoints + "&key=" + googlekey;
+				+ "&destination=" + location2 + "&waypoints=optimize:true|" + waypoints + "&key=" + googlekey;
 
 		System.out.println(url);
 
@@ -99,6 +99,7 @@ public class GoogleApiService {
 
 	}
 
+	// fix user input by eliminating spaces and adding + between city names
 	public String splitter(String str1) {
 
 		String[] str2 = str1.split(",");
@@ -111,6 +112,18 @@ public class GoogleApiService {
 			return str5;
 		} else {
 			return str3 + "," + str;
+		}
+	}
+
+	// replace space with + in city name
+	public String citySplit(String str1) {
+
+		if (str1.contains(" ")) {
+			String[] str4 = str1.split("\\s");
+			String str5 = str4[0] + "+" + str4[1];
+			return str5;
+		} else {
+			return str1;
 		}
 	}
 
