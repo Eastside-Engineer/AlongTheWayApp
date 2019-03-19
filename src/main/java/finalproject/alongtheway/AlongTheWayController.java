@@ -167,16 +167,24 @@ public class AlongTheWayController {
 			@SessionAttribute(name = "location2") String location2,
 			@SessionAttribute(name = "category", required = false) String category,
 			@SessionAttribute(name = "minrating", required = false) Double minrating,
-			@SessionAttribute(name = "stops", required = false) List<Stop> stops, HttpSession session) {
+			@SessionAttribute(name = "stops", required = false) List<Stop> stops,
+			@SessionAttribute(name = "steps", required = false) List<Steps> steps,
+			@SessionAttribute(name = "waypoints", required = false) List<Coordinates> waypoints,
+			@SessionAttribute(name = "fullResults", required = false) List<Businesses> fullResults,
+			HttpSession session) {
 
 		// define the steps along the way from the google directions api
-		List<Steps> steps = googleApiService.getWaypoints(location1, location2);
+		if (steps == null) {
+			steps = googleApiService.getWaypoints(location1, location2);
+			session.setAttribute("steps", steps);
+		}
 
 		// initialize the waypoints to be a list of Coordinates (paired lat and long)
-		List<Coordinates> waypoints = new ArrayList<Coordinates>();
-
-		// set save the waypoints list to the session
-		session.setAttribute("waypoints", waypoints);
+		if (waypoints == null) {
+			waypoints = new ArrayList<Coordinates>();
+			// set save the waypoints list to the session if empty at first
+			session.setAttribute("waypoints", waypoints);
+		}
 
 		int i = 0;
 		for (Steps stepwp : steps) {
@@ -188,6 +196,7 @@ public class AlongTheWayController {
 				coord.setLongitude(stepwp.getStartLocation().getStartLong());
 				waypoints.add(coord);
 			}
+
 			// store each lat and long from the list of steps in a list of Coordinates
 			// called waypoints
 			Coordinates coord = new Coordinates();
@@ -198,27 +207,31 @@ public class AlongTheWayController {
 			}
 
 			i++;
+
 		}
 
 		// fullResults will be a list of all results from all waypoints
-		List<Businesses> fullResults = new ArrayList<Businesses>();
+		if (fullResults == null) {
+			fullResults = new ArrayList<Businesses>();
+			session.setAttribute("fullResults", fullResults);
 
-		for (Coordinates coordinates : waypoints) {
-			// results will take in the yelp response from each waypoint
-			List<Businesses> results = businessSearchService.getAllResultsByCoordByCategory(coordinates.getLatitude(),
-					coordinates.getLongitude(), category);
+			for (Coordinates coordinates : waypoints) {
+				// results will take in the yelp response from each waypoint
+				List<Businesses> results = businessSearchService.getAllResultsByCoordByCategory(
+						coordinates.getLatitude(), coordinates.getLongitude(), category);
 
-			List<String> names = new ArrayList<String>();
+				List<String> names = new ArrayList<String>();
 
-			for (Businesses busi : results) {
-				if (!names.contains(busi.getId())) {
-					names.add(busi.getId());
-					// return fullResults from all waypoints for items rated 4.0 or higher
-					if (minrating == null) {
-						minrating = 4.0;
-					}
-					if (busi.getRating() >= minrating) {
-						fullResults.add(busi);
+				for (Businesses busi : results) {
+					if (!names.contains(busi.getId())) {
+						names.add(busi.getId());
+						// return fullResults from all waypoints for items rated 4.0 or higher
+						if (minrating == null) {
+							minrating = 4.0;
+						}
+						if (busi.getRating() >= minrating) {
+							fullResults.add(busi);
+						}
 					}
 				}
 			}
@@ -266,6 +279,7 @@ public class AlongTheWayController {
 		mav.addObject("distance", dist);
 		mav.addObject("duration", time);
 		return mav;
+
 	}
 
 	// when the user clicks from results page to details

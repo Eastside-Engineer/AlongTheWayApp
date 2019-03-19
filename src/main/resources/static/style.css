@@ -37,11 +37,15 @@ body {
 	
 }
 
+#indexheader{
+	
+	margin-top: 25px;
+	
+	
+}
 #indexpage{
 	
-	margin-top: 275px
-	
-	
+	margin-top: 205px;
 }
 
 
@@ -57,6 +61,11 @@ body {
 	border: 1px solid black;
 	align: center;
 	width: 100%;
+	
+}
+
+.twoequalcolumns td, .twoequalcolumns th {
+	width: 50%;
 	
 }
 
