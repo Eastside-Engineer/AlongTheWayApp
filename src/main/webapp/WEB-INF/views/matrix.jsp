@@ -36,7 +36,7 @@
 						  <div class="panel panel-default">
 						    <div class="panel-heading">
 						      <p class="panel-title">
-						        <a data-toggle="collapse" href="#collapse${amended.id}"> View Stops</a>
+						        <a data-toggle="collapse" href="#collapse${amended.id}"> View ${ amended.stops.size() } Stops</a>
 						      </p>
 						    </div>
 						    <div id="collapse${amended.id}" class="panel-collapse collapse">

@@ -110,9 +110,11 @@ public class AlongTheWayController {
 	}
 
 	@RequestMapping("/saveroute")
-	public ModelAndView saveroute(@SessionAttribute(value = "location1", required = true) String location1,
+	public ModelAndView saveroute(
+			@SessionAttribute(value = "location1", required = true) String location1,
 			@SessionAttribute(value = "location2", required = true) String location2,
-			@SessionAttribute(value = "stops", required = false) List<Stop> stops, HttpSession session) {
+			@SessionAttribute(value = "stops", required = false) List<Stop> stops, 
+			HttpSession session) {
 
 		Route route = new Route();
 		route.setLocation1(location1);
@@ -139,6 +141,11 @@ public class AlongTheWayController {
 
 	@RequestMapping("/edit")
 	public ModelAndView editRouteForm(@RequestParam("id") Long id, HttpSession session) {
+		session.removeAttribute("location1");
+		session.removeAttribute("location2");
+		session.removeAttribute("stops");
+		session.removeAttribute("fullResults");
+		
 		Route route = dao.findById(id);
 		String location1 = route.getLocation1();
 		String location2 = route.getLocation2();
@@ -205,23 +212,20 @@ public class AlongTheWayController {
 			if (stepwp.getDistance().getValue() > 4000) {
 				waypoints.add(coord);
 			}
-
 			i++;
-
 		}
 
 		// fullResults will be a list of all results from all waypoints
 		if (fullResults == null) {
 			fullResults = new ArrayList<Businesses>();
-			session.setAttribute("fullResults", fullResults);
-
+			session.setAttribute("fullResults", fullResults);		
+			List<String> names = new ArrayList<String>();
+			
 			for (Coordinates coordinates : waypoints) {
 				// results will take in the yelp response from each waypoint
-				List<Businesses> results = businessSearchService.getAllResultsByCoordByCategory(
-						coordinates.getLatitude(), coordinates.getLongitude(), category);
-
-				List<String> names = new ArrayList<String>();
-
+				List<Businesses> results = businessSearchService.getAllResultsByCoordByCategory(coordinates.getLatitude(),
+						coordinates.getLongitude(), category);
+	
 				for (Businesses busi : results) {
 					if (!names.contains(busi.getId())) {
 						names.add(busi.getId());
