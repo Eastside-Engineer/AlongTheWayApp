@@ -6,9 +6,19 @@ public class Steps {
 
 	@JsonProperty("end_location")
 	private End endLocation;
-	
+
+	private Distance distance;
+
 	@JsonProperty("start_location")
 	private Start startLocation;
+
+	public Distance getDistance() {
+		return distance;
+	}
+
+	public void setDistance(Distance distance) {
+		this.distance = distance;
+	}
 
 	public End getEndLocation() {
 		return endLocation;
@@ -30,6 +40,5 @@ public class Steps {
 	public String toString() {
 		return "Steps [endLocation=" + endLocation + ", startLocation=" + startLocation + "]";
 	}
-	
-	
+
 }

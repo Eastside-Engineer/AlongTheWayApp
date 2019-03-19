@@ -193,7 +193,10 @@ public class AlongTheWayController {
 			Coordinates coord = new Coordinates();
 			coord.setLatitude(stepwp.getEndLocation().getEndLat());
 			coord.setLongitude(stepwp.getEndLocation().getEndLong());
-			waypoints.add(coord);
+			if (stepwp.getDistance().getValue() > 4000) {
+				waypoints.add(coord);
+			}
+
 			i++;
 		}
 
@@ -239,12 +242,12 @@ public class AlongTheWayController {
 
 				if (j > 0) {
 
-					safeLoc = "|" + URLEncoder.encode(stops.get(j).getName());
+					safeLoc = "|" + URLEncoder.encode(stops.get(j).getCity()) + ","
+							+ URLEncoder.encode(stops.get(j).getState());
 
 				} else {
-
-					safeLoc = URLEncoder.encode(stops.get(j).getName());
-
+					safeLoc = URLEncoder.encode(stops.get(j).getCity()) + ","
+							+ URLEncoder.encode(stops.get(j).getState());
 				}
 
 				waypointsUrlPart += safeLoc;
@@ -335,15 +338,20 @@ public class AlongTheWayController {
 		Double hr = mins / 60;
 		Double min = mins % 60;
 		Double day = days / 24;
+		Double newDay = hours / 24;
 
 		Integer tot3 = days.intValue() + day.intValue();
 		Integer tot2 = min.intValue();
 		Integer tot1 = hours.intValue() + hr.intValue();
+		Integer tot4 = newDay.intValue();
 
-		if (days != 0.0) {
+		if (days > 0) {
 			return tot3 + " day " + tot1 + " hours " + tot2 + " mins";
+		} else if (newDay >= 1) {
+			return tot4 + " day " + tot1 + " hours " + tot2 + " mins";
+		} else {
+			return tot1 + " hours " + tot2 + " mins";
 		}
-		return tot1 + " hours " + tot2 + " mins";
 
 	}
 
