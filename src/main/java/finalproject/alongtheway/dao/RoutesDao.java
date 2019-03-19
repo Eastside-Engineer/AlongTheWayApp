@@ -17,7 +17,6 @@ public class RoutesDao {
 
 	public List<Route> findAll() {
 		return em.createQuery("FROM Route", Route.class).getResultList();
-
 	}
 
 	public Route findById(Long id) {
@@ -25,10 +24,23 @@ public class RoutesDao {
 	}
 
 	public void create(Route route) {
+		for (Stop stop : route.getStops()) {
+			stop.setId(null);
+			stop.setRoute(route);
+		}
 		em.persist(route);
 	}
 
 	public void update(Route route) {
+		for (int i = 0; i < route.getStops().size(); i++) {
+			Stop stop = route.getStops().get(i);
+			if (stop.getId() != null) {
+				stop = em.find(Stop.class, stop.getId());
+				route.getStops().set(i, stop);
+			} else {
+				stop.setRoute(route);
+			}
+		}
 		em.merge(route);
 	}
 
