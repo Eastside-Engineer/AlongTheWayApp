@@ -240,12 +240,14 @@ public class AlongTheWayController {
 
 		String tot = "";
 		Double totes = 0.0;
+
 		for (int i = 0; i < legs.size(); i++) {
-			tot = tot + legs.get(i).getDistance().getText();
+
+			tot = legs.get(i).getDistance().getText();
 
 			String[] str = tot.split("\\s+");
 
-			totes = totes + Double.parseDouble(str[0]);
+			totes = totes + Double.parseDouble(str[0].replace(",", ""));
 		}
 
 		Integer tot1 = totes.intValue();
@@ -259,12 +261,23 @@ public class AlongTheWayController {
 		String tot = "";
 		Double mins = 0.0;
 		Double hours = 0.0;
+		Double days = 0.0;
 
 		for (int i = 0; i < legs.size(); i++) {
 
 			tot = legs.get(i).getDuration().getText();
 
-			if (tot.contains("hour")) {
+			if (tot.contains("day")) {
+				String[] str = tot.split("\\s+");
+
+				days = days + Double.parseDouble(str[0]);
+
+				hours = hours + Double.parseDouble(str[2]);
+
+				System.out.println(days);
+				System.out.println(hours);
+
+			} else if (tot.contains("hour")) {
 				String[] str = tot.split("\\s+");
 
 				hours = hours + Double.parseDouble(str[0]);
@@ -281,9 +294,15 @@ public class AlongTheWayController {
 
 		Double hr = mins / 60;
 		Double min = mins % 60;
+		Double day = days / 24;
 
+		Integer tot3 = days.intValue() + day.intValue();
 		Integer tot2 = min.intValue();
 		Integer tot1 = hours.intValue() + hr.intValue();
+
+		if (days != 0.0) {
+			return tot3 + " day" + tot1 + " hours";
+		}
 
 		return tot1 + " hours " + tot2 + " mins";
 
