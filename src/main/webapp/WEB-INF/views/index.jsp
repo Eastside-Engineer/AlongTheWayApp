@@ -18,7 +18,7 @@
 	<div class="container" id="indexpage">
 		<br>
 		<h1>Along The Way</h1>
-		</br>
+		<br>
 		<h4>
 			Where are <i>you</i> traveling?
 		</h4>
