@@ -3,6 +3,7 @@ package finalproject.alongtheway;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -207,13 +208,14 @@ public class AlongTheWayController {
 		
 		if (stops != null && !stops.isEmpty()) {
 			String waypointsUrlPart = "&waypoints=";
-			
+		
 			
 			String safeLoc = URLEncoder.encode(stops.get(0).getName());
 			waypointsUrlPart += safeLoc;
 			
+			String moreStops = stops.stream().map(stop -> stop.getName()).collect(Collectors.joining("|"));
 			// TODO loop and add "|" between locations
-			
+			System.out.println(moreStops);
 			mav.addObject("waypointsUrlPart", waypointsUrlPart);
 		}
 
