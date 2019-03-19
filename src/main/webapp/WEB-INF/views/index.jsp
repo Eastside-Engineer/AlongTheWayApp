@@ -43,7 +43,7 @@
 				<br><br>
 				<select name="category">
 
-					<option value="disabled selected">Select a
+					<option value="landmarks">Select a
 						category&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
 
 					<option value="restaurants">Restaurants</option>
@@ -52,7 +52,7 @@
 				
 				<br><br>
 				<select name ="minrating">
-				<option value="disabled selected">Minimum Yelp Rating&nbsp;&nbsp;</option>
+				<option value="4.0">Minimum Yelp Rating&nbsp;&nbsp;</option>
 					<option value = 5.0>5.0</option>
 					<option value = 4.5>4.5</option>
 					<option value = 4.0>4.0</option>
