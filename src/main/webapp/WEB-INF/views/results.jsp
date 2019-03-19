@@ -18,7 +18,7 @@
 
 		<h1>Current Route</h1>
 		
-		<table class="table table-striped">
+		<table class="table table-striped twoequalcolumns">
 			<tr>
 				<th>${location1} to ${location2}</th>
 				<th>Time/Distance</th>
@@ -33,7 +33,8 @@
 			</tr>
 		</table>
 		
-		<table class="table table">
+		
+		<table class="table twoequalcolumns">
 			<tr>
 				<th>Added Stop(s)</th>
 				<th>City/State</th>
@@ -51,12 +52,6 @@
 			
 		</table>
 
-
-<%-- 	<iframe width="600" height="450" frameborder="0" style="border: 0"
-		src="https://www.google.com/maps/embed/v1/directions?origin=${loc1}&destination=${loc2}${waypoint}
-		<c:forEach var="stop" items="${waypointsURL}">${stop.name }</c:forEach>&key=AIzaSyBF6NVoNSyPvZ9PWq3J1WVh3Yup75hSM84"
-		allowfullscreen> </iframe> --%>
-
 		<form action="/saveroute">
 			<c:if test="${stops != null}">
 				<input type="hidden" name="stops" value="${stops}" />
@@ -68,14 +63,6 @@
 				route&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
 		</form>
 		<br>
-
-
-
-		<%-- <iframe id="iframe" width="600" height="450"
-			src="https://www.google.com/maps/embed/v1/directions?origin=${loc1}&destination=${loc2}${waypoint}
-		<c:forEach var="stop" items="${waypointsURL}">${stop.name }</c:forEach>
-		&key=AIzaSyBF6NVoNSyPvZ9PWq3J1WVh3Yup75hSM84">
-		</iframe> --%>
 		
 
 			<iframe id="iframe" width="600" height="450" 

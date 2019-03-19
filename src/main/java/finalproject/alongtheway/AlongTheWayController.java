@@ -170,8 +170,7 @@ public class AlongTheWayController {
 //	 when populating the results page, we want to return the set of results
 //	 generated from each waypoint along the way as a single list
 	@RequestMapping("/results")
-	public ModelAndView results(
-			@SessionAttribute(name = "location1") String location1,
+	public ModelAndView results(@SessionAttribute(name = "location1") String location1,
 			@SessionAttribute(name = "location2") String location2,
 			@SessionAttribute(name = "category", required = false) String category,
 			@SessionAttribute(name = "minrating", required = false) Double minrating,
@@ -186,35 +185,38 @@ public class AlongTheWayController {
 			steps = googleApiService.getWaypoints(location1, location2);
 			session.setAttribute("steps", steps);
 		}
-		
+
 		// initialize the waypoints to be a list of Coordinates (paired lat and long)
 		if (waypoints == null) {
 			waypoints = new ArrayList<Coordinates>();
 			// set save the waypoints list to the session if empty at first
 			session.setAttribute("waypoints", waypoints);
-				
-			int i = 0;
-			for (Steps stepwp : steps) {
-				// set the first coordinates in the list to be the starting location, as steps
-				// doesn't include location 0
-				if (i == 0) {
-					Coordinates coord = new Coordinates();
-					coord.setLatitude(stepwp.getStartLocation().getStartLat());
-					coord.setLongitude(stepwp.getStartLocation().getStartLong());
-					waypoints.add(coord);
-				}
-				// store each lat and long from the list of steps in a list of Coordinates
-				// called waypoints
+		}
+
+		int i = 0;
+		for (Steps stepwp : steps) {
+			// set the first coordinates in the list to be the starting location, as steps
+			// doesn't include location 0
+			if (i == 0) {
 				Coordinates coord = new Coordinates();
-				coord.setLatitude(stepwp.getEndLocation().getEndLat());
-				coord.setLongitude(stepwp.getEndLocation().getEndLong());
+				coord.setLatitude(stepwp.getStartLocation().getStartLat());
+				coord.setLongitude(stepwp.getStartLocation().getStartLong());
 				waypoints.add(coord);
-				i++;
 			}
+
+			// store each lat and long from the list of steps in a list of Coordinates
+			// called waypoints
+			Coordinates coord = new Coordinates();
+			coord.setLatitude(stepwp.getEndLocation().getEndLat());
+			coord.setLongitude(stepwp.getEndLocation().getEndLong());
+			if (stepwp.getDistance().getValue() > 4000) {
+				waypoints.add(coord);
+			}
+			i++;
 		}
 
 		// fullResults will be a list of all results from all waypoints
-		if (fullResults == null) {	
+		if (fullResults == null) {
 			fullResults = new ArrayList<Businesses>();
 			session.setAttribute("fullResults", fullResults);		
 			List<String> names = new ArrayList<String>();
@@ -257,12 +259,12 @@ public class AlongTheWayController {
 
 				if (j > 0) {
 
-					safeLoc = "|" + URLEncoder.encode(stops.get(j).getName());
+					safeLoc = "|" + URLEncoder.encode(stops.get(j).getCity()) + ","
+							+ URLEncoder.encode(stops.get(j).getState());
 
 				} else {
-
-					safeLoc = URLEncoder.encode(stops.get(j).getName());
-
+					safeLoc = URLEncoder.encode(stops.get(j).getCity()) + ","
+							+ URLEncoder.encode(stops.get(j).getState());
 				}
 
 				waypointsUrlPart += safeLoc;
@@ -281,6 +283,7 @@ public class AlongTheWayController {
 		mav.addObject("distance", dist);
 		mav.addObject("duration", time);
 		return mav;
+
 	}
 
 	// when the user clicks from results page to details
@@ -353,15 +356,20 @@ public class AlongTheWayController {
 		Double hr = mins / 60;
 		Double min = mins % 60;
 		Double day = days / 24;
+		Double newDay = hours / 24;
 
 		Integer tot3 = days.intValue() + day.intValue();
 		Integer tot2 = min.intValue();
 		Integer tot1 = hours.intValue() + hr.intValue();
+		Integer tot4 = newDay.intValue();
 
-		if (days != 0.0) {
+		if (days > 0) {
 			return tot3 + " day " + tot1 + " hours " + tot2 + " mins";
+		} else if (newDay >= 1) {
+			return tot4 + " day " + tot1 + " hours " + tot2 + " mins";
+		} else {
+			return tot1 + " hours " + tot2 + " mins";
 		}
-		return tot1 + " hours " + tot2 + " mins";
 
 	}
 

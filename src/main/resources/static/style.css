@@ -64,4 +64,9 @@ body {
 	
 }
 
+.twoequalcolumns td, .twoequalcolumns th {
+	width: 50%;
+	
+}
+
 
