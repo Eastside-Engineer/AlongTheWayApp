@@ -1,5 +1,7 @@
 package finalproject.alongtheway;
 
+import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,9 +47,12 @@ public class AlongTheWayController {
 	}
 
 	@RequestMapping("/submitform")
-	public ModelAndView formsubmit(@RequestParam(name = "location1") String location1,
-			@RequestParam(name = "location2") String location2, @RequestParam(name = "category") String category,
-			@RequestParam(name = "minrating") Double minrating, HttpSession session) {
+	public ModelAndView formsubmit(
+			@RequestParam(name = "location1") String location1,
+			@RequestParam(name = "location2") String location2, 
+			@RequestParam(name = "category") String category,
+			@RequestParam(name = "minrating") Double minrating, 
+			HttpSession session) {
 		// when first clicking submit button from index page, add the variables to the
 		// session
 		session.setAttribute("location1", location1);
@@ -104,26 +109,12 @@ public class AlongTheWayController {
 		// info is already in the session
 		ModelAndView mav = new ModelAndView("redirect:/results");
 
-		if (stop == null || stop.getName().isEmpty()) {
-			mav.addObject("waypoints", "");
-		} else {
-			// mav.addObject("waypoint", "&waypoints=");
-			String[] test = stop.getName().split(" ");
-
-			mav.addObject("waypoints", "&waypoints=" + test[0] + "+" + test[1]);
-			// mav.addObject("waypoints","&waypoints=Hamtramck,MI");
-		}
-
-		// String[] parsestop1 = stop.getName().split(" ");
-		// String[] parsestop2 = stop.getName().split(" ");
-		// mav.addObject("stop1", parsestop1[0] + "+" + parsestop1[1]);
-		// mav.addObject("stop2", parsestop2[0] + "+" + parsestop2[1]);
-
 		return mav;
 	}
 
 	@RequestMapping("/saveroute")
-	public ModelAndView saveroute(@SessionAttribute(value = "location1", required = true) String location1,
+	public ModelAndView saveroute(
+			@SessionAttribute(value = "location1", required = true) String location1,
 			@SessionAttribute(value = "location2", required = true) String location2,
 			@SessionAttribute(value = "stops", required = false) List<Stop> stops, HttpSession session) {
 
@@ -139,6 +130,7 @@ public class AlongTheWayController {
 	public ModelAndView showRoutes(HttpSession session) {
 		// return list of all items in DB and pass to model
 		List<Route> theRoutes = dao.findAll();
+		System.out.println(theRoutes);
 		return new ModelAndView("matrix", "amend", theRoutes);
 	}
 
@@ -148,14 +140,39 @@ public class AlongTheWayController {
 		ModelAndView mav = new ModelAndView("redirect:/matrix");
 		return mav;
 	}
+	
+	@RequestMapping("/edit")
+	public ModelAndView editRouteForm(@RequestParam("id") Long id, HttpSession session) {
+		Route route = dao.findById(id);
+		String location1 = route.getLocation1();
+		String location2 = route.getLocation2();
+		// in order to avoid Hibernate lazy initialization problem, copy the stops into a regular ArrayList.
+		route.setStops( new ArrayList<>(route.getStops()) );
+		
+		List<Stop> stops = route.getStops();
+		
+//		for (int i = 0; i<stops.size(); i++) {
+//			stops.set(i, new Stop(stops.get(i)));
+//			stops.get(i).setRoute(null);
+//		}
+		session.setAttribute("location1", location1);
+		session.setAttribute("location2", location2);
+		session.setAttribute("category", "landmarks");
+		session.setAttribute("stops", stops);
+		ModelAndView mav = new ModelAndView("redirect:/results");
+		return mav;
+	}
 
 //	 when populating the results page, we want to return the set of results
 //	 generated from each waypoint along the way as a single list
 	@RequestMapping("/results")
-	public ModelAndView results(@SessionAttribute(name = "location1") String location1,
+	public ModelAndView results(
+			@SessionAttribute(name = "location1") String location1,
 			@SessionAttribute(name = "location2") String location2,
-			@SessionAttribute(name = "category") String category,
-			@SessionAttribute(name = "minrating") Double minrating, HttpSession session) {
+			@SessionAttribute(name = "category", required = false) String category,
+			@SessionAttribute(name = "minrating", required = false) Double minrating, 
+			@SessionAttribute(name = "stops", required = false) List<Stop> stops,
+			HttpSession session) {
 
 		// define the steps along the way from the google directions api
 		List<Steps> steps = googleApiService.getWaypoints(location1, location2);
@@ -199,6 +216,9 @@ public class AlongTheWayController {
 				if (!names.contains(busi.getId())) {
 					names.add(busi.getId());
 					// return fullResults from all waypoints for items rated 4.0 or higher
+					if (minrating == null) {
+						minrating = 4.0;
+					}
 					if (busi.getRating() >= minrating) {
 						fullResults.add(busi);
 					}
@@ -215,7 +235,16 @@ public class AlongTheWayController {
 		String[] parseLoc1 = location1.split(",");
 		String[] parseLoc2 = location2.split(",");
 
-		System.out.println("map builder" + parseLoc1 + " " + parseLoc2);
+		if (stops != null && !stops.isEmpty()) {
+			String waypointsUrlPart = "&waypoints=";
+
+			String safeLoc = URLEncoder.encode(stops.get(0).getName());
+			waypointsUrlPart += safeLoc;
+
+			// TODO loop and add "|" between locations
+
+			mav.addObject("waypointsUrlPart", waypointsUrlPart);
+		}
 
 		mav.addObject("loc1", parseLoc1[0] + "+" + parseLoc1[1]);
 		mav.addObject("loc2", parseLoc2[0] + "+" + parseLoc2[1]);
@@ -237,17 +266,21 @@ public class AlongTheWayController {
 
 		String tot = "";
 		Double totes = 0.0;
+
 		for (int i = 0; i < legs.size(); i++) {
-			tot = tot + legs.get(i).getDistance().getText();
+
+			tot = legs.get(i).getDistance().getText();
 
 			String[] str = tot.split("\\s+");
 
-			totes = totes + Double.parseDouble(str[0]);
+			totes = totes + Double.parseDouble(str[0].replace(",", ""));
 		}
 
 		Integer tot1 = totes.intValue();
 
-		return tot1 + " mi";
+		DecimalFormat formatter = new DecimalFormat("#,###");
+
+		return formatter.format(tot1) + " mi";
 	}
 
 	// sum LEGS parsing Hours and Minutes rounding to INT
@@ -256,12 +289,23 @@ public class AlongTheWayController {
 		String tot = "";
 		Double mins = 0.0;
 		Double hours = 0.0;
+		Double days = 0.0;
 
 		for (int i = 0; i < legs.size(); i++) {
 
 			tot = legs.get(i).getDuration().getText();
 
-			if (tot.contains("hour")) {
+			if (tot.contains("day")) {
+				String[] str = tot.split("\\s+");
+
+				days = days + Double.parseDouble(str[0]);
+
+				hours = hours + Double.parseDouble(str[2]);
+
+				System.out.println(days);
+				System.out.println(hours);
+
+			} else if (tot.contains("hour")) {
 				String[] str = tot.split("\\s+");
 
 				hours = hours + Double.parseDouble(str[0]);
@@ -278,10 +322,15 @@ public class AlongTheWayController {
 
 		Double hr = mins / 60;
 		Double min = mins % 60;
+		Double day = days / 24;
 
+		Integer tot3 = days.intValue() + day.intValue();
 		Integer tot2 = min.intValue();
 		Integer tot1 = hours.intValue() + hr.intValue();
 
+		if (days != 0.0) {
+			return tot3 + " day " + tot1 + " hours " + tot2 + " mins";
+		}
 		return tot1 + " hours " + tot2 + " mins";
 
 	}
