@@ -18,7 +18,7 @@
 
 		<h1>Current Route</h1>
 		
-		<table class="table table-striped">
+		<table class="table table-striped twoequalcolumns">
 			<tr>
 				<th>${location1} to ${location2}</th>
 				<th>Time/Distance</th>
@@ -33,7 +33,8 @@
 			</tr>
 		</table>
 		
-		<table class="table table">
+		
+		<table class="table twoequalcolumns">
 			<tr>
 				<th>Added Stop(s)</th>
 				<th>City/State</th>
