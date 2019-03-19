@@ -55,7 +55,7 @@
 
 		<table class="table table-hover">
 			<tr>
-				<th>${location1}to ${location2}</th>
+				<th>${location1} to ${location2}</th>
 				<th>Amended</th>
 			</tr>
 			<tr>

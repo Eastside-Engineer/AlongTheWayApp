@@ -45,9 +45,12 @@ public class AlongTheWayController {
 	}
 
 	@RequestMapping("/submitform")
-	public ModelAndView formsubmit(@RequestParam(name = "location1") String location1,
-			@RequestParam(name = "location2") String location2, @RequestParam(name = "category") String category,
-			@RequestParam(name = "minrating") Double minrating, HttpSession session) {
+	public ModelAndView formsubmit(
+			@RequestParam(name = "location1") String location1,
+			@RequestParam(name = "location2") String location2, 
+			@RequestParam(name = "category") String category,
+			@RequestParam(name = "minrating") Double minrating, 
+			HttpSession session) {
 		// when first clicking submit button from index page, add the variables to the
 		// session
 		session.setAttribute("location1", location1);
@@ -123,7 +126,8 @@ public class AlongTheWayController {
 	}
 
 	@RequestMapping("/saveroute")
-	public ModelAndView saveroute(@SessionAttribute(value = "location1", required = true) String location1,
+	public ModelAndView saveroute(
+			@SessionAttribute(value = "location1", required = true) String location1,
 			@SessionAttribute(value = "location2", required = true) String location2,
 			@SessionAttribute(value = "stops", required = false) List<Stop> stops, HttpSession session) {
 
@@ -139,6 +143,7 @@ public class AlongTheWayController {
 	public ModelAndView showRoutes(HttpSession session) {
 		// return list of all items in DB and pass to model
 		List<Route> theRoutes = dao.findAll();
+		System.out.println(theRoutes);
 		return new ModelAndView("matrix", "amend", theRoutes);
 	}
 
@@ -148,14 +153,38 @@ public class AlongTheWayController {
 		ModelAndView mav = new ModelAndView("redirect:/matrix");
 		return mav;
 	}
+	
+	@RequestMapping("/edit")
+	public ModelAndView editRouteForm(@RequestParam("id") Long id, HttpSession session) {
+		Route route = dao.findById(id);
+		String location1 = route.getLocation1();
+		String location2 = route.getLocation2();
+		// in order to avoid Hibernate lazy initialization problem, copy the stops into a regular ArrayList.
+		route.setStops( new ArrayList<>(route.getStops()) );
+		
+		List<Stop> stops = route.getStops();
+		
+//		for (int i = 0; i<stops.size(); i++) {
+//			stops.set(i, new Stop(stops.get(i)));
+//			stops.get(i).setRoute(null);
+//		}
+		session.setAttribute("location1", location1);
+		session.setAttribute("location2", location2);
+		session.setAttribute("category", "landmarks");
+		session.setAttribute("stops", stops);
+		ModelAndView mav = new ModelAndView("redirect:/results");
+		return mav;
+	}
 
 //	 when populating the results page, we want to return the set of results
 //	 generated from each waypoint along the way as a single list
 	@RequestMapping("/results")
-	public ModelAndView results(@SessionAttribute(name = "location1") String location1,
+	public ModelAndView results(
+			@SessionAttribute(name = "location1") String location1,
 			@SessionAttribute(name = "location2") String location2,
-			@SessionAttribute(name = "category") String category,
-			@SessionAttribute(name = "minrating") Double minrating, HttpSession session) {
+			@SessionAttribute(name = "category", required = false) String category,
+			@SessionAttribute(name = "minrating", required = false) Double minrating, 
+			HttpSession session) {
 
 		// define the steps along the way from the google directions api
 		List<Steps> steps = googleApiService.getWaypoints(location1, location2);
@@ -199,6 +228,9 @@ public class AlongTheWayController {
 				if (!names.contains(busi.getId())) {
 					names.add(busi.getId());
 					// return fullResults from all waypoints for items rated 4.0 or higher
+					if (minrating == null) {
+						minrating = 4.0;
+					}
 					if (busi.getRating() >= minrating) {
 						fullResults.add(busi);
 					}
