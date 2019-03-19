@@ -18,7 +18,7 @@
 	<div class="container" id="indexpage">
 		<br>
 		<h1>Along The Way</h1>
-		<br>
+		
 		<h4>
 			Where are <i>you</i> traveling?
 		</h4>
@@ -36,7 +36,7 @@
 				<input placeholder="Ex: Seattle, WA" required
 					pattern="[A-Za-z]+[ ]*[A-Za-z]+,+[ ]*[A-Za-z]{2}" type="text"
 					name="location2" />
-				
+				<br><br>
 				<select name="category">
 					<option value="" disabled selected>Select a
 						category&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
@@ -44,8 +44,9 @@
 					<option value="landmarks">Landmarks</option>
 				</select>
 				
-				<p class = "text-light"> Minimum Yelp Rating
+				<br><br>
 				<select name ="minrating">
+				<option value="" disabled selected>Minimum Yelp Rating&nbsp;&nbsp;</option>
 					<option value = 5.0>5.0</option>
 					<option value = 4.5>4.5</option>
 					<option value = 4.0>4.0</option>

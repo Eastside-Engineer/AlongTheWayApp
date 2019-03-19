@@ -32,8 +32,6 @@ public class Stop implements Serializable {
 	public Stop() {}
 
 
-
-
 	public Long getId() {
 		return id;
 	}

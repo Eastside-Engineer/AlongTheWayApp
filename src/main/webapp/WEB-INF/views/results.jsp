@@ -78,7 +78,7 @@
 		<iframe id="iframe" width="600" height="450"
 			src="https://www.google.com/maps/embed/v1/directions?origin=${loc1}&destination=${loc2}&key=AIzaSyBF6NVoNSyPvZ9PWq3J1WVh3Yup75hSM84">
 		</iframe>
-
+		
 		<table class="table table-striped">
 			<tr>
 				<th>Name</th>
@@ -88,6 +88,7 @@
 				<th>URL Link</th>
 				<th>Add to Route</th>
 			</tr>
+			
 			<c:forEach items="${results}" var="result">
 				<tr>
 					<td>${result.name}</td>
