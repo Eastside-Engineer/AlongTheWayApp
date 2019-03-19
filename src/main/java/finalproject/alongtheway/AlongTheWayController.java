@@ -1,5 +1,7 @@
 package finalproject.alongtheway;
 
+import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,21 +109,6 @@ public class AlongTheWayController {
 		// info is already in the session
 		ModelAndView mav = new ModelAndView("redirect:/results");
 
-		if (stop == null || stop.getName().isEmpty()) {
-			mav.addObject("waypoints", "");
-		} else {
-			// mav.addObject("waypoint", "&waypoints=");
-			String[] test = stop.getName().split(" ");
-
-			mav.addObject("waypoints", "&waypoints=" + test[0] + "+" + test[1]);
-			// mav.addObject("waypoints","&waypoints=Hamtramck,MI");
-		}
-
-		// String[] parsestop1 = stop.getName().split(" ");
-		// String[] parsestop2 = stop.getName().split(" ");
-		// mav.addObject("stop1", parsestop1[0] + "+" + parsestop1[1]);
-		// mav.addObject("stop2", parsestop2[0] + "+" + parsestop2[1]);
-
 		return mav;
 	}
 
@@ -184,6 +171,7 @@ public class AlongTheWayController {
 			@SessionAttribute(name = "location2") String location2,
 			@SessionAttribute(name = "category", required = false) String category,
 			@SessionAttribute(name = "minrating", required = false) Double minrating, 
+			@SessionAttribute(name = "stops", required = false) List<Stop> stops,
 			HttpSession session) {
 
 		// define the steps along the way from the google directions api
@@ -247,7 +235,16 @@ public class AlongTheWayController {
 		String[] parseLoc1 = location1.split(",");
 		String[] parseLoc2 = location2.split(",");
 
-		System.out.println("map builder" + parseLoc1 + " " + parseLoc2);
+		if (stops != null && !stops.isEmpty()) {
+			String waypointsUrlPart = "&waypoints=";
+
+			String safeLoc = URLEncoder.encode(stops.get(0).getName());
+			waypointsUrlPart += safeLoc;
+
+			// TODO loop and add "|" between locations
+
+			mav.addObject("waypointsUrlPart", waypointsUrlPart);
+		}
 
 		mav.addObject("loc1", parseLoc1[0] + "+" + parseLoc1[1]);
 		mav.addObject("loc2", parseLoc2[0] + "+" + parseLoc2[1]);
@@ -269,17 +266,21 @@ public class AlongTheWayController {
 
 		String tot = "";
 		Double totes = 0.0;
+
 		for (int i = 0; i < legs.size(); i++) {
-			tot = tot + legs.get(i).getDistance().getText();
+
+			tot = legs.get(i).getDistance().getText();
 
 			String[] str = tot.split("\\s+");
 
-			totes = totes + Double.parseDouble(str[0]);
+			totes = totes + Double.parseDouble(str[0].replace(",", ""));
 		}
 
 		Integer tot1 = totes.intValue();
 
-		return tot1 + " mi";
+		DecimalFormat formatter = new DecimalFormat("#,###");
+
+		return formatter.format(tot1) + " mi";
 	}
 
 	// sum LEGS parsing Hours and Minutes rounding to INT
@@ -288,12 +289,23 @@ public class AlongTheWayController {
 		String tot = "";
 		Double mins = 0.0;
 		Double hours = 0.0;
+		Double days = 0.0;
 
 		for (int i = 0; i < legs.size(); i++) {
 
 			tot = legs.get(i).getDuration().getText();
 
-			if (tot.contains("hour")) {
+			if (tot.contains("day")) {
+				String[] str = tot.split("\\s+");
+
+				days = days + Double.parseDouble(str[0]);
+
+				hours = hours + Double.parseDouble(str[2]);
+
+				System.out.println(days);
+				System.out.println(hours);
+
+			} else if (tot.contains("hour")) {
 				String[] str = tot.split("\\s+");
 
 				hours = hours + Double.parseDouble(str[0]);
@@ -310,10 +322,15 @@ public class AlongTheWayController {
 
 		Double hr = mins / 60;
 		Double min = mins % 60;
+		Double day = days / 24;
 
+		Integer tot3 = days.intValue() + day.intValue();
 		Integer tot2 = min.intValue();
 		Integer tot1 = hours.intValue() + hr.intValue();
 
+		if (days != 0.0) {
+			return tot3 + " day " + tot1 + " hours " + tot2 + " mins";
+		}
 		return tot1 + " hours " + tot2 + " mins";
 
 	}

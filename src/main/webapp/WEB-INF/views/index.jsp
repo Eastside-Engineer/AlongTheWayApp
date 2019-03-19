@@ -35,7 +35,7 @@
 					name="location2" />
 				<p>
 				<select name="category">
-					<option value="" disabled selected>Select a
+					<option>Select a
 						category&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
 					<option value="restaurants">Restaurants</option>
 					<option value="landmarks">Landmarks</option>
@@ -45,7 +45,7 @@
 				<select name ="minrating">
 					<option value = 5.0>5.0</option>
 					<option value = 4.5>4.5</option>
-					<option value = 4.0>4.0</option>
+					<option value = 4.0 selected>4.0</option>
 					<option value = 3.5>3.5</option>
 					<option value = 3.0>3.0</option>
 					<option value = 2.5>2.5</option>
