@@ -17,15 +17,29 @@
 	<div class="container">
 
 		<h1>Current Route</h1>
+		
 		<table class="table table-striped">
 			<tr>
-				<th>Name</th>
-				<th>City, State</th>
+				<th>${location1} to ${location2}</th>
+				<th>Time/Distance</th>
 			</tr>
 			<tr>
-				<td>Starting location</td>
-				<td>${location1}</td>
+				<td>Time: ${duration}</td>
+				<td>Time: ${durationNew}</td>
 			</tr>
+			<tr>
+				<td>Distance: ${distance}</td>
+				<td>Distance: ${distanceNew}</td>
+			</tr>
+		</table>
+		
+		<table class="table table">
+			<tr>
+				<th>Added Stop(s)</th>
+				<th>City/State</th>
+				
+			</tr>
+			
 			<c:if test="${stops != null}">
 				<c:forEach items="${stops}" var="stop">
 					<tr>
@@ -34,10 +48,7 @@
 					</tr>
 				</c:forEach>
 			</c:if>
-			<tr>
-				<td>End location</td>
-				<td>${location2}</td>
-			</tr>
+			
 		</table>
 
 
@@ -57,22 +68,7 @@
 				route&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
 		</form>
 		<br>
-		<h3>Time and Distance of Routes</h3>
 
-		<table class="table table-hover">
-			<tr>
-				<th>${location1} to ${location2}</th>
-				<th>Amended</th>
-			</tr>
-			<tr>
-				<td>Time: ${duration}</td>
-				<td>Time: ${durationNew}</td>
-			</tr>
-			<tr>
-				<td>Distance: ${distance}</td>
-				<td>Distance: ${distanceNew}</td>
-			</tr>
-		</table>
 
 
 		<%-- <iframe id="iframe" width="600" height="450"

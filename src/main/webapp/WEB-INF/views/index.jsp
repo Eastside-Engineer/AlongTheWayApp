@@ -15,47 +15,43 @@
 
 	<%@include file="partials/header.jsp"%>
 
-	<div class="container" id="indexpage">
+	<div class="container" id="indexheader">
+		<br>
 		<h1>Along The Way</h1>
 		
+	</div>
+	<div class="container" id="indexpage">
 		<h4>
 			Where are <i>you</i> traveling?
 		</h4>
-
+		<br>
 		<form action="/submitform">
 			<div class="form-group">
-				<h5>Start City</h5>
+				<p>
+				<h5>Start</h5>
 				<input placeholder="Ex: Detroit, MI" required
 					pattern="[A-Za-z]+[ ]*[A-Za-z]+,+[ ]*[A-Za-z]{2}" type="text"
 					name="location1" />
 				
-				<h5>End City</h5>
+				<p>
+				<h5>End</h5>
 				<input placeholder="Ex: Seattle, WA" required
 					pattern="[A-Za-z]+[ ]*[A-Za-z]+,+[ ]*[A-Za-z]{2}" type="text"
 					name="location2" />
-
 				<br><br>
-
-				<p>
-
 				<select name="category">
-					<option>Select a
+					<option value="disabled selected">Select a
 						category&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
 					<option value="restaurants">Restaurants</option>
 					<option value="landmarks">Landmarks</option>
 				</select>
-
 				
 				<br><br>
-
-					
-				<p class = "text-light"> Minimum Yelp Rating
-
 				<select name ="minrating">
-				<option value="" disabled selected>Minimum Yelp Rating&nbsp;&nbsp;</option>
+				<option value="disabled selected">Minimum Yelp Rating&nbsp;&nbsp;</option>
 					<option value = 5.0>5.0</option>
 					<option value = 4.5>4.5</option>
-					<option value = 4.0 selected>4.0</option>
+					<option value = 4.0>4.0</option>
 					<option value = 3.5>3.5</option>
 					<option value = 3.0>3.0</option>
 					<option value = 2.5>2.5</option>

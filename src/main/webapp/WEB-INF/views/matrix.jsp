@@ -36,7 +36,7 @@
 						  <div class="panel panel-default">
 						    <div class="panel-heading">
 						      <p class="panel-title">
-						        <a data-toggle="collapse" href="#collapse${amended.id}">Stops</a>
+						        <a data-toggle="collapse" href="#collapse${amended.id}"> View Stops</a>
 						      </p>
 						    </div>
 						    <div id="collapse${amended.id}" class="panel-collapse collapse">
@@ -47,10 +47,6 @@
 						  </div>
   					</td>
 					<td>${amended.location2}</td>
-
-					<td><a href="/delete?id=${amended.id}"
-						class=" btn btn-secondary">Delete Route</a></td>
-
 
 					<td><a href="/delete?id=${amended.id}" class="btn btn-primary">Delete Route</a></td>
 					<td><a href="/edit?id=${amended.id}" class = "btn btn-primary">View/Edit Route</a></td>
