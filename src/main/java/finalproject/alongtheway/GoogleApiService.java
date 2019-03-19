@@ -59,8 +59,8 @@ public class GoogleApiService {
 
 		// String latLong2 = "via:" + latitude + "%2C" + longitude;
 		// %7C if multiple latLongs
-		String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + location1 + "&destination="
-				+ location2 + "&key=" + googlekey;
+		String url = "https://maps.googleapis.com/maps/api/directions/json?units=imperial&origin=" + location1
+				+ "&destination=" + location2 + "&key=" + googlekey;
 
 		WaypointResponse apiResponse = restTemplate.getForObject(url, WaypointResponse.class);
 
@@ -86,8 +86,8 @@ public class GoogleApiService {
 			}
 		}
 
-		String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + location1 + "&destination="
-				+ location2 + "&waypoints=" + waypoints + "&key=" + googlekey;
+		String url = "https://maps.googleapis.com/maps/api/directions/json?units=imperial&origin=" + location1
+				+ "&destination=" + location2 + "&waypoints=optimize:true" + waypoints + "&key=" + googlekey;
 
 		System.out.println(url);
 
