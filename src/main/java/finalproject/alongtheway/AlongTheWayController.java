@@ -213,8 +213,6 @@ public class AlongTheWayController {
 			mav.addObject("waypointsUrlPart", waypointsUrlPart);
 		}
 
-		System.out.println("map builder" + parseLoc1 + " " + parseLoc2);
-
 		mav.addObject("loc1", parseLoc1[0] + "+" + parseLoc1[1]);
 		mav.addObject("loc2", parseLoc2[0] + "+" + parseLoc2[1]);
 		mav.addObject("distance", dist);
@@ -298,9 +296,8 @@ public class AlongTheWayController {
 		Integer tot1 = hours.intValue() + hr.intValue();
 
 		if (days != 0.0) {
-			return tot3 + " day " + tot1 + " hours";
+			return tot3 + " day " + tot1 + " hours " + tot2 + " mins";
 		}
-
 		return tot1 + " hours " + tot2 + " mins";
 
 	}
