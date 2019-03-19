@@ -27,21 +27,25 @@
 		<br>
 		<form action="/submitform">
 			<div class="form-group">
-				<p>
-				<h5>Start</h5>
-				<input placeholder="Ex: Detroit, MI" required
-					pattern="[A-Za-z]+[ ]*[A-Za-z]+,+[ ]*[A-Za-z]{2}" type="text"
-					name="location1" />
 				
 				<p>
-				<h5>End</h5>
+				
+			<h5>Start</h5>
+				<input placeholder="Ex: Detroit, MI" required
+					pattern="[A-Za-z]+[ ]*[A-Za-z]+,+[ ]*[A-Za-z]{2}" type="text"
+					name="location1" /> 
+				<p>
+	
+			<h5>End</h5>
 				<input placeholder="Ex: Seattle, WA" required
 					pattern="[A-Za-z]+[ ]*[A-Za-z]+,+[ ]*[A-Za-z]{2}" type="text"
 					name="location2" />
 				<br><br>
 				<select name="category">
+
 					<option value="disabled selected">Select a
 						category&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+
 					<option value="restaurants">Restaurants</option>
 					<option value="landmarks">Landmarks</option>
 				</select>

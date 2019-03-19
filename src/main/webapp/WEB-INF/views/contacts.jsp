@@ -26,7 +26,7 @@
 					<h3>Cynthia C Turner</h3> <br>
 
 					<p>Cynthia is a Java Developer who has goals to change the
-						world with technology. With a background in Mechanical Engineering,
+						world with technology. She has a background in Mechanical Engineering,
 						she is excited to enter the tech industry to be more creative and
 						innovative with her technical skills. Cynthia is open to learning more
 						and building software that will positively impact the community and the world.</p> 

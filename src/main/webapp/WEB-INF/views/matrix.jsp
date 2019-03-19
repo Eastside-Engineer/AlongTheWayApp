@@ -45,6 +45,7 @@
 						      </c:forEach>
 						    </div>
 						  </div>
+						  </div>
   					</td>
 					<td>${amended.location2}</td>
 
