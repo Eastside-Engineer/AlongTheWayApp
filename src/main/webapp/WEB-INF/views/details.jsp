@@ -15,7 +15,7 @@
 <%@include file="partials/header.jsp"%>
 
 <div class = "container">
-<h1>${result.name}</h1>
+<h2 class="display-4">${result.name}</h2>
 <table class = "table table-striped"> 
 	<tr><th>Address</th><th>Categories</th><th>Price</th><th>Rating</th><th>URL</th><th>Add to Route</th></tr>
 	<tr>
@@ -23,14 +23,14 @@
 		<td><c:forEach var = "cats" items="${result.categories}">${cats.title}<br></c:forEach></td>
 		<td>${result.price}</td>
 		<td>${result.rating}</td>
-		<td><a class = "btn btn-primary" href = "${result.url}" target = "_blank">Yelp page</a></td>
+		<td><a class = "btn btn-primary" href = "${result.url}" target = "_blank">Yelp</a></td>
 		
 		<td>
 		<form action="/add">
 			<input type="hidden" name="latitude" value="${result.coordinates.latitude}"/>
 			<input type="hidden" name="longitude" value="${result.coordinates.longitude}"/>
 			<input type="hidden" name="yelpid" value="${result.id}"/>
-			<button type="submit">Add</button>
+			<button class="btn btn-primary">Add</button>
 		</form>
 		</td>
 	</tr>

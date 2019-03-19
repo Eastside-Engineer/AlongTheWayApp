@@ -84,10 +84,10 @@
 					<td>${result.name}</td>
 					<td>${result.price}</td>
 					<td>${result.location.city},${result.location.state}</td>
-					<td><a class="btn btn-primary" type="submit"
+					<td><a class="btn btn-primary"
 						href="/details/${result.id}">Details</a></td>
 					<td><a class="btn btn-primary" href="${result.url}"
-						target="_blank">Yelp page</a></td>
+						target="_blank">Yelp</a></td>
 
 					<td><form action="/add">
 							<input type="hidden" name="latitude"
