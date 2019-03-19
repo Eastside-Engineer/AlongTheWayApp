@@ -105,19 +105,6 @@ public class AlongTheWayController {
 		// info is already in the session
 		ModelAndView mav = new ModelAndView("redirect:/results");
 		
-//		if (stop.getName() == null || stop.getName().isEmpty()) {
-//			mav.addObject("waypoints", "");
-//		} else {
-//			//mav.addObject("waypoint", "&waypoints=");
-//			String[] parsestop1 = stop.getName().split(" ");
-//
-//			mav.addObject("waypoints","&waypoints=" + parsestop1[0] + "+" + parsestop1[1]);
-			//mav.addObject("waypoints","&waypoints=Hamtramck,MI");
-//		}
-		// String[] parsestop1 = stop.getName().split(" ");
-		// String[] parsestop2 = stop.getName().split(" ");
-		// mav.addObject("stop1", parsestop1[0] + "+" + parsestop1[1]);
-		// mav.addObject("stop2", parsestop2[0] + "+" + parsestop2[1]);
 
 		return mav;
 	}
