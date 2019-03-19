@@ -268,21 +268,16 @@ public class AlongTheWayController {
 
 				mins = mins + Double.parseDouble(str[2]);
 
-				System.out.println(mins);
-
 			} else {
 
 				String[] str1 = tot.split("\\s+");
 				mins = mins + Double.parseDouble(str1[0]);
-
-				System.out.println("no hours" + mins);
 			}
 
 		}
 
 		Double hr = mins / 60;
 		Double min = mins % 60;
-		System.out.println("hr" + hr + " min " + min);
 
 		Integer tot2 = min.intValue();
 		Integer tot1 = hours.intValue() + hr.intValue();
