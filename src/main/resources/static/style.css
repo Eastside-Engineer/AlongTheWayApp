@@ -1,72 +1,92 @@
 @charset "UTF-8";
 
-h1{
-	color: firebrick;
+h1 {
+	
+	color: #f47a00;
 	font-style: italic;
 	font-style: bold;
-	font-size: 60px;
+	font-size: 80px;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
-h3{
-	
-	color: gray;
+h3 {
+	color: #4ca5de;
 	font-style: italic;
 	font-style: bold;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
-h4{
-	
+h4 {
 	color: #C0C0C0;
 	font-style: bold;
-	
-	
 }
 
-h5{
-	
+h5 {
 	color: #C0C0C0;
 	font-style: bold;
-
 }
 
 body {
+	
 	background-color: ghostwhite;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+#indexheader {
 	
-	background-size: 1600px;
-	
+	margin-top: 140px;
 	
 }
 
-#indexheader{
-	
-	margin-top: 25px;
-	
-	
+#indexpage {
+	margin-top: 30px;
 }
-#indexpage{
-	
-	margin-top: 205px;
-}
-
 
 #img {
-	
 	height: 300px;
 	align: center;
-
 }
 
-#iframe{
-	
+#iframe {
 	border: 1px solid black;
 	align: center;
 	width: 100%;
-	
 }
 
 .twoequalcolumns td, .twoequalcolumns th {
 	width: 50%;
+}
+
+.message {
+	display: inline-block;
+	margin-left: 40px;
+	font-size: 20px;
+	font-style: italic;
+	color: firebrick;
 	
 }
+
+th{
+  
+text-transform: uppercase;
+
+
+}
+tr{
+
+font-size: 18px;
+}
+
+.display-2{
+	
+color: #f47a00;
+text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+font-weight: 500;
+
+}
+
 
 

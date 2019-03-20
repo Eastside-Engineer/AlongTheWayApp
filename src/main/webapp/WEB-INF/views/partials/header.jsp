@@ -5,15 +5,16 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Along the Way - Nav Bar</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
 
-<div class = "container">
+<div class="container">
 
-<nav class="navbar">
+<nav class="navbar navbar-default">
+
     <ul class ="nav">
 
       	<li class="nav-item"><a href="/endsession" class="nav-link">New Route</a></li>

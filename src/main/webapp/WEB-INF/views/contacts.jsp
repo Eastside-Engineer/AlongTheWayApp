@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Meet AlongTheWay</title>
+<title>Along the Way - Meet The Team</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="/style.css" />
@@ -15,7 +15,7 @@
 
 	<div class="container">
 	
-	<h1>Meet AlongTheWay</h1>
+	<h1>Meet Along The Way</h1>
 
 		<table class="table table-striped">
 
@@ -29,12 +29,12 @@
 
 					<p>Cynthia is a Java Developer who has goals to change the
 						world with technology. She has a background in Mechanical Engineering,
-						she is excited to enter the tech industry to be more creative and
+						and is excited to enter the tech industry to be more creative and
 						innovative with her technical skills. Cynthia is open to learning more
 						and building software that will positively impact the community and the world.</p> 
 						Connect with Cynthia: <br> 
-						<a href="https://github.com/FruitGeek313">GitHub</a> <br> 
-						<a href="https://www.linkedin.com/in/cynturner/">LinkedIn</a>
+						<a href="https://github.com/FruitGeek313" target = "_blank">GitHub</a> <br> 
+						<a href="https://www.linkedin.com/in/cynturner/" target = "_blank">LinkedIn</a>
 				</td>
 			</tr>
 
@@ -54,8 +54,8 @@
 						the burgeoning opportunities, and bringing forward the future
 						economy.</p> 
 						Connect with Krzysztof: <br> 
-						<a href="https://github.com/Maltheoshttps://github.com/Maltheos">GitHub</a>	<br> 
-						<a href="https://www.linkedin.com/in/krzysztof-grabka/">LinkedIn</a>
+						<a href="https://github.com/Maltheos" target = "_blank">GitHub</a>	<br> 
+						<a href="https://www.linkedin.com/in/kgrabka/" target = "_blank">LinkedIn</a>
 				</td>
 			</tr>
 
@@ -64,13 +64,13 @@
 
 				<td>
 					<h3>Kyle Dixon</h3> <br>
-					<p>Kyle has a background in Mathematics and is a Musician. 
+					<p>Kyle has a background in Mathematics and Music. 
 					As a java developer he is excited to blend logic and creativity 
 					to create beautiful content and solve complex problems. 
 					He has worked in Data Management and looks forward to further
 					database utilization and manipulation. </p> Connect with Kyle: <br> 
-						<a href="https://github.com/kyledexperience">GitHub</a> <br> 
-						<a href="https://www.linkedin.com/in/kylepdixon/">LinkedIn</a>
+						<a href="https://github.com/kyledexperience" target = "_blank">GitHub</a> <br> 
+						<a href="https://www.linkedin.com/in/kylepdixon/" target = "_blank">LinkedIn</a>
 				</td>
 			</tr>
 
@@ -86,8 +86,8 @@
 						salesman, with the technical knowledge and skills associated with
 						software development is exciting!</p> 
 						Connect with Tom: <br> 
-						<a href="https://github.com/TomJHagey">GitHub</a> <br> 
-						<a href="https://www.linkedin.com/in/tomjhagey/">LinkedIn</a>
+						<a href="https://github.com/TomJHagey" target = "_blank">GitHub</a> <br> 
+						<a href="https://www.linkedin.com/in/tomjhagey/" target = "_blank">LinkedIn</a>
 				</td>
 			</tr>
 

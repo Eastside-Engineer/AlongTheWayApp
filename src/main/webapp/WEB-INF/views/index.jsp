@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Index</title>
+<title>Along the Way - Index</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="/style.css" />
@@ -16,15 +16,13 @@
 	<%@include file="partials/header.jsp"%>
 
 	<div class="container" id="indexheader">
-		<br>
-		<h1>Along The Way</h1>
-		
+		<h1 class="display-2">Along The Way</h1>
 	</div>
 	<div class="container" id="indexpage">
-		<h4>
+		<h3 class="display-5">
 			Where are <i>you</i> traveling?
-		</h4>
-		<br>
+		</h3>
+
 		<form action="/submitform">
 			<div class="form-group">
 				
@@ -52,7 +50,7 @@
 				
 				<br><br>
 				<select name ="minrating">
-				<option value="4.0">Minimum Yelp Rating&nbsp;&nbsp;</option>
+				<option value="3.0">Minimum Yelp Rating&nbsp;&nbsp;</option>
 					<option value = 5.0>5.0</option>
 					<option value = 4.5>4.5</option>
 					<option value = 4.0>4.0</option>

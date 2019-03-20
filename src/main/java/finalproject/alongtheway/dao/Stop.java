@@ -1,6 +1,8 @@
 package finalproject.alongtheway.dao;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,8 +31,8 @@ public class Stop implements Serializable {
 	private Double latitude;
 	private Double longitude;
 
-	public Stop() {}
-
+	public Stop() {
+	}
 
 	public Stop(Stop from) {
 		this.id = from.id;
@@ -41,7 +43,7 @@ public class Stop implements Serializable {
 		this.state = from.state;
 		this.latitude = from.latitude;
 		this.longitude = from.longitude;
-		
+
 	}
 
 	public Long getId() {
@@ -109,13 +111,20 @@ public class Stop implements Serializable {
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
+
+	public String getEncodedUrlPart() {
+		try {
+			return URLEncoder.encode(name + "," + city + "," + state, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return city + "," + state;
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "Stop [id=" + id + ", route=" + route + ", yelpId=" + yelpId + ", name=" + name + ", city=" + city
 				+ ", state=" + state + ", latitude=" + latitude + ", longitude=" + longitude + "]";
 	}
-	
+
 }
-
-
-	

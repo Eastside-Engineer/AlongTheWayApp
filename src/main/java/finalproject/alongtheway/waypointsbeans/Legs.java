@@ -13,6 +13,27 @@ public class Legs {
 	private Distance distance;
 	private Duration duration;
 
+	@JsonProperty("end_location")
+	private EndLocation endLocation;
+	@JsonProperty("start_location")
+	private StartLocation startLocation;
+
+	public EndLocation getEndLocation() {
+		return endLocation;
+	}
+
+	public StartLocation getStartLocation() {
+		return startLocation;
+	}
+
+	public void setEndLocation(EndLocation endLocation) {
+		this.endLocation = endLocation;
+	}
+
+	public void setStartLocation(StartLocation startLocation) {
+		this.startLocation = startLocation;
+	}
+
 	public Distance getDistance() {
 		return distance;
 	}
