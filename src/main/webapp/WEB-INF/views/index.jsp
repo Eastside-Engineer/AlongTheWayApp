@@ -16,15 +16,13 @@
 	<%@include file="partials/header.jsp"%>
 
 	<div class="container" id="indexheader">
-		<br>
-		<h1>Along The Way</h1>
-		
+		<h1 class="display-2">Along The Way</h1>
 	</div>
 	<div class="container" id="indexpage">
-		<h4>
+		<h3 class="display-5">
 			Where are <i>you</i> traveling?
-		</h4>
-		<br>
+		</h3>
+
 		<form action="/submitform">
 			<div class="form-group">
 				

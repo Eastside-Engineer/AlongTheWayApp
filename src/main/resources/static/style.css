@@ -1,72 +1,51 @@
 @charset "UTF-8";
 
-h1{
-	color: firebrick;
+h1 {
 	font-style: italic;
 	font-style: bold;
 	font-size: 60px;
 }
 
-h3{
-	
-	color: gray;
+h3 {
+	color: #4ca5de;
 	font-style: italic;
 	font-style: bold;
 }
 
-h4{
-	
+h4 {
 	color: #C0C0C0;
 	font-style: bold;
-	
-	
 }
 
-h5{
-	
+h5 {
 	color: #C0C0C0;
 	font-style: bold;
-
 }
 
 body {
 	background-color: ghostwhite;
-	
 	background-size: 1600px;
-	
-	
 }
 
-#indexheader{
-	
+#indexheader {
 	margin-top: 25px;
-	
-	
-}
-#indexpage{
-	
-	margin-top: 205px;
 }
 
+#indexpage {
+	margin-top: 160px;
+}
 
 #img {
-	
 	height: 300px;
 	align: center;
-
 }
 
-#iframe{
-	
+#iframe {
 	border: 1px solid black;
 	align: center;
 	width: 100%;
-	
 }
 
 .twoequalcolumns td, .twoequalcolumns th {
 	width: 50%;
-	
 }
-
-
