@@ -15,7 +15,7 @@
 
 	<div class="container">
 	
-	<h1>Meet AlongTheWay</h1>
+	<h1>Meet Along The Way</h1>
 
 		<table class="table table-striped">
 
