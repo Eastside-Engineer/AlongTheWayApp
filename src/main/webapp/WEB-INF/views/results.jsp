@@ -16,31 +16,39 @@
 
 	<div class="container">
 
-		<h1>Current Route</h1>
-		
+		<h1 class="display-2">Current Route</h1>
+
 		<table class="table table-striped twoequalcolumns">
 			<tr>
 				<th>${location1} to ${location2}</th>
-				<th>Time/Distance</th>
+				<c:if test="${not empty durationNew}">
+					<th>Time/Distance</th>
+				</c:if>
 			</tr>
 			<tr>
 				<td>Time: ${duration}</td>
-				<td>Time: ${durationNew}</td>
+				<c:if test="${not empty durationNew}">
+					<td>Time: ${durationNew}</td>
+				</c:if>
 			</tr>
+
 			<tr>
 				<td>Distance: ${distance}</td>
-				<td>Distance: ${distanceNew}</td>
+				<c:if test="${not empty distanceNew}">
+					<td>Distance: ${distanceNew}</td>
+				</c:if>
 			</tr>
+
 		</table>
-		
-		
+
+
 		<table class="table twoequalcolumns">
 			<tr>
 				<th>Added Stop(s)</th>
 				<th>City/State</th>
 				<th></th>
 			</tr>
-			
+
 			<c:if test="${stops != null}">
 				<c:forEach items="${stops}" var="stop">
 					<tr>
@@ -48,14 +56,14 @@
 						<td>${stop.city},${stop.state}</td>
 						<td>
 							<form action="/deleteStop">
-								<input type="hidden" name = "stopToRemove" value="${stop.yelpId}"/>
-								<button type = "submit" class = "btn btn-primary">Remove</button>
+								<input type="hidden" name="stopToRemove" value="${stop.yelpId}" />
+								<button type="submit" class="btn btn-primary">Remove</button>
 							</form>
 						</td>
 					</tr>
 				</c:forEach>
 			</c:if>
-			
+
 		</table>
 
 		<form action="/saveroute">
@@ -69,10 +77,11 @@
 				route&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
 		</form>
 		<br>
-		
 
-			<iframe id="iframe" width="600" height="450" 
-		src="https://www.google.com/maps/embed/v1/directions?origin=${loc1}&destination=${loc2}${waypointsUrlPart}&key=AIzaSyBF6NVoNSyPvZ9PWq3J1WVh3Yup75hSM84"> </iframe>
+
+		<iframe id="iframe" width="600" height="450"
+			src="https://www.google.com/maps/embed/v1/directions?origin=${loc1}&destination=${loc2}${waypointsUrlPart}&key=AIzaSyBF6NVoNSyPvZ9PWq3J1WVh3Yup75hSM84">
+		</iframe>
 
 
 		<table class="table table-striped">
@@ -84,14 +93,13 @@
 				<th>URL Link</th>
 				<th>Add to Route</th>
 			</tr>
-			
+
 			<c:forEach items="${results}" var="result">
 				<tr>
 					<td>${result.name}</td>
 					<td>${result.price}</td>
 					<td>${result.location.city},${result.location.state}</td>
-					<td><a class="btn btn-primary"
-						href="/details/${result.id}">Details</a></td>
+					<td><a class="btn btn-primary" href="/details/${result.id}">Details</a></td>
 					<td><a class="btn btn-primary" href="${result.url}"
 						target="_blank">Yelp</a></td>
 
@@ -104,8 +112,7 @@
 								type="hidden" name="location2" value="${location2}" /> <input
 								type="hidden" name="category" value="${category}" />
 							<button type="submit" class="btn btn-primary">Add</button>
-						</form>
-					</td>
+						</form></td>
 				</tr>
 			</c:forEach>
 		</table>

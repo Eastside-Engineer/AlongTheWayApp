@@ -67,9 +67,9 @@ public class GoogleApiService {
 
 		for (int i = 0; i < stops.size(); i++) {
 			if (i > 0) {
-				waypoints = waypoints + "|" + citySplit(stops.get(i).getCity()) + "," + stops.get(i).getState();
+				waypoints = waypoints + "|" + stops.get(i).getEncodedUrlPart();
 			} else {
-				waypoints = citySplit(stops.get(i).getCity()) + "," + stops.get(i).getState();
+				waypoints = stops.get(i).getEncodedUrlPart();
 			}
 		}
 
@@ -77,6 +77,8 @@ public class GoogleApiService {
 				+ "&destination=" + location2 + "&waypoints=optimize:true|" + waypoints + "&key=" + googlekey;
 
 		WaypointResponse apiResponse = restTemplate.getForObject(url, WaypointResponse.class);
+
+		System.out.println(url);
 
 		return apiResponse.getRoutes().get(0).getLegs();
 

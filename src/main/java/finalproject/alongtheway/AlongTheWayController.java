@@ -1,6 +1,5 @@
 package finalproject.alongtheway;
 
-import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,15 +107,13 @@ public class AlongTheWayController {
 		ModelAndView mav = new ModelAndView("redirect:/results");
 		return mav;
 	}
-	
+
 	// GET DAVID OR MARIAH THIS SHOULD WORK ARRRRRRRGGGGHHHHHHH!!!!!!!
 	@RequestMapping("/deleteStop")
-	public ModelAndView deleteStop(
-			@SessionAttribute(name="stops", required = true) List<Stop> stops,
-			@RequestParam(value="stopToRemove", required = true) String stopToRemove,
-			HttpSession session) {
+	public ModelAndView deleteStop(@SessionAttribute(name = "stops", required = true) List<Stop> stops,
+			@RequestParam(value = "stopToRemove", required = true) String stopToRemove, HttpSession session) {
 		System.out.println(stopToRemove);
-		
+
 		for (Stop s : stops) {
 			System.out.println(s);
 			if (s.getYelpId().equals(stopToRemove)) {
@@ -124,17 +121,15 @@ public class AlongTheWayController {
 				stops.remove(s);
 			}
 		}
-		
+
 		ModelAndView mav = new ModelAndView("redirect:/results");
 		return mav;
 	}
-	
+
 	@RequestMapping("/saveroute")
-	public ModelAndView saveroute(
-			@SessionAttribute(name = "location1", required = true) String location1,
+	public ModelAndView saveroute(@SessionAttribute(name = "location1", required = true) String location1,
 			@SessionAttribute(name = "location2", required = true) String location2,
-			@SessionAttribute(name = "stops", required = false) List<Stop> stops, 
-			HttpSession session) {
+			@SessionAttribute(name = "stops", required = false) List<Stop> stops, HttpSession session) {
 
 		Route route = new Route();
 		route.setLocation1(location1);
@@ -182,6 +177,13 @@ public class AlongTheWayController {
 		session.setAttribute("location2", location2);
 		session.setAttribute("category", "landmarks");
 		session.setAttribute("stops", stops);
+		List<Legs> legs = googleApiService.getAmendedDirections(location1, location2, stops);
+
+		String totalDist = total1(legs);
+		String totalTime = total2(legs);
+
+		session.setAttribute("distanceNew", totalDist);
+		session.setAttribute("durationNew", totalTime);
 		ModelAndView mav = new ModelAndView("redirect:/results");
 		return mav;
 	}
@@ -197,7 +199,8 @@ public class AlongTheWayController {
 			@SessionAttribute(name = "steps", required = false) List<Steps> steps,
 			@SessionAttribute(name = "waypoints", required = false) List<Coordinates> waypoints,
 			@SessionAttribute(name = "fullResults", required = false) List<Businesses> fullResults,
-			HttpSession session) {
+			@SessionAttribute(name = "distanceNew", required = false) String distanceNew,
+			@SessionAttribute(name = "durationNew", required = false) String durationNew, HttpSession session) {
 
 		// define the steps along the way from the google directions api
 		if (steps == null) {
@@ -260,14 +263,6 @@ public class AlongTheWayController {
 			}
 		}
 
-		String totalDist = "";
-		String totalTime = "";
-		if (stops != null) {
-			List<Legs> legs = googleApiService.getAmendedDirections(location1, location2, stops);
-			totalDist = total1(legs);
-			totalTime = total2(legs);
-		}
-
 		Legs leg = googleApiService.getBasicDirections(location1, location2);
 		String dist = leg.getDistance().getText();
 		String time = leg.getDuration().getText();
@@ -286,17 +281,13 @@ public class AlongTheWayController {
 
 				if (j > 0) {
 
-					safeLoc = "|" + URLEncoder.encode(stops.get(j).getCity()) + ","
-							+ URLEncoder.encode(stops.get(j).getState());
+					safeLoc = "|" + stops.get(j).getEncodedUrlPart();
 
 				} else {
-					safeLoc = URLEncoder.encode(stops.get(j).getCity()) + ","
-							+ URLEncoder.encode(stops.get(j).getState());
+					safeLoc = stops.get(j).getEncodedUrlPart();
 				}
 
 				waypointsUrlPart += safeLoc;
-
-				// System.out.println(waypointsUrlPart);
 
 			}
 
@@ -310,8 +301,8 @@ public class AlongTheWayController {
 		mav.addObject("loc2", parseLoc2[0] + "+" + parseLoc2[1]);
 		mav.addObject("distance", dist);
 		mav.addObject("duration", time);
-		mav.addObject("distanceNew", totalDist);
-		mav.addObject("durationNew", totalTime);
+		mav.addObject("distanceNew", distanceNew);
+		mav.addObject("durationNew", durationNew);
 
 		return mav;
 
@@ -366,8 +357,8 @@ public class AlongTheWayController {
 
 				hours = hours + Double.parseDouble(str[2]);
 
-				//System.out.println(days);
-				//System.out.println(hours);
+				// System.out.println(days);
+				// System.out.println(hours);
 
 			} else if (tot.contains("hour")) {
 				String[] str = tot.split("\\s+");
