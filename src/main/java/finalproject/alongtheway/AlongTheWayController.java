@@ -97,14 +97,6 @@ public class AlongTheWayController {
 		// add this created stop to the session List<Stop> stops
 		stops.add(stop);
 
-		// call google api to get directions for amended time and distance calc
-		List<Legs> legs = googleApiService.getAmendedDirections(location1, location2, stops);
-
-		session.setAttribute("legs", legs);
-
-		String totalDist = total1(legs);
-		String totalTime = total2(legs);
-
 		// redirect to the results page, no need to add objects to model since the same
 		// info is already in the session
 		ModelAndView mav = new ModelAndView("redirect:/results");
@@ -184,7 +176,6 @@ public class AlongTheWayController {
 		session.setAttribute("location2", location2);
 		session.setAttribute("category", "landmarks");
 		session.setAttribute("stops", stops);
-
 		ModelAndView mav = new ModelAndView("redirect:/results");
 		return mav;
 	}
@@ -231,7 +222,7 @@ public class AlongTheWayController {
 			coord.setLatitude(stepwp.getEndLocation().getEndLat());
 			coord.setLongitude(stepwp.getEndLocation().getEndLong());
 
-			if (stepwp.getDistance().getValue() > 4000) {
+			if (stepwp.getDistance().getValue() > 10000) {
 
 				waypoints.add(coord);
 

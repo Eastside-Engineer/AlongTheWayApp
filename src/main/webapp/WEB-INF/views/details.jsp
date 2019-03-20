@@ -23,7 +23,7 @@
 		<td><c:forEach var = "cats" items="${result.categories}">${cats.title}<br></c:forEach></td>
 		<td>${result.price}</td>
 		<td>${result.rating}</td>
-		<td><a class = "btn btn-primary" href = "${result.url}" target = "_blank">Yelp</a></td>
+		<td><a class = "btn btn-secondary" href = "${result.url}" target = "_blank">Yelp</a></td>
 		
 		<td>
 		<form action="/add">
