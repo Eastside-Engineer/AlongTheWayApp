@@ -50,7 +50,7 @@
 				
 				<br><br>
 				<select name ="minrating">
-				<option value="4.0">Minimum Yelp Rating&nbsp;&nbsp;</option>
+				<option value="3.0">Minimum Yelp Rating&nbsp;&nbsp;</option>
 					<option value = 5.0>5.0</option>
 					<option value = 4.5>4.5</option>
 					<option value = 4.0>4.0</option>
