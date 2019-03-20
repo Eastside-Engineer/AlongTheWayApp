@@ -2,6 +2,7 @@ package finalproject.alongtheway;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -108,22 +109,22 @@ public class AlongTheWayController {
 		return mav;
 	}
 
-	// GET DAVID OR MARIAH THIS SHOULD WORK ARRRRRRRGGGGHHHHHHH!!!!!!!
+	// deelete a stop from the stops list after hitting button on results page
 	@RequestMapping("/deleteStop")
 	public ModelAndView deleteStop(@SessionAttribute(name = "stops", required = true) List<Stop> stops,
 			@RequestParam(value = "stopToRemove", required = true) String stopToRemove, HttpSession session) {
-		System.out.println(stopToRemove);
-
-		for (Stop s : stops) {
-			System.out.println(s);
-			if (s.getYelpId().equals(stopToRemove)) {
-				System.out.println(s + "i");
-				stops.remove(s);
+		
+		try {
+			for (Stop s : stops) {
+				System.out.println(s);
+				if (s.getYelpId().equals(stopToRemove)) {
+					stops.remove(s);
+				}
 			}
+		} catch (ConcurrentModificationException e) {
+			return new ModelAndView("redirect:/results");
 		}
-
-		ModelAndView mav = new ModelAndView("redirect:/results");
-		return mav;
+		return new ModelAndView("redirect:/results");
 	}
 
 	@RequestMapping("/saveroute")
@@ -193,7 +194,8 @@ public class AlongTheWayController {
 //	 when populating the results page, we want to return the set of results
 //	 generated from each waypoint along the way as a single list
 	@RequestMapping("/results")
-	public ModelAndView results(@SessionAttribute(name = "location1") String location1,
+	public ModelAndView results(
+			@SessionAttribute(name = "location1") String location1,
 			@SessionAttribute(name = "location2") String location2,
 			@SessionAttribute(name = "category", required = false) String category,
 			@SessionAttribute(name = "minrating", required = false) Double minrating,
@@ -207,7 +209,6 @@ public class AlongTheWayController {
 		// define the steps along the way from the google directions api
 		if (steps == null) {
 			steps = googleApiService.getWaypoints(location1, location2);
-			session.setAttribute("steps", steps);
 		}
 
 		// initialize the waypoints to be a list of Coordinates (paired lat and long)
@@ -239,6 +240,10 @@ public class AlongTheWayController {
 			i++;
 		}
 
+		// parse the location strings into a city and state
+		String[] parseLoc1 = location1.split(",");
+		String[] parseLoc2 = location2.split(",");
+
 		// fullResults will be a list of all results from all waypoints
 		if (fullResults == null) {
 			fullResults = new ArrayList<Businesses>();
@@ -253,12 +258,15 @@ public class AlongTheWayController {
 				for (Businesses busi : results) {
 					if (!names.contains(busi.getId())) {
 						names.add(busi.getId());
-						// return fullResults from all waypoints for items rated 4.0 or higher
+						// return fullResults from all waypoints for items rated 4.0 or higher by default
 						if (minrating == null) {
 							minrating = 4.0;
 						}
-						if (busi.getRating() >= minrating) {
-							fullResults.add(busi);
+						// if the business returned by the search is NOT in the city of location1, then add to fullResults
+						if (!busi.getLocation().getCity().equalsIgnoreCase(parseLoc1[0])) {
+							if (busi.getRating() >= minrating) {
+								fullResults.add(busi);
+							}
 						}
 					}
 				}
@@ -270,9 +278,6 @@ public class AlongTheWayController {
 		String time = leg.getDuration().getText();
 
 		ModelAndView mav = new ModelAndView("results", "results", fullResults);
-
-		String[] parseLoc1 = location1.split(",");
-		String[] parseLoc2 = location2.split(",");
 
 		if (stops != null && !stops.isEmpty()) {
 			String waypointsUrlPart = "&waypoints=";
