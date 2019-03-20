@@ -246,6 +246,11 @@ public class AlongTheWayController {
 		String[] parseLoc1 = location1.split(",");
 		String[] parseLoc2 = location2.split(",");
 
+		// if minrating is missing, then set to 4.0 as default
+		if (minrating == null) {
+			minrating = 4.0;
+		}
+		
 		// fullResults will be a list of all results from all waypoints
 		if (fullResults == null) {
 			fullResults = new ArrayList<Businesses>();
@@ -258,16 +263,17 @@ public class AlongTheWayController {
 						coordinates.getLatitude(), coordinates.getLongitude(), category);
 
 				for (Businesses busi : results) {
+					// if the yelp id of the result is already in the rsult list, don't add it to list again
 					if (!names.contains(busi.getId())) {
 						names.add(busi.getId());
-						// return fullResults from all waypoints for items rated 4.0 or higher by default
-						if (minrating == null) {
-							minrating = 4.0;
-						}
 						// if the business returned by the search is NOT in the city of location1, then add to fullResults
 						if (!busi.getLocation().getCity().equalsIgnoreCase(parseLoc1[0])) {
+							// return fullResults from all waypoints for items rated equal or higher than min rating
 							if (busi.getRating() >= minrating) {
-								fullResults.add(busi);
+								// must have at least 10 reviews to be included, gets rid of some obscure results
+								if (busi.getReviewCount() > 9) {
+									fullResults.add(busi);
+								}
 							}
 						}
 					}
