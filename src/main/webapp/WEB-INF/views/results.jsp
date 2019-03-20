@@ -47,6 +47,7 @@
 				<th>Added Stop(s)</th>
 				<th>City/State</th>
 				<th></th>
+				<th></th>
 			</tr>
 
 			<c:if test="${stops != null}">
@@ -54,6 +55,9 @@
 					<tr>
 						<td>${stop.name}</td>
 						<td>${stop.city},${stop.state}</td>
+						<td>
+							<a class="btn btn-primary" href="/details/${stop.yelpId}">Details</a>
+						</td>
 						<td>
 							<form action="/deleteStop">
 								<input type="hidden" name="stopToRemove" value="${stop.yelpId}" />
@@ -74,8 +78,10 @@
 				type="hidden" name="location2" value="${location2}" />
 			<button type="submit" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save
 				this
-				route&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+				route&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>  
+			<p class="message">${message}</p>
 		</form>
+	
 		<br>
 
 

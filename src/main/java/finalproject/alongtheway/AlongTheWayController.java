@@ -2,6 +2,7 @@ package finalproject.alongtheway;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import finalproject.alongtheway.dao.Route;
 import finalproject.alongtheway.dao.RoutesDao;
@@ -112,34 +114,36 @@ public class AlongTheWayController {
 		return mav;
 	}
 
-	// GET DAVID OR MARIAH THIS SHOULD WORK ARRRRRRRGGGGHHHHHHH!!!!!!!
+	// deelete a stop from the stops list after hitting button on results page
 	@RequestMapping("/deleteStop")
 	public ModelAndView deleteStop(@SessionAttribute(name = "stops", required = true) List<Stop> stops,
 			@RequestParam(value = "stopToRemove", required = true) String stopToRemove, HttpSession session) {
-		System.out.println(stopToRemove);
 
-		for (Stop s : stops) {
-			System.out.println(s);
-			if (s.getYelpId().equals(stopToRemove)) {
-				System.out.println(s + "i");
-				stops.remove(s);
+		try {
+			for (Stop s : stops) {
+				System.out.println(s);
+				if (s.getYelpId().equals(stopToRemove)) {
+					stops.remove(s);
+				}
 			}
+		} catch (ConcurrentModificationException e) {
+			return new ModelAndView("redirect:/results");
 		}
-
-		ModelAndView mav = new ModelAndView("redirect:/results");
-		return mav;
+		return new ModelAndView("redirect:/results");
 	}
 
 	@RequestMapping("/saveroute")
 	public ModelAndView saveroute(@SessionAttribute(name = "location1", required = true) String location1,
 			@SessionAttribute(name = "location2", required = true) String location2,
-			@SessionAttribute(name = "stops", required = false) List<Stop> stops, HttpSession session) {
+			@SessionAttribute(name = "stops", required = false) List<Stop> stops, HttpSession session,
+			RedirectAttributes redir) {
 
 		Route route = new Route();
 		route.setLocation1(location1);
 		route.setLocation2(location2);
 		route.setStops(stops);
 		dao.create(route);
+		redir.addFlashAttribute("message", "Route Saved!");
 		return new ModelAndView("redirect:/results");
 	}
 
@@ -163,6 +167,8 @@ public class AlongTheWayController {
 		session.removeAttribute("location2");
 		session.removeAttribute("stops");
 		session.removeAttribute("fullResults");
+		session.removeAttribute("steps");
+		session.removeAttribute("waypoints");
 
 		Route route = dao.findById(id);
 		String location1 = route.getLocation1();
@@ -210,7 +216,6 @@ public class AlongTheWayController {
 		// define the steps along the way from the google directions api
 		if (steps == null) {
 			steps = googleApiService.getWaypoints(location1, location2);
-//			session.setAttribute("steps", steps);
 		}
 
 		// initialize the waypoints to be a list of Coordinates (paired lat and long)
@@ -246,6 +251,15 @@ public class AlongTheWayController {
 			i++;
 		}
 
+		// parse the location strings into a city and state
+		String[] parseLoc1 = location1.split(",");
+		String[] parseLoc2 = location2.split(",");
+
+		// if minrating is missing, then set to 4.0 as default
+		if (minrating == null) {
+			minrating = 4.0;
+		}
+
 		// fullResults will be a list of all results from all waypoints
 		if (fullResults == null) {
 			fullResults = new ArrayList<Businesses>();
@@ -258,14 +272,22 @@ public class AlongTheWayController {
 						coordinates.getLatitude(), coordinates.getLongitude(), category);
 
 				for (Businesses busi : results) {
+					// if the yelp id of the result is already in the rsult list, don't add it to
+					// list again
 					if (!names.contains(busi.getId())) {
 						names.add(busi.getId());
-						// return fullResults from all waypoints for items rated 4.0 or higher
-						if (minrating == null) {
-							minrating = 4.0;
-						}
-						if (busi.getRating() >= minrating) {
-							fullResults.add(busi);
+						// if the business returned by the search is NOT in the city of location1, then
+						// add to fullResults
+						if (!busi.getLocation().getCity().equalsIgnoreCase(parseLoc1[0])) {
+							// return fullResults from all waypoints for items rated equal or higher than
+							// min rating
+							if (busi.getRating() >= minrating) {
+								// must have at least 10 reviews to be included, gets rid of some obscure
+								// results
+								if (busi.getReviewCount() > 9) {
+									fullResults.add(busi);
+								}
+							}
 						}
 					}
 				}
@@ -277,9 +299,6 @@ public class AlongTheWayController {
 		String time = leg.getDuration().getText();
 
 		ModelAndView mav = new ModelAndView("results", "results", fullResults);
-
-		String[] parseLoc1 = location1.split(",");
-		String[] parseLoc2 = location2.split(",");
 
 		List<Stop> ordered = new ArrayList<>();
 

@@ -14,6 +14,8 @@ public class Businesses implements Serializable {
 	private String imageUrl;
 	@JsonProperty("is_closed")
 	private Boolean isClosed;
+	@JsonProperty("review_count")
+	private Integer reviewCount;
 	private String url;
 	private List<Categories> categories;
 	private Double rating;
@@ -103,6 +105,13 @@ public class Businesses implements Serializable {
 		this.displayPhone = displayPhone;
 	}
 
+	public Integer getReviewCount() {
+		return reviewCount;
+	}
+
+	public void setReviewCount(Integer reviewCount) {
+		this.reviewCount = reviewCount;
+	}
 	@Override
 	public String toString() {
 		return "Businesses [id=" + id + ", name=" + name + ", imageUrl=" + imageUrl + ", isClosed=" + isClosed
