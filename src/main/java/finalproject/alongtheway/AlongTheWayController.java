@@ -278,7 +278,7 @@ public class AlongTheWayController {
 		String[] parseLoc2 = location2.split(",");
 
 		if (stops != null && !stops.isEmpty()) {
-			String waypointsUrlPart = "&waypoints=";
+			String waypointsUrlPart = "&waypoints=optimize:true|";
 
 			String safeLoc = "";
 
