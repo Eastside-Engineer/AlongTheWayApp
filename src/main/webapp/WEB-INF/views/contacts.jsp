@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Meet AlongTheWay</title>
+<title>Along the Way - Meet The Team</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="/style.css" />
@@ -29,7 +29,7 @@
 
 					<p>Cynthia is a Java Developer who has goals to change the
 						world with technology. She has a background in Mechanical Engineering,
-						she is excited to enter the tech industry to be more creative and
+						and is excited to enter the tech industry to be more creative and
 						innovative with her technical skills. Cynthia is open to learning more
 						and building software that will positively impact the community and the world.</p> 
 						Connect with Cynthia: <br> 
@@ -54,8 +54,8 @@
 						the burgeoning opportunities, and bringing forward the future
 						economy.</p> 
 						Connect with Krzysztof: <br> 
-						<a href="https://github.com/Maltheoshttps://github.com/Maltheos">GitHub</a>	<br> 
-						<a href="https://www.linkedin.com/in/krzysztof-grabka/">LinkedIn</a>
+						<a href="https://github.com/Maltheos">GitHub</a>	<br> 
+						<a href="https://www.linkedin.com/in/kgrabka/">LinkedIn</a>
 				</td>
 			</tr>
 
