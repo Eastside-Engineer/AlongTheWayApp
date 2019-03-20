@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import finalproject.alongtheway.dao.Route;
 import finalproject.alongtheway.dao.RoutesDao;
@@ -129,13 +130,14 @@ public class AlongTheWayController {
 	@RequestMapping("/saveroute")
 	public ModelAndView saveroute(@SessionAttribute(name = "location1", required = true) String location1,
 			@SessionAttribute(name = "location2", required = true) String location2,
-			@SessionAttribute(name = "stops", required = false) List<Stop> stops, HttpSession session) {
+			@SessionAttribute(name = "stops", required = false) List<Stop> stops, HttpSession session, RedirectAttributes redir) {
 
 		Route route = new Route();
 		route.setLocation1(location1);
 		route.setLocation2(location2);
 		route.setStops(stops);
 		dao.create(route);
+		redir.addFlashAttribute("message", "Route Saved!");
 		return new ModelAndView("redirect:/results");
 	}
 
@@ -205,7 +207,6 @@ public class AlongTheWayController {
 		// define the steps along the way from the google directions api
 		if (steps == null) {
 			steps = googleApiService.getWaypoints(location1, location2);
-			session.setAttribute("steps", steps);
 		}
 
 		// initialize the waypoints to be a list of Coordinates (paired lat and long)

@@ -1,6 +1,8 @@
 @charset "UTF-8";
 
 h1 {
+	
+	color: red;
 	font-style: italic;
 	font-style: bold;
 	font-size: 60px;
@@ -23,12 +25,18 @@ h5 {
 }
 
 body {
+	
 	background-color: ghostwhite;
-	background-size: 1600px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
 }
 
 #indexheader {
+	
 	margin-top: 25px;
+	
 }
 
 #indexpage {
@@ -49,3 +57,19 @@ body {
 .twoequalcolumns td, .twoequalcolumns th {
 	width: 50%;
 }
+
+.message {
+	display: inline-block;
+	margin-left: 40px;
+	font-size: 20px;
+	font-style: italic;
+	
+}
+
+th {
+  
+text-transform: uppercase;
+
+}
+
+
