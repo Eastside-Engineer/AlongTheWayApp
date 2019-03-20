@@ -89,12 +89,16 @@ public class AlongTheWayController {
 		stop.setName(busi.getName());
 		stop.setCity(busi.getLocation().getCity());
 		stop.setState(busi.getLocation().getState());
+		stop.setLatitude(busi.getCoordinates().getLatitude());
+		stop.setLongitude(busi.getCoordinates().getLongitude());
 
 		// add this created stop to the session List<Stop> stops
 		stops.add(stop);
 
 		// call google api to get directions for amended time and distance calc
 		List<Legs> legs = googleApiService.getAmendedDirections(location1, location2, stops);
+
+		session.setAttribute("legs", legs);
 
 		String totalDist = total1(legs);
 		String totalTime = total2(legs);
@@ -191,8 +195,8 @@ public class AlongTheWayController {
 //	 when populating the results page, we want to return the set of results
 //	 generated from each waypoint along the way as a single list
 	@RequestMapping("/results")
-	public ModelAndView results(@SessionAttribute(name = "location1") String location1,
-			@SessionAttribute(name = "location2") String location2,
+	public ModelAndView results(@SessionAttribute(name = "location1", required = false) String location1,
+			@SessionAttribute(name = "location2", required = false) String location2,
 			@SessionAttribute(name = "category", required = false) String category,
 			@SessionAttribute(name = "minrating", required = false) Double minrating,
 			@SessionAttribute(name = "stops", required = false) List<Stop> stops,
@@ -200,12 +204,13 @@ public class AlongTheWayController {
 			@SessionAttribute(name = "waypoints", required = false) List<Coordinates> waypoints,
 			@SessionAttribute(name = "fullResults", required = false) List<Businesses> fullResults,
 			@SessionAttribute(name = "distanceNew", required = false) String distanceNew,
-			@SessionAttribute(name = "durationNew", required = false) String durationNew, HttpSession session) {
+			@SessionAttribute(name = "durationNew", required = false) String durationNew,
+			@SessionAttribute(name = "legs", required = false) List<Legs> legs, HttpSession session) {
 
 		// define the steps along the way from the google directions api
 		if (steps == null) {
 			steps = googleApiService.getWaypoints(location1, location2);
-			session.setAttribute("steps", steps);
+//			session.setAttribute("steps", steps);
 		}
 
 		// initialize the waypoints to be a list of Coordinates (paired lat and long)
@@ -231,9 +236,13 @@ public class AlongTheWayController {
 			Coordinates coord = new Coordinates();
 			coord.setLatitude(stepwp.getEndLocation().getEndLat());
 			coord.setLongitude(stepwp.getEndLocation().getEndLong());
+
 			if (stepwp.getDistance().getValue() > 4000) {
+
 				waypoints.add(coord);
+
 			}
+
 			i++;
 		}
 
@@ -271,6 +280,39 @@ public class AlongTheWayController {
 
 		String[] parseLoc1 = location1.split(",");
 		String[] parseLoc2 = location2.split(",");
+
+		List<Stop> ordered = new ArrayList<>();
+
+		if (stops != null) {
+
+			Stop stop = new Stop();
+
+			for (int k = 0; k < stops.size() - 1; k++) {
+
+				Double mini = 10.0;
+
+				Double diff2 = legs.get(k).getEndLocation().getLongitude()
+						- legs.get(k + 1).getEndLocation().getLongitude();
+
+				Double diff1 = legs.get(k).getEndLocation().getLatitude()
+						- legs.get(k + 1).getEndLocation().getLatitude();
+
+				Double a = diff1 * diff1;
+				Double b = diff2 * diff2;
+
+				if (a + b < mini) {
+					mini = a + b;
+				}
+
+				System.out.println(mini);
+
+				stop.setLatitude(legs.get(k).getEndLocation().getLatitude());
+				stop.setLongitude(legs.get(k).getEndLocation().getLongitude());
+				ordered.add(stop);
+
+			}
+
+		}
 
 		if (stops != null && !stops.isEmpty()) {
 			String waypointsUrlPart = "&waypoints=";

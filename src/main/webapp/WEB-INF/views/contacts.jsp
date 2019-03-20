@@ -64,7 +64,7 @@
 
 				<td>
 					<h3>Kyle Dixon</h3> <br>
-					<p>Kyle has a background in Mathematics and is a Musician. 
+					<p>Kyle has a background in Mathematics and Music. 
 					As a java developer he is excited to blend logic and creativity 
 					to create beautiful content and solve complex problems. 
 					He has worked in Data Management and looks forward to further
