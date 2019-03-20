@@ -1,5 +1,6 @@
 package finalproject.alongtheway.dao;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,22 +15,22 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "routes")
-public class Route {
+public class Route implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
-	
+
 	@Column(name = "start")
 	private String location1;
 
 	@Column(name = "end")
-	private String location2;  
-	
-	@OneToMany(cascade = CascadeType.ALL,
-	        mappedBy = "route", orphanRemoval = true)
+	private String location2;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "route", orphanRemoval = true)
 	private List<Stop> stops = new ArrayList<Stop>();
-	
+
 	public List<Stop> getStops() {
 		return stops;
 	}
