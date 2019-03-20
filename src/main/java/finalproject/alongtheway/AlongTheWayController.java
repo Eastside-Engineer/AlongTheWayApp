@@ -183,8 +183,8 @@ public class AlongTheWayController {
 //	 when populating the results page, we want to return the set of results
 //	 generated from each waypoint along the way as a single list
 	@RequestMapping("/results")
-	public ModelAndView results(@SessionAttribute(name = "location1", required = true) String location1,
-			@SessionAttribute(name = "location2", required = true) String location2,
+	public ModelAndView results(@SessionAttribute(name = "location1", required = false) String location1,
+			@SessionAttribute(name = "location2", required = false) String location2,
 			@SessionAttribute(name = "category", required = false) String category,
 			@SessionAttribute(name = "minrating", required = false) Double minrating,
 			@SessionAttribute(name = "stops", required = false) List<Stop> stops,
@@ -262,9 +262,9 @@ public class AlongTheWayController {
 							// return fullResults from all waypoints for items rated equal or higher than
 							// min rating
 							if (busi.getRating() >= minrating) {
-								// must have at least 10 reviews to be included, gets rid of some obscure
+								// must have at least 3 reviews to be included, gets rid of some obscure
 								// results
-								if (busi.getReviewCount() > 9) {
+								if (busi.getReviewCount() > 2) {
 									fullResults.add(busi);
 								}
 							}
@@ -286,7 +286,6 @@ public class AlongTheWayController {
 		if (stops != null && !stops.isEmpty()) {
 
 			legs = googleApiService.getAmendedDirections(location1, location2, stops);
-			session.setAttribute("legs", legs);
 			String totalDist = total1(legs);
 			String totalTime = total2(legs);
 			mav.addObject("distanceNew", totalDist);
@@ -297,7 +296,7 @@ public class AlongTheWayController {
 
 		// get MAP
 		if (stops != null && !stops.isEmpty()) {
-			String waypointsUrlPart = "&waypoints=optimize:true|";
+			String waypointsUrlPart = "&waypoints=";
 
 			String safeLoc = "";
 
