@@ -293,7 +293,7 @@ public class AlongTheWayController {
 			mav.addObject("durationNew", totalTime);
 		}
 
-		stops = orderStops(stops, legs);
+		// stops = orderStops(stops, legs);
 
 		// get MAP
 		if (stops != null && !stops.isEmpty()) {
@@ -341,6 +341,10 @@ public class AlongTheWayController {
 			Legs leg = legs.get(legI);
 
 			Stop closest = stops.get(0);
+
+			for (int stopI = 0; stopI < stops.size() - 1; stopI++) {
+
+			}
 
 			// loop through all stops to find the closest
 			// - get dist from stop lat/lng to leg lat/lng
