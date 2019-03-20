@@ -24,11 +24,13 @@ public class RoutesDao {
 	}
 
 	public void create(Route route) {
-		for (Stop stop : route.getStops()) {
-			stop.setId(null);
-			stop.setRoute(route);
+		if (!route.equals(route)) {
+			for (Stop stop : route.getStops()) {
+				stop.setId(null);
+				stop.setRoute(route);
+			}
+			em.persist(route);
 		}
-		em.persist(route);
 	}
 
 	public void update(Route route) {
