@@ -56,12 +56,12 @@
 						<td>${stop.name}</td>
 						<td>${stop.city},${stop.state}</td>
 						<td>
-							<a class="btn btn-secondary" href="/details/${stop.yelpId}">Details</a>
+							<a class="btn btn-primary" href="/details/${stop.yelpId}">Details</a>
 						</td>
 						<td>
 							<form action="/deleteStop">
 								<input type="hidden" name="stopToRemove" value="${stop.yelpId}" />
-								<button type="submit" class="btn btn-secondary">Remove</button>
+								<button type="submit" class="btn btn-primary">Remove</button>
 							</form>
 						</td>
 					</tr>
@@ -76,7 +76,7 @@
 			</c:if>
 			<input type="hidden" name="location1" value="${location1}" /> <input
 				type="hidden" name="location2" value="${location2}" />
-			<button type="submit" class="btn btn-secondary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save
+			<button type="submit" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save
 				this
 				route&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>  
 			<p class="message">${message}</p>
@@ -103,8 +103,8 @@
 				<tr>
 					<td>${result.name}</td>
 					<td>${result.location.city},${result.location.state}</td>
-					<td><a class="btn btn-secondary" href="/details/${result.id}">Details</a></td>
-					<td><a class="btn btn-secondary" href="${result.url}"
+					<td><a class="btn btn-primary" href="/details/${result.id}">Details</a></td>
+					<td><a class="btn btn-primary" href="${result.url}"
 						target="_blank">Yelp</a></td>
 
 					<td><form action="/add">
@@ -115,7 +115,7 @@
 								type="hidden" name="location1" value="${location1}" /> <input
 								type="hidden" name="location2" value="${location2}" /> <input
 								type="hidden" name="category" value="${category}" />
-							<button type="submit" class="btn btn-secondary">Add</button>
+							<button type="submit" class="btn btn-primary">Add</button>
 						</form></td>
 				</tr>
 			</c:forEach>

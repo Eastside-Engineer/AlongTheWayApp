@@ -2,16 +2,18 @@
 
 h1 {
 	
-	color: #df9200;
+	color: #f47a00;
 	font-style: italic;
 	font-style: bold;
 	font-size: 80px;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 h3 {
 	color: #4ca5de;
 	font-style: italic;
 	font-style: bold;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 h4 {
@@ -77,5 +79,14 @@ tr{
 
 font-size: 18px;
 }
+
+.display-2{
+	
+color: #f47a00;
+text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+font-weight: 500;
+
+}
+
 
 

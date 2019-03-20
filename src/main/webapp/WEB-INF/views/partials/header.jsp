@@ -14,6 +14,7 @@
 <div class="container">
 
 <nav class="navbar navbar-default">
+
     <ul class ="nav">
 
       	<li class="nav-item"><a href="/endsession" class="nav-link">New Route</a></li>
