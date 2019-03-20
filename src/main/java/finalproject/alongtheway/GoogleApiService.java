@@ -74,14 +74,9 @@ public class GoogleApiService {
 		}
 
 		String url = "https://maps.googleapis.com/maps/api/directions/json?units=imperial&origin=" + location1
-				+ "&destination=" + location2 + "&waypoints=optimize:true|" + waypoints + "&key="
-				+ googlekey;
-
-		System.out.println(url);
+				+ "&destination=" + location2 + "&waypoints=optimize:true|" + waypoints + "&key=" + googlekey;
 
 		WaypointResponse apiResponse = restTemplate.getForObject(url, WaypointResponse.class);
-
-		System.out.println(apiResponse.toString());
 
 		return apiResponse.getRoutes().get(0).getLegs();
 
