@@ -192,6 +192,7 @@ public class AlongTheWayController {
 		String totalDist = total1(legs);
 		String totalTime = total2(legs);
 
+		session.setAttribute("legs", legs);
 		session.setAttribute("distanceNew", totalDist);
 		session.setAttribute("durationNew", totalTime);
 		ModelAndView mav = new ModelAndView("redirect:/results");
@@ -242,7 +243,7 @@ public class AlongTheWayController {
 			coord.setLatitude(stepwp.getEndLocation().getEndLat());
 			coord.setLongitude(stepwp.getEndLocation().getEndLong());
 
-			if (stepwp.getDistance().getValue() > 4000) {
+			if (stepwp.getDistance().getValue() > 10000) {
 
 				waypoints.add(coord);
 

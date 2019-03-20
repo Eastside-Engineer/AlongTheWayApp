@@ -76,9 +76,11 @@
 			</c:if>
 			<input type="hidden" name="location1" value="${location1}" /> <input
 				type="hidden" name="location2" value="${location2}" />
-			<button type="submit" class="btn btn-secondary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save
-				this
-				route&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>  
+			<button type="submit" class="btn btn-secondary">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				Save this route
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</button>  
 			<p class="message">${message}</p>
 		</form>
 	
@@ -91,6 +93,16 @@
 
 
 		<table class="table table-striped">
+		 
+			<h3>Results for ${category} search</h3>
+		<!--
+			<c:if test = "${category == 'landmarks'}">
+				<a>Search for restaurants</a>
+			</c:if>
+			<c:if test = "${category == 'restaurants'}">
+				<a>Search for landmarks</a>
+			</c:if>
+		-->
 			<tr>
 				<th>Name</th>
 				<th>City, State</th>
