@@ -38,7 +38,7 @@
 			<tr>
 				<th>Added Stop(s)</th>
 				<th>City/State</th>
-				
+				<th></th>
 			</tr>
 			
 			<c:if test="${stops != null}">
@@ -46,6 +46,12 @@
 					<tr>
 						<td>${stop.name}</td>
 						<td>${stop.city},${stop.state}</td>
+						<td>
+							<form action="/deleteStop">
+								<input type="hidden" name = "stopToRemove" value="${stop.yelpId}"/>
+								<button type = "submit" class = "btn btn-primary">Remove</button>
+							</form>
+						</td>
 					</tr>
 				</c:forEach>
 			</c:if>
@@ -98,7 +104,8 @@
 								type="hidden" name="location2" value="${location2}" /> <input
 								type="hidden" name="category" value="${category}" />
 							<button type="submit" class="btn btn-primary">Add</button>
-						</form></td>
+						</form>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>

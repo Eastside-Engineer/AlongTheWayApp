@@ -109,6 +109,11 @@ public class Stop implements Serializable {
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
+	@Override
+	public String toString() {
+		return "Stop [id=" + id + ", route=" + route + ", yelpId=" + yelpId + ", name=" + name + ", city=" + city
+				+ ", state=" + state + ", latitude=" + latitude + ", longitude=" + longitude + "]";
+	}
 	
 }
 

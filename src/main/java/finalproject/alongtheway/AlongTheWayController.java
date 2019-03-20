@@ -105,15 +105,34 @@ public class AlongTheWayController {
 		// redirect to the results page, no need to add objects to model since the same
 		// info is already in the session
 		ModelAndView mav = new ModelAndView("redirect:/results");
-
 		return mav;
 	}
-
+	
+	// GET DAVID OR MARIAH THIS SHOULD WORK ARRRRRRRGGGGHHHHHHH!!!!!!!
+	@RequestMapping("/deleteStop")
+	public ModelAndView deleteStop(
+			@SessionAttribute(name="stops", required = true) List<Stop> stops,
+			@RequestParam(value="stopToRemove", required = true) String stopToRemove,
+			HttpSession session) {
+		System.out.println(stopToRemove);
+		
+		for (Stop s : stops) {
+			System.out.println(s);
+			if (s.getYelpId().equals(stopToRemove)) {
+				System.out.println(s + "i");
+				stops.remove(s);
+			}
+		}
+		
+		ModelAndView mav = new ModelAndView("redirect:/results");
+		return mav;
+	}
+	
 	@RequestMapping("/saveroute")
 	public ModelAndView saveroute(
-			@SessionAttribute(value = "location1", required = true) String location1,
-			@SessionAttribute(value = "location2", required = true) String location2,
-			@SessionAttribute(value = "stops", required = false) List<Stop> stops, 
+			@SessionAttribute(name = "location1", required = true) String location1,
+			@SessionAttribute(name = "location2", required = true) String location2,
+			@SessionAttribute(name = "stops", required = false) List<Stop> stops, 
 			HttpSession session) {
 
 		Route route = new Route();
@@ -128,7 +147,6 @@ public class AlongTheWayController {
 	public ModelAndView showRoutes(HttpSession session) {
 		// return list of all items in DB and pass to model
 		List<Route> theRoutes = dao.findAll();
-		System.out.println(theRoutes);
 		return new ModelAndView("matrix", "amend", theRoutes);
 	}
 
@@ -268,7 +286,7 @@ public class AlongTheWayController {
 				}
 
 				waypointsUrlPart += safeLoc;
-				System.out.println(waypointsUrlPart);
+				// System.out.println(waypointsUrlPart);
 
 			}
 
@@ -335,8 +353,8 @@ public class AlongTheWayController {
 
 				hours = hours + Double.parseDouble(str[2]);
 
-				System.out.println(days);
-				System.out.println(hours);
+				//System.out.println(days);
+				//System.out.println(hours);
 
 			} else if (tot.contains("hour")) {
 				String[] str = tot.split("\\s+");
