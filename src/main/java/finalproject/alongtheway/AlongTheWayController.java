@@ -159,7 +159,9 @@ public class AlongTheWayController {
 		session.removeAttribute("location2");
 		session.removeAttribute("stops");
 		session.removeAttribute("fullResults");
-
+		session.removeAttribute("steps");
+		session.removeAttribute("waypoints");
+		
 		Route route = dao.findById(id);
 		String location1 = route.getLocation1();
 		String location2 = route.getLocation2();

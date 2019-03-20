@@ -47,6 +47,7 @@
 				<th>Added Stop(s)</th>
 				<th>City/State</th>
 				<th></th>
+				<th></th>
 			</tr>
 
 			<c:if test="${stops != null}">
@@ -54,6 +55,9 @@
 					<tr>
 						<td>${stop.name}</td>
 						<td>${stop.city},${stop.state}</td>
+						<td>
+							<a class="btn btn-primary" href="/details/${stop.yelpId}">Details</a>
+						</td>
 						<td>
 							<form action="/deleteStop">
 								<input type="hidden" name="stopToRemove" value="${stop.yelpId}" />
