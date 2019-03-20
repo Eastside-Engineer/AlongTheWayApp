@@ -105,9 +105,6 @@ public class AlongTheWayController {
 		String totalDist = total1(legs);
 		String totalTime = total2(legs);
 
-		session.setAttribute("distanceNew", totalDist);
-		session.setAttribute("durationNew", totalTime);
-
 		// redirect to the results page, no need to add objects to model since the same
 		// info is already in the session
 		ModelAndView mav = new ModelAndView("redirect:/results");
@@ -187,13 +184,7 @@ public class AlongTheWayController {
 		session.setAttribute("location2", location2);
 		session.setAttribute("category", "landmarks");
 		session.setAttribute("stops", stops);
-		List<Legs> legs = googleApiService.getAmendedDirections(location1, location2, stops);
 
-		String totalDist = total1(legs);
-		String totalTime = total2(legs);
-
-		session.setAttribute("distanceNew", totalDist);
-		session.setAttribute("durationNew", totalTime);
 		ModelAndView mav = new ModelAndView("redirect:/results");
 		return mav;
 	}
@@ -201,16 +192,14 @@ public class AlongTheWayController {
 //	 when populating the results page, we want to return the set of results
 //	 generated from each waypoint along the way as a single list
 	@RequestMapping("/results")
-	public ModelAndView results(@SessionAttribute(name = "location1", required = false) String location1,
-			@SessionAttribute(name = "location2", required = false) String location2,
+	public ModelAndView results(@SessionAttribute(name = "location1", required = true) String location1,
+			@SessionAttribute(name = "location2", required = true) String location2,
 			@SessionAttribute(name = "category", required = false) String category,
 			@SessionAttribute(name = "minrating", required = false) Double minrating,
 			@SessionAttribute(name = "stops", required = false) List<Stop> stops,
 			@SessionAttribute(name = "steps", required = false) List<Steps> steps,
 			@SessionAttribute(name = "waypoints", required = false) List<Coordinates> waypoints,
 			@SessionAttribute(name = "fullResults", required = false) List<Businesses> fullResults,
-			@SessionAttribute(name = "distanceNew", required = false) String distanceNew,
-			@SessionAttribute(name = "durationNew", required = false) String durationNew,
 			@SessionAttribute(name = "legs", required = false) List<Legs> legs, HttpSession session) {
 
 		// define the steps along the way from the google directions api
@@ -294,45 +283,28 @@ public class AlongTheWayController {
 			}
 		}
 
+		ModelAndView mav = new ModelAndView("results", "results", fullResults);
+
 		Legs leg = googleApiService.getBasicDirections(location1, location2);
 		String dist = leg.getDistance().getText();
 		String time = leg.getDuration().getText();
 
-		ModelAndView mav = new ModelAndView("results", "results", fullResults);
+		mav.addObject("distance", dist);
+		mav.addObject("duration", time);
 
-		List<Stop> ordered = new ArrayList<>();
+		if (stops != null && !stops.isEmpty()) {
 
-		if (stops != null) {
-
-			Stop stop = new Stop();
-
-			for (int k = 0; k < stops.size() - 1; k++) {
-
-				Double mini = 10.0;
-
-				Double diff2 = legs.get(k).getEndLocation().getLongitude()
-						- legs.get(k + 1).getEndLocation().getLongitude();
-
-				Double diff1 = legs.get(k).getEndLocation().getLatitude()
-						- legs.get(k + 1).getEndLocation().getLatitude();
-
-				Double a = diff1 * diff1;
-				Double b = diff2 * diff2;
-
-				if (a + b < mini) {
-					mini = a + b;
-				}
-
-				System.out.println(mini);
-
-				stop.setLatitude(legs.get(k).getEndLocation().getLatitude());
-				stop.setLongitude(legs.get(k).getEndLocation().getLongitude());
-				ordered.add(stop);
-
-			}
-
+			legs = googleApiService.getAmendedDirections(location1, location2, stops);
+			session.setAttribute("legs", legs);
+			String totalDist = total1(legs);
+			String totalTime = total2(legs);
+			mav.addObject("distanceNew", totalDist);
+			mav.addObject("durationNew", totalTime);
 		}
 
+		stops = orderStops(stops, legs);
+
+		// get MAP
 		if (stops != null && !stops.isEmpty()) {
 			String waypointsUrlPart = "&waypoints=";
 
@@ -360,13 +332,59 @@ public class AlongTheWayController {
 
 		mav.addObject("loc1", parseLoc1[0] + "+" + parseLoc1[1]);
 		mav.addObject("loc2", parseLoc2[0] + "+" + parseLoc2[1]);
-		mav.addObject("distance", dist);
-		mav.addObject("duration", time);
-		mav.addObject("distanceNew", distanceNew);
-		mav.addObject("durationNew", durationNew);
 
 		return mav;
 
+	}
+
+	private List<Stop> orderStops(List<Stop> stops, List<Legs> legs) {
+		// to be safe, make a copy of stops so we don't mess up original.
+		stops = new ArrayList<>(stops);
+		List<Stop> ordered = new ArrayList<>();
+
+		if (stops == null || legs == null || stops.size() != legs.size() - 1) {
+			return stops;
+		}
+
+		for (int legI = 0; legI < legs.size() - 1; legI++) {
+			Legs leg = legs.get(legI);
+
+			Stop closest = stops.get(0);
+
+			// loop through all stops to find the closest
+			// - get dist from stop lat/lng to leg lat/lng
+			// - keep track of closest
+			// add that to order list
+			// and remove it from stops list
+
+		}
+
+		Stop stop = new Stop();
+		for (int k = 0; k < stops.size() - 1; k++) {
+
+			Double mini = 10.0;
+
+			Double diff2 = legs.get(k).getEndLocation().getLongitude()
+					- legs.get(k + 1).getEndLocation().getLongitude();
+
+			Double diff1 = legs.get(k).getEndLocation().getLatitude() - legs.get(k + 1).getEndLocation().getLatitude();
+
+			Double a = diff1 * diff1;
+			Double b = diff2 * diff2;
+
+			if (a + b < mini) {
+				mini = a + b;
+			}
+			System.out.println(mini);
+			stop.setLatitude(legs.get(k).getEndLocation().getLatitude());
+			stop.setLongitude(legs.get(k).getEndLocation().getLongitude());
+			ordered.add(stop);
+		}
+
+		for (Stop p : ordered) {
+			System.out.println("city" + p.getCity());
+		}
+		return ordered;
 	}
 
 	// when the user clicks from results page to details

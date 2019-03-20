@@ -21,22 +21,16 @@
 		<table class="table table-striped twoequalcolumns">
 			<tr>
 				<th>${location1} to ${location2}</th>
-				<c:if test="${not empty durationNew}">
 					<th>Time/Distance</th>
-				</c:if>
 			</tr>
 			<tr>
 				<td>Time: ${duration}</td>
-				<c:if test="${not empty durationNew}">
 					<td>Time: ${durationNew}</td>
-				</c:if>
 			</tr>
 
 			<tr>
 				<td>Distance: ${distance}</td>
-				<c:if test="${not empty distanceNew}">
 					<td>Distance: ${distanceNew}</td>
-				</c:if>
 			</tr>
 
 		</table>
