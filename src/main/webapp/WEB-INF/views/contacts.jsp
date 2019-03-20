@@ -33,8 +33,8 @@
 						innovative with her technical skills. Cynthia is open to learning more
 						and building software that will positively impact the community and the world.</p> 
 						Connect with Cynthia: <br> 
-						<a href="https://github.com/FruitGeek313">GitHub</a> <br> 
-						<a href="https://www.linkedin.com/in/cynturner/">LinkedIn</a>
+						<a href="https://github.com/FruitGeek313" target = "_blank">GitHub</a> <br> 
+						<a href="https://www.linkedin.com/in/cynturner/" target = "_blank">LinkedIn</a>
 				</td>
 			</tr>
 
@@ -54,8 +54,8 @@
 						the burgeoning opportunities, and bringing forward the future
 						economy.</p> 
 						Connect with Krzysztof: <br> 
-						<a href="https://github.com/Maltheos">GitHub</a>	<br> 
-						<a href="https://www.linkedin.com/in/kgrabka/">LinkedIn</a>
+						<a href="https://github.com/Maltheos" target = "_blank">GitHub</a>	<br> 
+						<a href="https://www.linkedin.com/in/kgrabka/" target = "_blank">LinkedIn</a>
 				</td>
 			</tr>
 
@@ -69,8 +69,8 @@
 					to create beautiful content and solve complex problems. 
 					He has worked in Data Management and looks forward to further
 					database utilization and manipulation. </p> Connect with Kyle: <br> 
-						<a href="https://github.com/kyledexperience">GitHub</a> <br> 
-						<a href="https://www.linkedin.com/in/kylepdixon/">LinkedIn</a>
+						<a href="https://github.com/kyledexperience" target = "_blank">GitHub</a> <br> 
+						<a href="https://www.linkedin.com/in/kylepdixon/" target = "_blank">LinkedIn</a>
 				</td>
 			</tr>
 
@@ -86,8 +86,8 @@
 						salesman, with the technical knowledge and skills associated with
 						software development is exciting!</p> 
 						Connect with Tom: <br> 
-						<a href="https://github.com/TomJHagey">GitHub</a> <br> 
-						<a href="https://www.linkedin.com/in/tomjhagey/">LinkedIn</a>
+						<a href="https://github.com/TomJHagey" target = "_blank">GitHub</a> <br> 
+						<a href="https://www.linkedin.com/in/tomjhagey/" target = "_blank">LinkedIn</a>
 				</td>
 			</tr>
 
