@@ -15,7 +15,7 @@
 
 <nav class="navbar navbar-default">
 
-    <ul class ="nav">
+    <ul class ="nav justify-content-center">
 
       	<li class="nav-item"><a href="/endsession" class="nav-link">New Route</a></li>
       	<li class="nav-item"><a href="/matrix" class="nav-link">Saved Routes</a></li>

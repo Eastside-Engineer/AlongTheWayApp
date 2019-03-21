@@ -16,12 +16,12 @@
 
 	<div class="container">
 
-		<h1 class="display-2">Current Route</h1>
+		<h1 class="display-2">The Route</h1>
 
 		<table class="table table-striped twoequalcolumns">
 			<tr>
 				<th>${location1} to ${location2}</th>
-					<th>Time/Distance</th>
+					<th>Added Time/Distance</th>
 			</tr>
 			<tr>
 				<td>Time: ${duration}</td>
@@ -50,12 +50,12 @@
 						<td>${stop.name}</td>
 						<td>${stop.city},${stop.state}</td>
 						<td>
-							<a class="btn btn-primary" href="/details/${stop.yelpId}">Details</a>
+							<a class="btn btn-outline-primary" href="/details/${stop.yelpId}">Details</a>
 						</td>
 						<td>
 							<form action="/deleteStop">
 								<input type="hidden" name="stopToRemove" value="${stop.yelpId}" />
-								<button type="submit" class="btn btn-primary">Remove</button>
+								<button type="submit" class="btn btn-outline-primary">Remove</button>
 							</form>
 						</td>
 					</tr>
@@ -70,9 +70,7 @@
 			</c:if>
 			<input type="hidden" name="location1" value="${location1}" /> <input
 				type="hidden" name="location2" value="${location2}" />
-			<button type="submit" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save
-				this
-				route&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>  
+			<button type="submit" class="btn btn-outline-primary btn-lg btn-block">Save This Route</button>  
  
 
 			<p class="message">${message}</p>
@@ -101,7 +99,7 @@
 				<th>Name</th>
 				<th>City, State</th>
 				<th>Details</th>
-				<th>URL Link</th>
+				<th>Link</th>
 				<th>Add to Route</th>
 			</tr>
 
@@ -109,8 +107,8 @@
 				<tr>
 					<td>${result.name}</td>
 					<td>${result.location.city},${result.location.state}</td>
-					<td><a class="btn btn-primary" href="/details/${result.id}">Details</a></td>
-					<td><a class="btn btn-primary" href="${result.url}"
+					<td><a class="btn btn-outline-primary btn-block" href="/details/${result.id}">Details</a></td>
+					<td><a class="btn btn-outline-primary btn-block" href="${result.url}"
 						target="_blank">Yelp</a></td>
 
 					<td><form action="/add">
@@ -121,7 +119,7 @@
 								type="hidden" name="location1" value="${location1}" /> <input
 								type="hidden" name="location2" value="${location2}" /> <input
 								type="hidden" name="category" value="${category}" />
-							<button type="submit" class="btn btn-primary">Add</button>
+							<button type="submit" class="btn btn-outline-primary btn-block">GO!</button>
 						</form></td>
 				</tr>
 			</c:forEach>

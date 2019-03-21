@@ -16,7 +16,7 @@
 
 	<div class="container">
 
-		<h1>The Routes</h1>
+		<h1>Saved Routes</h1>
 
 		<table class="table table-striped">
 
@@ -24,8 +24,8 @@
 				<th>Starting Location</th>
 				<th>Along The Way</th>
 				<th>Ending Location</th>
-				<th></th>
-				<th></th>
+				<th>View Route</th>
+				<th>Delete Route</th>
 			</tr>
 
 			<c:forEach items="${amend}" var="amended">
@@ -49,8 +49,8 @@
   					</td>
 					<td>${amended.location2}</td>
 
-					<td><a href="/edit?id=${amended.id}" class = "btn btn-primary">View Route</a></td>
-					<td><a href="/delete?id=${amended.id}" class="btn btn-primary">Delete Route</a></td>			
+					<td><a href="/edit?id=${amended.id}" class = "btn btn-outline-primary btn-block">View Route</a></td>
+					<td><a href="/delete?id=${amended.id}" class="btn btn-outline-primary btn-block">Delete Route</a></td>			
 
 				</tr>
 			</c:forEach>
