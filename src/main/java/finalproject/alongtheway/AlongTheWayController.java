@@ -97,6 +97,8 @@ public class AlongTheWayController {
 		// add this created stop to the session List<Stop> stops
 		stops.add(stop);
 
+		System.out.println("Stop Lat " + stop.getLatitude());
+
 		// redirect to the results page, no need to add objects to model since the same
 		// info is already in the session
 		ModelAndView mav = new ModelAndView("redirect:/results");
@@ -222,7 +224,7 @@ public class AlongTheWayController {
 			coord.setLatitude(stepwp.getEndLocation().getEndLat());
 			coord.setLongitude(stepwp.getEndLocation().getEndLong());
 
-			if (stepwp.getDistance().getValue() > 10000) {
+			if (stepwp.getDistance().getValue() > 4000) {
 
 				waypoints.add(coord);
 
@@ -290,9 +292,8 @@ public class AlongTheWayController {
 			String totalTime = total2(legs);
 			mav.addObject("distanceNew", totalDist);
 			mav.addObject("durationNew", totalTime);
+			stops = orderStops(stops, legs);
 		}
-
-		// stops = orderStops(stops, legs);
 
 		// get MAP
 		if (stops != null && !stops.isEmpty()) {
@@ -330,6 +331,7 @@ public class AlongTheWayController {
 	private List<Stop> orderStops(List<Stop> stops, List<Legs> legs) {
 		// to be safe, make a copy of stops so we don't mess up original.
 		stops = new ArrayList<>(stops);
+
 		List<Stop> ordered = new ArrayList<>();
 
 		if (stops == null || legs == null || stops.size() != legs.size() - 1) {
@@ -341,9 +343,29 @@ public class AlongTheWayController {
 
 			Stop closest = stops.get(0);
 
-			for (int stopI = 0; stopI < stops.size() - 1; stopI++) {
+			for (int stopI = 0; stopI < stops.size(); stopI++) {
+				Stop stop = stops.get(stopI);
+
+				Double lat = leg.getEndLocation().getLatitude() - stop.getLatitude();
+				Double lng = leg.getEndLocation().getLongitude() - stop.getLongitude();
+				Double lat2 = leg.getEndLocation().getLatitude() - closest.getLatitude();
+				Double lng2 = leg.getEndLocation().getLongitude() - closest.getLongitude();
+
+				System.out.println(leg.getEndLocation().getLatitude());
+
+				if ((lat * lat + lng * lng) < (lat2 * lat2 + lng2 * lng2)) {
+
+					closest = stops.get(stopI);
+
+					System.out.println(closest.getCity());
+				}
 
 			}
+
+			ordered.add(closest);
+			System.out.println(stops);
+			stops.remove(closest);
+			System.out.println("Ordered" + ordered);
 
 			// loop through all stops to find the closest
 			// - get dist from stop lat/lng to leg lat/lng
@@ -353,31 +375,6 @@ public class AlongTheWayController {
 
 		}
 
-		Stop stop = new Stop();
-		for (int k = 0; k < stops.size() - 1; k++) {
-
-			Double mini = 10.0;
-
-			Double diff2 = legs.get(k).getEndLocation().getLongitude()
-					- legs.get(k + 1).getEndLocation().getLongitude();
-
-			Double diff1 = legs.get(k).getEndLocation().getLatitude() - legs.get(k + 1).getEndLocation().getLatitude();
-
-			Double a = diff1 * diff1;
-			Double b = diff2 * diff2;
-
-			if (a + b < mini) {
-				mini = a + b;
-			}
-			System.out.println(mini);
-			stop.setLatitude(legs.get(k).getEndLocation().getLatitude());
-			stop.setLongitude(legs.get(k).getEndLocation().getLongitude());
-			ordered.add(stop);
-		}
-
-		for (Stop p : ordered) {
-			System.out.println("city" + p.getCity());
-		}
 		return ordered;
 	}
 
