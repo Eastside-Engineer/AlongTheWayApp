@@ -97,8 +97,6 @@ public class AlongTheWayController {
 		// add this created stop to the session List<Stop> stops
 		stops.add(stop);
 
-		System.out.println("Stop Lat " + stop.getLatitude());
-
 		// redirect to the results page, no need to add objects to model since the same
 		// info is already in the session
 		ModelAndView mav = new ModelAndView("redirect:/results");
@@ -450,12 +448,14 @@ public class AlongTheWayController {
 		Integer tot1 = hours.intValue() + hr.intValue();
 		Integer tot4 = newDay.intValue();
 
-		if (days > 0) {
+		if (day >= 1) {
 			return tot3 + " day " + tot1 + " hours " + tot2 + " mins";
 		} else if (newDay >= 1) {
 			return tot4 + " day " + tot1 + " hours " + tot2 + " mins";
-		} else {
+		} else if (hours >= 1) {
 			return tot1 + " hours " + tot2 + " mins";
+		} else {
+			return tot2 + "mins";
 		}
 
 	}
