@@ -86,7 +86,7 @@
 
 		<table class="table table-striped">
 		 
-			<h3>Results for ${category} search</h3>
+			<h3>Which ${category} would you like to visit?</h3>
 		<!--
 			<c:if test = "${category == 'landmarks'}">
 				<a>Search for restaurants</a>
@@ -99,7 +99,7 @@
 				<th>Name</th>
 				<th>City, State</th>
 				<th>Details</th>
-				<th>Link</th>
+				<th>Yelp Link</th>
 				<th>Add to Route</th>
 			</tr>
 

@@ -24,12 +24,12 @@ public class RoutesDao {
 	}
 
 	public void create(Route route) {
-		if (!route.equals(route)) {
-			for (Stop stop : route.getStops()) {
-				stop.setId(null);
-				stop.setRoute(route);
-			}
+
+		for (Stop stop : route.getStops()) {
+			stop.setId(null);
+			stop.setRoute(route);
 			em.persist(route);
+
 		}
 	}
 
