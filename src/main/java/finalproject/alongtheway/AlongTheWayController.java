@@ -351,21 +351,16 @@ public class AlongTheWayController {
 				Double lat2 = leg.getEndLocation().getLatitude() - closest.getLatitude();
 				Double lng2 = leg.getEndLocation().getLongitude() - closest.getLongitude();
 
-				System.out.println(leg.getEndLocation().getLatitude());
-
 				if ((lat * lat + lng * lng) < (lat2 * lat2 + lng2 * lng2)) {
 
 					closest = stops.get(stopI);
 
-					System.out.println(closest.getCity());
 				}
 
 			}
 
 			ordered.add(closest);
-			System.out.println(stops);
 			stops.remove(closest);
-			System.out.println("Ordered" + ordered);
 
 			// loop through all stops to find the closest
 			// - get dist from stop lat/lng to leg lat/lng
